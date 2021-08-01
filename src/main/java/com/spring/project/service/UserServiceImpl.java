@@ -14,4 +14,9 @@ public class UserServiceImpl implements UserService {
     public UserDto findUserByEmail(String email) {
         return null;
     }
+
+    @Override
+    public UserDto signup(UserDto userDto) {
+        return null;
+    }
 }
