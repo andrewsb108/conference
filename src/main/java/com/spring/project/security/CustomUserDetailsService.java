@@ -4,7 +4,6 @@ package com.spring.project.security;
 import com.spring.project.dto.RoleDto;
 import com.spring.project.dto.UserDto;
 import com.spring.project.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * @author Andrii Barsuk
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

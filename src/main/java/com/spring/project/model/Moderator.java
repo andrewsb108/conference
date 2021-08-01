@@ -8,6 +8,9 @@ import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * @author Andrii Barsuk
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -21,7 +21,9 @@ import java.util.List;
 
 import static com.spring.project.security.SecurityConstants.*;
 
-
+/**
+ * @author Andrii Barsuk
+ */
 public class FormBasedJWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
 

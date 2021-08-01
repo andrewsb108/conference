@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+/**
+ * @author Andrii Barsuk
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,9 +17,9 @@ import java.util.Set;
 public class UserDto {
     private long id;
     private String firstName;
-    private String surname;
+    private String lastName;
     private String email;
     private String password;
-    private String phoneNumber;
+    private String mobileNumber;
     private Set<RoleDto> roles;
 }

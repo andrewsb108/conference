@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2
-public class SpeakerServiceImpl {
+public class SpeakerServiceImpl implements SpeakerService {
 }

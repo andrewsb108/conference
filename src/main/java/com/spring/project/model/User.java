@@ -8,6 +8,9 @@ import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * @author Andrii Barsuk
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,13 +24,13 @@ public class User {
     @Column(name = "name", nullable = false)
     private String firstName;
     @Column(name = "surname", nullable = false)
-    private String surname;
+    private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "phoneNumber", nullable = false)
-    private String phoneNumber;
+    private String mobileNumber;
     @OneToMany
     private Set<Role> roles;
 

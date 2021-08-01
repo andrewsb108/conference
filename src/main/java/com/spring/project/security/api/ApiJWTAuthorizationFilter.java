@@ -18,7 +18,9 @@ import java.util.ArrayList;
 
 import static com.spring.project.security.SecurityConstants.*;
 
-
+/**
+ * @author Andrii Barsuk
+ */
 public class ApiJWTAuthorizationFilter extends BasicAuthenticationFilter {
     public ApiJWTAuthorizationFilter(AuthenticationManager authManager) {
         super(authManager);

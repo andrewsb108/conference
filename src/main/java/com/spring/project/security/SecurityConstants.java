@@ -1,6 +1,8 @@
 package com.spring.project.security;
 
-
+/**
+ * @author Andrii Barsuk
+ */
 public interface SecurityConstants {
     String SECRET = "andrewConference";
     String TOKEN_PREFIX = "Bearer ";
