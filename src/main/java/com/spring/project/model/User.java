@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,10 +19,16 @@ public class User {
     @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "name", nullable = false)
-    private String name;
+    private String firstName;
     @Column(name = "surname", nullable = false)
     private String surname;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Column(name = "phoneNumber", nullable = false)
+    private String phoneNumber;
+    @OneToMany
+    private Set<Role> roles;
 
 }
