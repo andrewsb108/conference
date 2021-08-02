@@ -21,15 +21,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "firstName", nullable = false)
     private String firstName;
-    @Column(name = "surname", nullable = false)
+    @Column(name = "lastName", nullable = false)
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "phoneNumber", nullable = false)
+    @Column(name = "mobileNumber", nullable = false)
     private String mobileNumber;
     @OneToMany
     private Set<Role> roles;

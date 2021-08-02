@@ -18,7 +18,6 @@ import java.util.List;
 @Builder
 public class ModeratorDto {
     private long id;
-    private String name;
     private List<Speaker> speakerList;
     private List<User> userList;
 }

@@ -19,5 +19,4 @@ public class UserController {
         modelAndView.addObject("user", new UserSignUpDto());
         return modelAndView;
     }
-
 }

@@ -22,9 +22,6 @@ public class Moderator {
     @Column(name = "id", nullable = false)
     private long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
     @OneToMany
     private List<Speaker> speakerList;
 

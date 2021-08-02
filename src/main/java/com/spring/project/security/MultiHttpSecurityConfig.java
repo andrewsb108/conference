@@ -3,10 +3,8 @@ package com.spring.project.security;
 
 import com.spring.project.security.api.ApiJWTAuthenticationFilter;
 import com.spring.project.security.api.ApiJWTAuthorizationFilter;
-
 import com.spring.project.security.form.CustomAuthenticationSuccessHandler;
 import com.spring.project.security.form.CustomLogoutSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -29,10 +28,10 @@ public class MultiHttpSecurityConfig {
     @Configuration
     @Order(1)
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-        @Autowired
+        @Resource
         private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        @Autowired
+        @Resource
         private CustomUserDetailsService userDetailsService;
 
         @Override
@@ -68,13 +67,13 @@ public class MultiHttpSecurityConfig {
     @Order(2)
     @Configuration
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-        @Autowired
+        @Resource
         private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        @Autowired
+        @Resource
         private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
-        @Autowired
+        @Resource
         private CustomUserDetailsService userDetailsService;
 
         @Override
