@@ -41,11 +41,7 @@ public class FormBasedJWTAuthenticationFilter extends UsernamePasswordAuthentica
             user.setEmail(email);
             user.setPassword(password);
             return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            user.getEmail(),
-                            user.getPassword(),
-                            new ArrayList<>())
-            );
+                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), new ArrayList<>()));
         }
 
         return null;

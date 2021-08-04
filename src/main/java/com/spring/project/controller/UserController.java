@@ -2,11 +2,13 @@ package com.spring.project.controller;
 
 import com.spring.project.dto.UserDto;
 import com.spring.project.dto.UserSignUpDto;
+import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,20 +41,21 @@ public class UserController {
     }
 
     @PostMapping(value = "/signup")
-    public ModelAndView createUser(@Valid @ModelAttribute("userSignupDto") UserSignUpDto userSignUpDto, BindingResult bindingResult) {
+    public ModelAndView createUser(@Valid @ModelAttribute("userSignupDto") UserSignUpDto userSignUpDto,
+                                   BindingResult bindingResult, Model model) {
         ModelAndView modelAndView = new ModelAndView("signup");
         if (bindingResult.hasErrors()) {
             return modelAndView;
         }
-//        else {
             try {
                 UserDto newUser = businessMapper.convertFromSignupDtoToUserDto(userSignUpDto);
                 userService.signup(newUser);
-            } catch (Exception exception) {
-//                bindingResult.rejectValue("email", "error.user.not.created");
-                bindingResult.rejectValue("email", exception.getMessage());
+                log.info("Account {} registered successfully", newUser.getEmail());
+            } catch (Exception e) {
+                log.error("User with such email ({}) already exist", userSignUpDto.getEmail());
+                model.addAttribute("error_message",
+                        "reg.login.not.unique");
                 return modelAndView;
-//            }
         }
         return new ModelAndView("login");
     }

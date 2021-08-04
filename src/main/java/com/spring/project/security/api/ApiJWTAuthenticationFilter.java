@@ -44,8 +44,7 @@ public class ApiJWTAuthenticationFilter extends UsernamePasswordAuthenticationFi
                     new UsernamePasswordAuthenticationToken(
                             user.getEmail(),
                             user.getPassword(),
-                            new ArrayList<>())
-            );
+                            new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

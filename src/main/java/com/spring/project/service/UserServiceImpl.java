@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
             user.setRoles(new HashSet<>(Arrays.asList(userRole)));
             user.setFirstName(userDto.getFirstName());
             user.setLastName(userDto.getLastName());
-            user.setMobileNumber(userDto.getMobileNumber());
             return businessMapper.toUserDto(userRepository.save(user));
         }
         throw new UserDublicateException("User already exist: " + userDto.getEmail());

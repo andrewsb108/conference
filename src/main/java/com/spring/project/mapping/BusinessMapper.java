@@ -16,7 +16,6 @@ public class BusinessMapper {
         userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setMobileNumber(user.getMobileNumber());
         userDto.setRoles(new HashSet<>(user.getRoles().stream().map(this::convertToRoleDto).collect(Collectors.toSet())));
         return userDto;
     }
@@ -27,7 +26,6 @@ public class BusinessMapper {
         userDto.setLastName(userSignUpDto.getLastName());
         userDto.setEmail(userSignUpDto.getEmail());
         userDto.setPassword(userSignUpDto.getPassword());
-        userDto.setMobileNumber(userSignUpDto.getMobileNumber());
         userDto.setCreated(LocalDateTime.now());
 
         return userDto;

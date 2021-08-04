@@ -41,27 +41,24 @@ public class MultiHttpSecurityConfig {
                     .passwordEncoder(bCryptPasswordEncoder);
         }
 
-        // @formatter:off
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .csrf()
-                        .disable()
+                    .disable()
                     .antMatcher("/api/**")
                     .authorizeRequests()
-                        .antMatchers("/api/v1/user/signup").permitAll()
+                    .antMatchers("/api/v1/user/signup").permitAll()
                     .anyRequest()
-                        .authenticated()
+                    .authenticated()
                     .and()
                     .exceptionHandling()
-                        .authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+                    .authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                     .and()
                     .addFilter(new ApiJWTAuthenticationFilter(authenticationManager()))
                     .addFilter(new ApiJWTAuthorizationFilter(authenticationManager()))
                     .sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         }
-        // @formatter:on
-
     }
 
     @Order(2)
@@ -83,38 +80,37 @@ public class MultiHttpSecurityConfig {
                     .passwordEncoder(bCryptPasswordEncoder);
         }
 
-        // @formatter:off
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .cors()
                     .and()
                     .csrf()
-                        .disable()
+                    .disable()
                     .authorizeRequests()
-                        .antMatchers("/").permitAll()
-                        .antMatchers("/login").permitAll()
-                        .antMatchers("/signup").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/signup").permitAll()
 //                        .antMatchers("/dashboard/**").hasAuthority("ADMIN")
                     .anyRequest()
-                        .authenticated()
+                    .authenticated()
                     .and()
                     .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
-                        .failureUrl("/login?error=true")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .successHandler(customAuthenticationSuccessHandler)
+                    .loginPage("/login")
+                    .permitAll()
+                    .failureUrl("/login?error=true")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                    .successHandler(customAuthenticationSuccessHandler)
                     .and()
                     .logout()
-                        .permitAll()
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessHandler(new CustomLogoutSuccessHandler())
-                        .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/")
+                    .permitAll()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessHandler(new CustomLogoutSuccessHandler())
+                    .deleteCookies("JSESSIONID")
+                    .logoutSuccessUrl("/")
                     .and()
-                        .exceptionHandling();
+                    .exceptionHandling();
         }
 
         @Override
@@ -127,6 +123,6 @@ public class MultiHttpSecurityConfig {
                     "/webjars/**", "/swagger-resources/**", "/swagge‌​r-ui.html", "/actuator",
                     "/actuator/**");
         }
-        // @formatter:on
+
     }
 }

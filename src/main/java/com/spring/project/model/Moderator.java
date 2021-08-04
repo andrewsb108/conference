@@ -29,8 +29,6 @@ public class Moderator {
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "mobileNumber", nullable = false)
-    private String mobileNumber;
     @OneToMany
     private List<Speaker> speakerList;
     @OneToMany
