@@ -62,7 +62,9 @@ public class ApiJWTAuthenticationFilter extends UsernamePasswordAuthenticationFi
             if (login != null && login.length() > 0) {
                 Claims claims = Jwts.claims().setSubject(login);
                 List<String> roles = new ArrayList<>();
-                user.getAuthorities().stream().forEach(authority -> roles.add(authority.getAuthority()));
+                user.getAuthorities()
+                        .stream()
+                        .forEach(authority -> roles.add(authority.getAuthority()));
                 claims.put("roles", roles);
                 String token = Jwts.builder()
                         .setClaims(claims)

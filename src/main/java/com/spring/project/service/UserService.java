@@ -2,38 +2,16 @@ package com.spring.project.service;
 
 import com.spring.project.dto.UserDto;
 
+import java.util.Optional;
+
 /**
  * @author Andrii Barsuk
  */
 public interface UserService {
-   /**
-    * Search an existing user
-    *
-    * @param email
-    * @return UserDto
-    */
-   UserDto findUserByEmail(String email);
-   /**
-    * Register a new user
-    *
-    * @param userDto
-    * @return UserDto
-    */
+
+   Optional<UserDto> findUserByEmail(String email);
    UserDto signup(UserDto userDto);
-
-   /**
-    * Update profile of the user
-    *
-    * @param userDto
-    * @return UserDto
-    */
-   UserDto updateProfile(UserDto userDto);
-
-   /**
-    * Update password
-    *
-    * @param newPassword
-    * @return UserDto
-    */
-   UserDto changePassword(UserDto userDto, String newPassword);
+//   boolean promote(String email, Role role);
+//   UserDto updateProfile(UserDto userDto);
+//   UserDto changePassword(UserDto userDto, String newPassword);
 }

@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDto userDto = userService.findUserByEmail(email);
+        UserDto userDto = userService.findUserByEmail(email).orElseThrow();
         if (userDto != null) {
             List<GrantedAuthority> authorities = getUserAuthority(userDto.getRoles());
             return buildUserForAuthentication(userDto, authorities);
@@ -40,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private List<GrantedAuthority> getUserAuthority(Set<RoleDto> userRoles) {
         Set<GrantedAuthority> roles = new HashSet<>();
         userRoles.forEach((role) -> {
-            roles.add(new SimpleGrantedAuthority(role.getRole()));
+            roles.add(new SimpleGrantedAuthority(String.valueOf(role.getRole())));
         });
         return new ArrayList<GrantedAuthority>(roles);
     }

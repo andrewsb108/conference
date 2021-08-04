@@ -11,21 +11,18 @@ import javax.validation.constraints.Size;
  */
 @Data
 public class UserSignUpDto {
-    @NotBlank
+    @NotBlank(message="Email is required")
     @Email
     private String email;
 
-    @NotBlank
-    @Size(min = 5)
+    @NotBlank(message="Password is required")
     private String password;
 
-    @NotBlank
+    @NotBlank(message="FirstName is required")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message="LastName is required")
     private String lastName;
 
-    @NotBlank
-    @Size(min = 5, max = 13)
-    private String mobileNumber;
+
 }

@@ -1,17 +1,18 @@
 package com.spring.project.model;
 
-import org.springframework.data.annotation.Id;
+import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * @author Andrii Barsuk
  */
 @Entity
+@Data
 public class Role {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(name = "role", nullable = false)
     private String role;
 }

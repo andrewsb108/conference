@@ -3,9 +3,11 @@ package com.spring.project.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * @author Andrii Barsuk
@@ -18,11 +20,17 @@ import javax.persistence.*;
 public class Speaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private long id;
-
-
-
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
     @ManyToOne
     private Moderator moderator;
+    @CreatedDate
+    private LocalDateTime created = LocalDateTime.now();
+
+    @Column(name = "last_modified")
+    @LastModifiedDate
+    private LocalDateTime lastModified;
 }
