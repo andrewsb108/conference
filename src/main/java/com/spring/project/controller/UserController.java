@@ -2,10 +2,10 @@ package com.spring.project.controller;
 
 import com.spring.project.dto.UserDto;
 import com.spring.project.dto.UserSignUpDto;
-import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -29,10 +30,7 @@ public class UserController {
     @Resource
     private BusinessMapper businessMapper;
 
-    @GetMapping(value = {"/", "/login"})
-    public ModelAndView login() {
-        return new ModelAndView("login");
-    }
+
 
     @GetMapping(value = {"/logout"})
     public String logout() {
@@ -52,7 +50,7 @@ public class UserController {
                 userService.signup(newUser);
                 log.info("Account {} registered successfully", newUser.getEmail());
             } catch (Exception e) {
-                log.error("User with such email ({}) already exist", userSignUpDto.getEmail());
+//                log.error("User with such email ({}) already exist", userSignUpDto.getEmail());
                 model.addAttribute("error_message",
                         "reg.login.not.unique");
                 return modelAndView;
@@ -60,10 +58,11 @@ public class UserController {
         return new ModelAndView("login");
     }
 
-    @GetMapping(value = "/signup")
-    public ModelAndView signup() {
-        ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("userSignupDto", new UserSignUpDto());
-        return modelAndView;
-    }
+
+
+//    @GetMapping("/locale")
+//    @ResponseBody
+//    public String getLocale() {
+//        return LocaleContextHolder.getLocale().toString();
+//    }
 }

@@ -1,26 +1,15 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<body>
-    <div th:fragment="lang">
-        <div class="btn-group shadow-0 float-right">
-            <button type="button" class="btn btn-link dropdown-toggle text-dark" data-mdb-toggle="dropdown"
-                aria-expanded="false" th:text="#{lang.change}">Lang</button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="?lang=en">
-                        <img th:src="@{~/img/united-kingdom.svg}" alt="user-image" class="mr-1" height="18">
-                        <span class="align-middle" th:text="#{lang.en}">English</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="?lang=uk">
-                        <img th:src="@{~/img/ukraine.svg}" alt="user-image" class="mr-1" height="18">
-                        <span class="align-middle" th:text="#{lang.uk}">Ukrainian</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+
+<div th:fragment="lang">
+
+    <div>
+
+        <a href="?lang=en" class="btn btn-outline-success">English</a>
+        <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
     </div>
+
+</div>
 </body>
 
 </html>

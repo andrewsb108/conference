@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class BusinessMapper {
-    public UserDto toUserDto(User user) {
+    public UserDto convertUserToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());

@@ -4,68 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up</title>
-
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <div th:replace="fragments/login_page :: head_tag"></div>
 </head>
-<body>
+<body class="p-0 m-0">
+<div th:replace="fragments/top_menu :: menu"></div>
+<!--    <section class="sign-in">-->
 
-<div class="main">
-
-    <section class="signup">
-        <div class="container">
-            <!-- Lang menu  -->
-            <div th:replace="fragments/lang_menu :: lang"></div>
-            <div class="signup-content">
-                <div class="signup-form">
-                    <h2 class="form-title">Sign up</h2>
-                    <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/signup}"
-                          th:object="${userSignupDto}">
-                        <div class="form-group">
-                            <label for="firstName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <br> <input type="text" th:field="*{firstName}" name="firstName" id="firstName"
-                                   placeholder="First Name"/>
-                            <small class="text-danger" th:if="${#fields.hasErrors('firstName')}"
-                                   th:errors="*{firstName}"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <br> <label for="lastName"><i class="zmdi zmdi-account-o"></i></label>
-                            <input type="text" th:field="*{lastName}" name="lastName" id="lastName"
-                                   placeholder="Last Name"/>
-                            <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
-                                   th:errors="*{lastName}"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-email"></i></label>
-                            <br> <input type="email" th:field="*{email}" name="email" id="email" placeholder="Your Email"/>
-                            <small class="text-danger" th:if="${#fields.hasErrors('email')}"
-                                   th:errors="*{email}"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password"><i class="zmdi zmdi-lock"></i></label>
-                            <br> <input type="password" th:field="*{password}" name="password" id="password"
-                                   placeholder="Password"/>
-                            <small class="text-danger" th:if="${#fields.hasErrors('password')}"
-                                   th:errors="*{password}"></small>
-                        </div>
-
-                        <div class="form-group form-button">
-                            <br> <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
-                        </div>
-                    </form>
-                </div>
+<!-- Lang menu  -->
+<div class="card text-center container  mt-5 w-50 shadow-lg">
+    <div class="card-header"> SIGN IN</div>
+    <div class="card-body">
+        <h2 class="form-signin-heading" th:text="#{reg.header.title}">Create your account</h2>
+        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/signup}"
+              th:object="${userSignupDto}">
+            <div class="form-group">
+                <label for="firstName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <br> <input type="text" th:field="*{firstName}" name="firstName" id="firstName"
+                            placeholder="First Name" th:placeholder="#{reg.first.name.placeholder}" required autofocus/>
+                <small class="text-danger" th:if="${#fields.hasErrors('firstName')}"
+                       th:errors="*{firstName}"></small>
             </div>
+            <div class="form-group">
+                <br> <label for="lastName"><i class="zmdi zmdi-account-o"></i></label>
+                <input type="text" th:field="*{lastName}" name="lastName" id="lastName"
+                       placeholder="Last Name" th:placeholder="#{reg.last.name.placeholder}" required/>
+                <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                       th:errors="*{lastName}"></small>
+            </div>
+            <div class="form-group">
+                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                <br> <input type="email" th:field="*{email}" name="email" id="email"
+                            placeholder="Your Email" th:placeholder="#{reg.email.placeholder}" required/>
+                <small class="text-danger" th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"></small>
+            </div>
+            <div class="form-group">
+                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                <br> <input type="password" th:field="*{password}" name="password" id="password"
+                            th:placeholder="#{reg.password.placeholder}" required/>
+                <small class="text-danger" th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"></small>
+            </div>
+
+
+            <div class="form-group">
+                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                <br> <input type="password" th:field="*{matchingPassword}" name="matchingPassword" id="matchingPassword"
+                            th:placeholder="#{reg.confirm.password.placeholder}" required/>
+                <small class="text-danger" th:if="${#fields.hasErrors('matchingPassword')}"
+                       th:errors="*{matchingPassword}"></small>
+            </div>
+            <div class="form-group form-button">
+                <br> <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-muted">
+        <div id="errors" class="text-danger"
+             th:if="${(param.error != null) and (param.error[0] == 'true')}">
+            Invalid email or password
         </div>
-    </section>
+    </div>
 </div>
 
-<!-- JS -->
-<!--<script src="/auth/vendor/jquery/jquery.min.js"></script>-->
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

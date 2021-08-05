@@ -4,49 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <div th:replace="fragments/login_page :: head_tag"></div>
 </head>
-<body>
+<body class="p-0 m-0">
+<div th:replace="fragments/top_menu :: menu"></div>
+<!--    <section class="sign-in">-->
 
-<div class="main">
-    <section class="sign-in">
-        <div class="container">
-            <!-- Lang menu  -->
-            <div th:replace="fragments/lang_menu :: lang"></div>
-
-            <div class="signin-content">
-                <div class="signin-image">
-                    <a href="/signup" class="signup-image-link">Create an account</a>
-                </div>
-
-                <div class="signin-form">
-                    <h2 class="form-title">Login</h2>
-                    <form method="POST" class="register-form" id="login-form" th:action="@{/login}">
-                        <div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="email" id="email" placeholder="Email"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="password"><i class="zmdi zmdi-lock"></i></label>
-                            <br> <input type="password" name="password" id="password" placeholder="Password"/>
-                        </div>
-                        <div class="form-group form-button">
-                            <br> <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
-                        </div>
-                    </form>
-                    <div id="errors" class="text-danger"
-                         th:if="${(param.error != null) and (param.error[0] == 'true')}">
-                        Invalid email or password
-                    </div>
-                </div>
+<!-- Lang menu  -->
+<div class="card text-center container  mt-5 w-50 shadow-lg">
+    <div class="card-header"> SIGN IN</div>
+    <div class="card-body">
+        <form method="POST" class="register-form" id="login-form" th:action="@{/login}">
+            <!--                        <h2 class="text-body"th:text="#{login.title}">Sign in</h2>-->
+            <div class="form-group">
+                <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input type="text" name="email" id="email" placeholder="Email"
+                       th:placeholder="#{login.email.placeholder}" autofocus/>
             </div>
+            <div class="form-group">
+                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                <br> <input type="password" name="password" id="password" placeholder="Password"
+                            th:placeholder="#{login.password.placeholder}"/>
+            </div>
+            <button class="btn btn-lg btn-info" type="submit" th:text="#{login.login}">Log In
+            </button>
+            <div class="my-sm-4 m-4 text-lg-left"><a href="/signup" th:text="#{reg.header.title}">Sign up</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-muted">
+        <div id="errors" class="text-danger"
+             th:if="${(param.error != null) and (param.error[0] == 'true')}">
+            Invalid email or password
         </div>
-    </section>
+    </div>
 </div>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
 </body>
 </html>
