@@ -8,14 +8,11 @@
 </head>
 <body class="p-0 m-0">
 <div th:replace="fragments/top_menu :: menu"></div>
-<!--    <section class="sign-in">-->
 
-<!-- Lang menu  -->
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <div class="card-header"> SIGN IN</div>
+    <div class="card-header" th:text="#{login.title}"> SIGN IN</div>
     <div class="card-body">
         <form method="POST" class="register-form" id="login-form" th:action="@{/login}">
-            <!--                        <h2 class="text-body"th:text="#{login.title}">Sign in</h2>-->
             <div class="form-group">
                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                 <input type="text" name="email" id="email" placeholder="Email"
@@ -28,8 +25,6 @@
             </div>
             <button class="btn btn-lg btn-info" type="submit" th:text="#{login.login}">Log In
             </button>
-            <div class="my-sm-4 m-4 text-lg-left"><a href="/signup" th:text="#{reg.header.title}">Sign up</a>
-            </div>
         </form>
     </div>
     <div class="card-footer text-muted">
@@ -39,6 +34,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

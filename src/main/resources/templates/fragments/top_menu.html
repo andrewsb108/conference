@@ -4,22 +4,20 @@
 
 
 <div th:fragment="menu">
-
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container-fluid">
             <div clas="row">
-                <div class="col-7"><a class="navbar-brand" th:href="@{/}">Conference Management System</a></div>
+                <div class="col-7"><a class="navbar-brand" th:href="@{/}" th:text="#{start.page.title}">Conference Management System</a></div>
             </div>
 
             <div class="col-3" th:replace="fragments/lang_menu :: lang"></div>
 
             <div class="col-2">
-                <a class="btn btn-outline-success" th:href="@{/login}">Sign in</a>
-                <a class="btn btn-outline-success" th:href="@{/signup}">Signup</a>
+                <a class="btn btn-outline-success" th:href="@{/login}" th:text="#{login.login}">Sign in</a>
+                <a class="btn btn-outline-success" th:href="@{/signup}" th:text="#{login.sign.up}">Signup</a>
             </div>
         </div>
     </nav>
-
 </div>
 </body>
 
