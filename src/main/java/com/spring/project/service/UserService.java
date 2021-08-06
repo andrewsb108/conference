@@ -11,8 +11,11 @@ import java.util.Optional;
 public interface UserService {
     Optional<UserDto> findUserByEmail(String email);
 
-    UserDto signup(UserDto userDto);
-//   boolean promote(String email, Role role);
-//   UserDto updateProfile(UserDto userDto);
-//   UserDto changePassword(UserDto userDto, String newPassword);
+    UserDto signup(UserDto userDto); //todo: Optional?
+
+    UserDto changePassword(UserDto userDto, String newPassword); //todo: Optional?
+
+    UserDto updateProfile(UserDto userDto); //todo: Optional?
+
+//    boolean promote(String email, Role role);
 }
