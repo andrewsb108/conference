@@ -1,5 +1,6 @@
 package com.spring.project.dto;
 
+import com.spring.project.model.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
-    private Set<RoleDto> roles;
+    private Set<UserRole> roles;
     private LocalDateTime created;
     private LocalDateTime lastModified;
 }

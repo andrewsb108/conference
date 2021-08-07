@@ -1,6 +1,6 @@
 package com.spring.project.validation;
 
-import com.spring.project.dto.UserSignUpDto;
+import com.spring.project.dto.RegistrationDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -9,12 +9,12 @@ import org.springframework.validation.Validator;
 public class PasswordValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
-        return UserSignUpDto.class.equals(clazz);
+        return RegistrationDto.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        UserSignUpDto user = (UserSignUpDto) target;
+        RegistrationDto user = (RegistrationDto) target;
         if (!user.getMatchingPassword().equals(user.getPassword())) {
             errors.rejectValue("matchingPassword", "valid.reg.password.matching");
         }

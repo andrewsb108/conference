@@ -10,7 +10,8 @@ import javax.validation.constraints.Size;
  * @author Andrii Barsuk
  */
 @Data
-public class UserSignUpDto {
+public class RegistrationDto {
+//    private Long id;
     @Email(message = "{valid.reg.email}")
     @NotEmpty(message = "{valid.reg.not.empty}")
     @Size(min = 5, max = 50, message = "{valid.reg.email.size}")
