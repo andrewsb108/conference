@@ -1,10 +1,11 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.UserSignUpDto;
+import com.spring.project.dto.RegistrationDto;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-
+@Log4j2
 @Controller
 public class UIController {
     @GetMapping(value = {"/"})
@@ -21,7 +22,7 @@ public class UIController {
     @GetMapping(value = "/signup")
     public ModelAndView signup() {
         ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("userSignupDto", new UserSignUpDto());
+        modelAndView.addObject("registrationDto", new RegistrationDto());
         return modelAndView;
     }
 }

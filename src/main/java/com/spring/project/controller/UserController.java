@@ -1,18 +1,21 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.UserDto;
-import com.spring.project.dto.UserSignUpDto;
-import com.spring.project.mapping.BusinessMapper;
+import com.spring.project.dto.RegistrationDto;
+import com.spring.project.model.User;
 import com.spring.project.service.UserService;
+import com.spring.project.validation.PasswordValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+<<<<<<<HEAD
 import org.springframework.web.servlet.ModelAndView;
+=======
+        >>>>>>>test
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -22,44 +25,38 @@ import javax.validation.Valid;
  */
 @Log4j2
 @Controller
+@RequiredArgsConstructor
 public class UserController {
     @Resource
-    private UserService userService;
+    private final UserService userService;
+
+<<<<<<<HEAD
+=======
     @Resource
-    private BusinessMapper businessMapper;
+    private PasswordValidator passwordValidator;
 
-
+>>>>>>>test
     @GetMapping(value = {"/logout"})
+
     public String logout() {
         SecurityContextHolder.getContext().setAuthentication(null);
         return "redirect:login";
     }
 
     @PostMapping(value = "/signup")
-    public ModelAndView createUser(@Valid @ModelAttribute("userSignupDto") UserSignUpDto userSignUpDto,
-                                   BindingResult bindingResult, Model model) {
-        ModelAndView modelAndView = new ModelAndView("signup");
+    public String createNewUserAccount(@ModelAttribute("registrationDto") @Valid RegistrationDto registrationDto,
+                                       BindingResult bindingResult) {
+        passwordValidator.validate(registrationDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return modelAndView;
+            return "signup";
         }
-            try {
-                UserDto newUser = businessMapper.convertFromSignupDtoToUserDto(userSignUpDto);
-                userService.signup(newUser);
-                log.info("Account {} registered successfully", newUser.getEmail());
-            } catch (Exception e) {
-//                log.error("User with such email ({}) already exist", userSignUpDto.getEmail());
-                model.addAttribute("error_message",
-                        "reg.login.not.unique");
-                return modelAndView;
+        try {
+            User newUser = userService.createAccount(registrationDto);
+            log.info("Account ({}) registered successfully", newUser.getEmail());
+        } catch (Exception e) {
+            bindingResult.rejectValue("email", "user.email", "reg.login.not.unique");
+            return "signup";
         }
-        return new ModelAndView("login");
+        return "redirect:/";
     }
-
-
-
-//    @GetMapping("/locale")
-//    @ResponseBody
-//    public String getLocale() {
-//        return LocaleContextHolder.getLocale().toString();
-//    }
 }
