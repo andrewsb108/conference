@@ -11,6 +11,9 @@
 
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <div class="card-header" th:text="#{login.title}"> SIGN IN</div>
+<!--    <div th:if="${logout != null}" class="alert alert-success" role="alert" th:text="#{valid.login.logged.out.success}">You signed out</div>-->
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="#{valid.login.wrong.credential}">Login error</div>
+
     <div class="card-body">
         <form method="POST" class="register-form" id="login-form" th:action="@{/login}">
             <div class="form-group">
@@ -26,12 +29,6 @@
             <button class="btn btn-lg btn-info" type="submit" th:text="#{login.login}">Log In
             </button>
         </form>
-    </div>
-    <div class="card-footer text-muted">
-        <div id="errors" class="text-danger"
-             th:if="${(param.error != null) and (param.error[0] == 'true')}">
-            Invalid email or password
-        </div>
     </div>
 </div>
 </body>
