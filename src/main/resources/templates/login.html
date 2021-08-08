@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <div th:replace="fragments/login_page :: head_tag"></div>
 </head>
-<body class="p-0 m-0">
+<body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
 <div th:replace="fragments/top_menu :: menu"></div>
 
 <div class="card text-center container  mt-5 w-50 shadow-lg">
@@ -14,7 +14,7 @@
 <!--    <div th:if="${logout != null}" class="alert alert-success" role="alert" th:text="#{valid.login.logged.out.success}">You signed out</div>-->
     <div th:if="${error}" class="alert alert-danger" role="alert" th:text="#{valid.login.wrong.credential}">Login error</div>
 
-    <div class="card-body">
+    <div class="card-body" >
         <form method="POST" class="register-form" id="login-form" th:action="@{/login}">
             <div class="form-group">
                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>

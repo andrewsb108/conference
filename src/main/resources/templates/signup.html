@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!--    <div th:replace="fragments/login_page :: head_tag"></div>-->
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-
-    <link href="../public/css/main.css" rel="stylesheet">
+    <div th:replace="fragments/login_page :: head_tag"></div>
+    <!--    <link href="../public/css/main.css" rel="stylesheet">-->
+    <!-- Lang menu  -->
+    <div th:replace="fragments/top_menu :: menu"></div>
 
 </head>
-<body class="p-0 m-0">
-<div th:replace="fragments/top_menu :: menu"></div>
-
-<!-- Lang menu  -->
+<body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <h2 class="form-signin-heading" th:text="#{reg.header.title}">Create your account</h2>
-    <div class="card-body">
+<!--    <h2 class="form-signin-heading" th:text="#{reg.header.title}">Create your account</h2>-->
+    <h2 class="card-header" th:text="#{reg.header.title}">Create your account</h2>
+<!--    <div class="card-body">-->
+    <div class="col py-3">
         <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/signup}"
               th:object="${registrationDto}">
             <div class="form-group">
@@ -26,28 +24,32 @@
                 <br> <input type="text" th:field="*{firstName}" name="firstName" id="firstName"
                             placeholder="First Name" th:placeholder="#{reg.first.name.placeholder}" required autofocus/>
                 <small class="text-danger" th:if="${#fields.hasErrors('firstName')}"
-                       th:errors="*{firstName}"></small>
+                       th:errors="*{firstName}">Validation error
+                </small>
             </div>
             <div class="form-group">
                 <br> <label for="lastName"><i class="zmdi zmdi-account-o"></i></label>
                 <input type="text" th:field="*{lastName}" name="lastName" id="lastName"
                        placeholder="Last Name" th:placeholder="#{reg.last.name.placeholder}" required/>
                 <small class="text-danger" th:if="${#fields.hasErrors('lastName')}"
-                       th:errors="*{lastName}"></small>
+                       th:errors="*{lastName}">Validation error
+                </small>
             </div>
             <div class="form-group">
                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                 <br> <input type="email" th:field="*{email}" name="email" id="email"
                             placeholder="Your Email" th:placeholder="#{reg.email.placeholder}" required/>
                 <small class="text-danger" th:if="${#fields.hasErrors('email')}"
-                       th:errors="*{email}"></small>
+                       th:errors="*{email}">Validation error
+                </small>
             </div>
             <div class="form-group">
                 <label for="password"><i class="zmdi zmdi-lock"></i></label>
                 <br> <input type="password" th:field="*{password}" name="password" id="password"
                             th:placeholder="#{reg.password.placeholder}" required/>
                 <small class="text-danger" th:if="${#fields.hasErrors('password')}"
-                       th:errors="*{password}"></small>
+                       th:errors="*{password}">Validation error
+                </small>
             </div>
 
 
@@ -56,26 +58,18 @@
                 <br> <input type="password" th:field="*{matchingPassword}" name="matchingPassword" id="matchingPassword"
                             th:placeholder="#{reg.confirm.password.placeholder}" required/>
                 <small class="text-danger" th:if="${#fields.hasErrors('matchingPassword')}"
-                       th:errors="*{matchingPassword}"></small>
-            </div>
-            <div class="form-group form-button">
-<!--                <br> <input type="submit" name="createAccount" id="createAccount" class="form-submit" value="Register"/>-->
+                       th:errors="*{matchingPassword}">Validation error
+                </small>
             </div>
             <div>
-                <br> <button class="btn btn-outline-success" type="submit" th:text="#{login.sign.up}">Sign up</button>
-                <div class="my-sm-3 m-3 text-right"><a href="/login" th:text="#{reg.sign.in}">I already have an Account</a></div>
+                <br>
+                <button class="btn btn-outline-success" type="submit" th:text="#{login.sign.up}">Sign up</button>
+                <div class="my-sm-3 m-3 text-right"><a href="/login" th:text="#{reg.sign.in}">I already have an
+                    Account</a></div>
             </div>
         </form>
     </div>
-<!--    <div class="card-footer text-muted">-->
-<!--        <div id="errors" class="text-danger"-->
-<!--             th:if="${(param.error != null) and (param.error[0] == 'true')}">-->
-<!--            Invalid email or password-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
+<div th:replace="fragments/login_page :: footer"></div>
 </body>
 </html>
