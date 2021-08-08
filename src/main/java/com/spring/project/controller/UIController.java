@@ -2,11 +2,17 @@ package com.spring.project.controller;
 
 import com.spring.project.dto.RegistrationDto;
 import lombok.extern.log4j.Log4j2;
+import org.dom4j.DocumentException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.context.Context;
+
+
+import javax.servlet.http.HttpServletRequest;
+
 @Log4j2
 @Controller
 public class UIController {
@@ -15,10 +21,9 @@ public class UIController {
         return new ModelAndView("start-page");
     }
 
-
-//    @GetMapping(value = {"/login"})
-//    public String login() {
-//        return "login";
+//    @GetMapping(value = "/")
+//    public String startPage() {
+//        return "start-page";
 //    }
 
     @GetMapping("/login")

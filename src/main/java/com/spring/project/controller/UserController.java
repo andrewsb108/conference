@@ -49,6 +49,6 @@ public class UserController {
             bindingResult.rejectValue("email", "user.email", "reg.login.not.unique");
             return "signup";
         }
-        return "redirect:/";
+        return "redirect:login";
     }
 }
