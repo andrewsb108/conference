@@ -1,30 +1,27 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.RegistrationDto;
+import com.spring.project.dto.LoginDto;
+import com.spring.project.service.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.dom4j.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.context.Context;
 
-
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
+import javax.security.auth.login.CredentialException;
+import javax.validation.Valid;
 
 @Log4j2
 @Controller
-public class UIController {
-    @GetMapping(value = {"/"})
-    public ModelAndView startPage() {
-        return new ModelAndView("start-page");
-    }
+@RequiredArgsConstructor
+public class LoginController {
 
-//    @GetMapping(value = "/")
-//    public String startPage() {
-//        return "start-page";
-//    }
+    @Resource
+    private final UserServiceImpl userServiceImpl;
 
     @GetMapping("/login")
     public String showLoginPage(@RequestParam(value = "error", required = false) String error,
@@ -35,10 +32,9 @@ public class UIController {
         return "login";
     }
 
-    @GetMapping(value = "/signup")
-    public ModelAndView signup() {
-        ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("registrationDto", new RegistrationDto());
-        return modelAndView;
+    @PostMapping("/login")
+    public String loginUser(@Valid LoginDto loginDto) throws CredentialException {
+        userServiceImpl.getUser(loginDto);
+        return "redirect:/start-page";
     }
 }

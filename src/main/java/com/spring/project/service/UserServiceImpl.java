@@ -1,5 +1,6 @@
 package com.spring.project.service;
 
+import com.spring.project.dto.LoginDto;
 import com.spring.project.dto.RegistrationDto;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.security.auth.login.CredentialException;
 import java.util.*;
 
 /**
@@ -23,6 +25,7 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Resource
     private UserRepository userRepository;
 
@@ -48,6 +51,13 @@ public class UserServiceImpl implements UserService {
 
     private boolean emailExist(String email) {
         return userRepository.findByEmail(email).orElse(null) != null;
+    }
+
+    public User getUser(LoginDto loginDto) throws CredentialException {
+        User user = userRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
+                .orElseThrow(() -> new CredentialException("valid.login.wrong.credential"));
+        log.info("User {} successfully logged in", loginDto.getEmail());
+        return user;
     }
 
 //    public User getUserById(Long id) {

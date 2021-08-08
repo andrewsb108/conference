@@ -14,11 +14,11 @@ public class UpdateUserDto {
     private Long id;
 
     @NotEmpty(message = "{valid.reg.not_empty}")
-    @Size(min = 2, max = 30, message = "{valid.name.size}")
+    @Size(min = 2, max = 30, message = "{valid.reg.name.size}")
     private String firstName;
 
     @NotEmpty(message = "{valid.reg.not_empty}")
-    @Size(min = 2, max = 30, message = "{valid.name.size}")
+    @Size(min = 2, max = 30, message = "{valid.reg.name.size}")
     private String lastName;
 
 }
