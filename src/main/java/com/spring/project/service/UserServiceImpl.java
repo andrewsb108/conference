@@ -7,16 +7,19 @@ import com.spring.project.dto.UserDto;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.User;
+import com.spring.project.model.enums.UserRole;
 import com.spring.project.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.security.auth.login.CredentialException;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -36,6 +39,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private BusinessMapper businessMapper;
 
+    @Resource
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -50,6 +56,8 @@ public class UserServiceImpl implements UserService {
                     "There is an account with this email address", user.getEmail());
             throw new UserAlreadyExistException("reg.login.not.unique");
         }
+//        user.setRoles(Collections.singleton(UserRole.USER));
+        user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         return userRepository.save(user);
     }
 
@@ -65,9 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream().map(user ->
-                businessMapper.convertUserToUserDto(user)).collect(Collectors.toList());
-//        return businessMapper.convertUserToUserDto(userRepository.findAll());
+        return businessMapper.convertUserToUserDtoGetAll(userRepository.findAll());
     }
 
     public User getById(Long id) {
@@ -75,6 +81,7 @@ public class UserServiceImpl implements UserService {
                 new UsernameNotFoundException("No such user was found, id: " + id));
     }
 
+    @Transactional
     public User updateProfile(UpdateUserDto updateUserDto) {
         User user = userRepository.findById(updateUserDto.getId()).orElseThrow(() ->
                 new UsernameNotFoundException("No such user found"));
@@ -91,23 +98,4 @@ public class UserServiceImpl implements UserService {
             log.info("Deleted category with id: " + id);
         }
     }
-
-//    @Override
-//    public User changePassword(UserDto userDto, String newPassword) {
-//        return null;
-//    }
-
-
-//    @Override
-//    public UserDto updateProfile(UserDto userDto) {
-//        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(userDto.getEmail()));
-//        if (user.isPresent()) {
-//            User userModel = user.get();
-//            userModel.setFirstName(userDto.getFirstName());
-//            userModel.setLastName(userDto.getLastName());
-//
-//            return businessMapper.convertUserToUserDto(userRepository.save(userModel));
-//        }
-//        throw new UsernameNotFoundException("User not found");
-//    }
 }

@@ -10,61 +10,63 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.text.CollationElementIterator;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class BusinessMapper {
-    @Resource
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-//    public UserDto convertUserToUserDto(User user) {
-//        UserDto userDto = new UserDto();
-//        userDto.setEmail(user.getEmail());
-//        userDto.setFirstName(user.getFirstName());
-//        userDto.setLastName(user.getLastName());
-//        userDto.setPassword(bCryptPasswordEncoder.encode((user.getPassword())));
-//
-//        return userDto;
-//    }
 
     public UserDto convertUserToUserDto(User user) {
+        if (user == null) {
+            return null;
+        }
         UserDto userDto = new UserDto();
-        userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setPassword(bCryptPasswordEncoder.encode((user.getPassword())));
+        userDto.setEmail(user.getEmail());
 
         return userDto;
     }
 
+
+    public List<UserDto> convertUserToUserDtoGetAll(List<User> users) {
+        if ( users == null ) {
+            return null;
+        }
+        List<UserDto> list = new ArrayList<>();
+            for (User user: users) {
+                list.add(convertUserToUserDto(user));
+            }
+        return list;
+    }
+
+
+
     public User convertUserDtoToUser(UserDto userDto) {
+        if ( userDto == null ) {
+            return null;
+        }
         User user = new User();
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        user.setRoles(Set.of(UserRole.USER));
 
         return user;
     }
 
-    public UserDto convertFromSignupDtoToUserDto(RegistrationDto registrationDto) {
-        UserDto userDto = new UserDto();
-        userDto.setFirstName(registrationDto.getFirstName());
-        userDto.setLastName(registrationDto.getLastName());
-        userDto.setEmail(registrationDto.getEmail());
-        userDto.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
-
-        return userDto;
-    }
-
     public User convertFromRegistrationDtoToUser(RegistrationDto registrationDto) {
+        if ( registrationDto == null ) {
+            return null;
+        }
         User user = new User();
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
-        user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         user.setCreated(LocalDateTime.now());
 
         return user;
