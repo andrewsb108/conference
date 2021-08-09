@@ -2,29 +2,33 @@ package com.spring.project.service;
 
 import com.spring.project.dto.LoginDto;
 import com.spring.project.dto.RegistrationDto;
+import com.spring.project.dto.UpdateUserDto;
+import com.spring.project.dto.UserDto;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.User;
 import com.spring.project.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.security.auth.login.CredentialException;
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Andrii Barsuk
  */
-@Service
 @Log4j2
 @Component
+@Service
 public class UserServiceImpl implements UserService {
-    @Resource
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Resource
     private UserRepository userRepository;
@@ -60,49 +64,40 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-//    public User getUserById(Long id) {
-//        return businessMapper.convertUserToUserDto(userRepository.findById(id).orElseThrow(() ->
-//                new UsernameNotFoundException("No such user was found, id: " + id)));
-//    }
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream().map(user ->
+                businessMapper.convertUserToUserDto(user)).collect(Collectors.toList());
+//        return businessMapper.convertUserToUserDto(userRepository.findAll());
+    }
+
+    public User getById(Long id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new UsernameNotFoundException("No such user was found, id: " + id));
+    }
+
+    public User updateProfile(UpdateUserDto updateUserDto) {
+        User user = userRepository.findById(updateUserDto.getId()).orElseThrow(() ->
+                new UsernameNotFoundException("No such user found"));
+        user.setFirstName(updateUserDto.getFirstName());
+        user.setLastName(updateUserDto.getLastName());
+
+        return userRepository.save(user);
+    }
+
+    public void deleteById(long id) {
+        try {
+            userRepository.deleteById(id);
+        } catch (NoSuchElementException e) {
+            log.info("Deleted category with id: " + id);
+        }
+    }
 
 //    @Override
 //    public User changePassword(UserDto userDto, String newPassword) {
 //        return null;
 //    }
-//
-//    @Override
-//    public User updateProfile(UserDto userDto) {
-//        return null;
-//    }
-//
-//    public void deleteById(long id) {
-//        try {
-//            userRepository.deleteById(id);
-//        } catch (NoSuchElementException e) {
-//            log.info("Deleted category with id: " + id);
-//        }
-//    }
 
 
-//    public List<UserDto> getAllUsers() {
-//        return businessMapper.convertUserToUserDto(userRepository.findAll());
-//    }
-
-//    @Override
-//    public UserDto changePassword(UserDto userDto, String newPassword) {
-//        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(userDto.getEmail()));
-//        if (user.isPresent()) {
-//            User userModel = user.get();
-//            userModel.setPassword(bCryptPasswordEncoder.encode(newPassword));
-//            return BusinessMapper.convertUserToUserDto(userRepository.save(userModel));
-//        }
-//        throw exception(USER, ENTITY_NOT_FOUND, userDto.getEmail());
-//    }
-//
-//    public User getUser(UserDto userDto) {
-//        return null;
-//    }
-//
 //    @Override
 //    public UserDto updateProfile(UserDto userDto) {
 //        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(userDto.getEmail()));

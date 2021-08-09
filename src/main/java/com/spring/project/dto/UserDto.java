@@ -1,13 +1,13 @@
 package com.spring.project.dto;
 
-import com.spring.project.model.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * @author Andrii Barsuk
@@ -18,11 +18,19 @@ import java.util.Set;
 @Builder
 public class UserDto {
     private long id;
+    @NotEmpty(message = "{valid.reg.not_empty}")
+    @Size(min = 2, max = 30, message = "{valid.reg.name.size}")
     private String firstName;
+
+    @NotEmpty(message = "{valid.reg.not_empty}")
+    @Size(min = 2, max = 30, message = "{valid.reg.name.size}")
     private String lastName;
+
+    @Email(message = "{valid.reg.email}")
+    @NotEmpty(message = "{valid.reg.not_empty}")
+    @Size(min = 2, max = 25, message = "{valid.reg.email.size}")
     private String email;
+
+    @NotEmpty(message = "{valid.reg.not_empty}")
     private String password;
-    private Set<UserRole> roles;
-    private LocalDateTime created;
-    private LocalDateTime lastModified;
 }

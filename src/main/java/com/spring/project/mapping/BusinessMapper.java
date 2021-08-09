@@ -18,14 +18,22 @@ public class BusinessMapper {
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+//    public UserDto convertUserToUserDto(User user) {
+//        UserDto userDto = new UserDto();
+//        userDto.setEmail(user.getEmail());
+//        userDto.setFirstName(user.getFirstName());
+//        userDto.setLastName(user.getLastName());
+//        userDto.setPassword(bCryptPasswordEncoder.encode((user.getPassword())));
+//
+//        return userDto;
+//    }
+
     public UserDto convertUserToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setPassword(bCryptPasswordEncoder.encode((user.getPassword())));
-        userDto.setRoles(user.getRoles());
-        userDto.setCreated(LocalDateTime.now());
 
         return userDto;
     }
@@ -37,6 +45,7 @@ public class BusinessMapper {
         user.setLastName(userDto.getLastName());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setRoles(Set.of(UserRole.USER));
+
         return user;
     }
 
@@ -46,7 +55,6 @@ public class BusinessMapper {
         userDto.setLastName(registrationDto.getLastName());
         userDto.setEmail(registrationDto.getEmail());
         userDto.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
-        userDto.setCreated(LocalDateTime.now());
 
         return userDto;
     }
