@@ -18,34 +18,20 @@
 <div class="container w-75 bg-light">
     <div class="row my-5">
         <div class="col py-3 shadow rounded">
-            <a class="btn btn-success" th:href="@{}" th:text="#{}">Add conference</a>
+<!--            <a class="btn btn-success" th:href="@{}" th:text="#{}">Add conference</a>-->
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Scheduled</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Conference title 1</td>
-                    <td>Some info 1</td>
-                    <td>Some info 1</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Conference title 2</td>
-                    <td>Some info 2</td>
-                    <td>Some info 2</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Conference title 3</td>
-                    <td>Some info 3</td>
-                    <td>Some info 3</td>
+                <tr th:each="event : ${events}">
+                    <td th:text="${event.id}"/>
+                    <td th:text="${event.title}"/>
+                    <td th:text="${event.scheduled}"/>
                 </tr>
                 </tbody>
             </table>

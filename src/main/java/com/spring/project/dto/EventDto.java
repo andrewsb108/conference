@@ -1,11 +1,13 @@
-package com.spring.project.model;
+package com.spring.project.dto;
 
+import com.spring.project.model.Participant;
+import com.spring.project.model.Speaker;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -17,24 +19,15 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "events")
-public class Event {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EventDto {
     private long id;
 
-    @Column(name = "title", nullable = false)
+    @NotEmpty(message = "{valid.reg.not.empty}")
     private String title;
-    @Column(name = "last_modified")
 
     private LocalDateTime scheduled;
 
-    @ElementCollection
-    @CollectionTable(name = "phone_register")
-    @Column(name = "since")
     private Map<String, Speaker> topics;
 
-    @OneToMany
     private List<Participant> participantList;
 }

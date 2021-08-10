@@ -1,6 +1,7 @@
 package com.spring.project.controller;
 
 import com.spring.project.dto.LoginDto;
+import com.spring.project.service.UserService;
 import com.spring.project.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     @Resource
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
     @GetMapping("/login")
     public String showLoginPage(@RequestParam(value = "error", required = false) String error,
@@ -33,7 +34,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginUser(@Valid LoginDto loginDto) throws CredentialException {
-        userServiceImpl.getUser(loginDto);
+        userService.getUser(loginDto);
         return "redirect:/start-page";
     }
 }

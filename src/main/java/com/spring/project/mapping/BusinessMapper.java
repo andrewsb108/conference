@@ -1,12 +1,12 @@
 package com.spring.project.mapping;
 
-import com.spring.project.dto.RegistrationDto;
-import com.spring.project.dto.RoleDto;
-import com.spring.project.dto.UpdateUserDto;
-import com.spring.project.dto.UserDto;
+import com.spring.project.dto.*;
+import com.spring.project.model.Event;
+import com.spring.project.model.Participant;
 import com.spring.project.model.Role;
 import com.spring.project.model.User;
 import com.spring.project.model.enums.UserRole;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -22,19 +22,6 @@ import java.util.stream.Collectors;
 @Component
 public class BusinessMapper {
 
-//    public UserDto convertUserToUserDto(User user) {
-//        if (user == null) {
-//            return null;
-//        }
-//        UserDto userDto = new UserDto();
-//        userDto.setFirstName(user.getFirstName());
-//        userDto.setLastName(user.getLastName());
-//        userDto.setEmail(user.getEmail());
-//
-//        return userDto;
-//    }
-
-
     public UserDto convertUserToUserDto(User user) {
         if (user == null) {
             return null;
@@ -45,7 +32,6 @@ public class BusinessMapper {
                 .email(user.getEmail()).build();
     }
 
-
     public User convertFromUpdateUserDtoToUser(UpdateUserDto updateUserDto) {
         if (updateUserDto == null) {
             return null;
@@ -55,7 +41,6 @@ public class BusinessMapper {
                 .lastName(updateUserDto.getLastName())
                 .build();
     }
-
 
     public List<UserDto> convertUserToUserDtoGetAll(List<User> users) {
         if (users == null) {
@@ -68,7 +53,6 @@ public class BusinessMapper {
         return list;
     }
 
-
     public User convertUserDtoToUser(UserDto userDto) {
         if (userDto == null) {
             return null;
@@ -80,7 +64,7 @@ public class BusinessMapper {
         return user;
     }
 
-    public User convertFromRegistrationDtoToUser(RegistrationDto registrationDto) {
+    public User convertRegistrationDtoToUser(RegistrationDto registrationDto) {
         if (registrationDto == null) {
             return null;
         }
@@ -101,5 +85,62 @@ public class BusinessMapper {
         return roleDto;
     }
 
+    public Event convertEventDtoToEvent(EventDto eventDto) {
+        if (eventDto == null) {
+            return null;
+        }
+        return Event.builder()
+                .title(eventDto.getTitle())
+                .scheduled(LocalDateTime.now())
+                .topics(eventDto.getTopics())
+                .participantList(eventDto.getParticipantList())
+                .build();
+    }
 
+    public EventDto convertEventToEventDto(Event event) {
+        if (event == null) {
+            return null;
+        }
+        return EventDto.builder()
+                .title(event.getTitle())
+                .scheduled(event.getScheduled())
+                .topics(event.getTopics())
+                .participantList(event.getParticipantList())
+                .build();
+    }
+
+    public List<EventDto> convertEventDtoToEventGetAll(List<Event> events) {
+        if (events == null) {
+            return null;
+        }
+        List<EventDto> list = new ArrayList<>();
+        for (Event event : events) {
+            list.add(convertEventToEventDto(event));
+        }
+        return list;
+    }
+
+    public Participant convertParticipantDtoToParticipant(ParticipantDto participantDto) {
+        if (participantDto == null) {
+            return null;
+        }
+        return Participant.builder()
+                .name(participantDto.getName())
+                .email(participantDto.getEmail())
+                .isPresent(true)
+                .registered(participantDto.getRegistered())
+                .build();
+    }
+
+    public ParticipantDto convertParticipantToParticipantDto(Participant participant) {
+        if (participant == null) {
+            return null;
+        }
+        return ParticipantDto.builder()
+                .name(participant.getName())
+                .email(participant.getEmail())
+                .isPresent(true)
+                .registered(participant.getRegistered())
+                .build();
+    }
 }

@@ -1,9 +1,8 @@
 package com.spring.project.controller;
 
 import com.spring.project.dto.RegistrationDto;
-import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.model.User;
-import com.spring.project.service.UserServiceImpl;
+import com.spring.project.service.UserService;
 import com.spring.project.validation.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +26,7 @@ import javax.validation.Valid;
 @RequestMapping("/signup")
 public class RegistrationController {
     @Resource
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
     @Resource
     private PasswordValidator passwordValidator;
@@ -48,7 +47,7 @@ public class RegistrationController {
             return "signup";
         }
         try {
-            User newUser = userServiceImpl.createAccount(registrationDto);
+            User newUser = userService.createAccount(registrationDto);
             log.info("Account ({}) registered successfully", newUser.getEmail());
         } catch (Exception e) {
             bindingResult.rejectValue("email", "user.email", "reg.login.not.unique");

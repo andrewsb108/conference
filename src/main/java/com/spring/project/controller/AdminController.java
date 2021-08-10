@@ -1,6 +1,7 @@
 package com.spring.project.controller;
 
 import com.spring.project.dto.RegistrationDto;
+import com.spring.project.service.UserService;
 import com.spring.project.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,7 +24,7 @@ import javax.annotation.Resource;
 public class AdminController {
 
     @Resource
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
 
 //    @GetMapping
 //    public String showAdminPage(Model model) {

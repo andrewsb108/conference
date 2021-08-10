@@ -1,9 +1,7 @@
 package com.spring.project.controller;
 
-import com.spring.project.service.UserServiceImpl;
-import lombok.RequiredArgsConstructor;
+import com.spring.project.service.UserService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +14,13 @@ import javax.annotation.Resource;
  */
 @Log4j2
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/")
 public class UserController {
 
     @Resource
-    private final UserServiceImpl userServiceImpl;
+    private UserService userService;
+
+
 
 //    @GetMapping("/logout")
 //    public String logout() {
