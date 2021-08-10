@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:replace="fragments/login_page :: head_tag"></div>
+</head>
+<body class="p-0 m-0"
+      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
+<div th:replace="fragments/top_menu :: menu"></div>
+
+<div class="card text-center container  mt-5 w-50 shadow-lg">
+    <div class="card-header" th:text="#{create.new.event}">Create new event</div>
+    <div class="card-body">
+        <form method="POST" class="register-form" id="login-form" th:action="@{/create-event}">
+            <div class="form-group">
+                <label for="title"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input type="text" name="title" id="title" placeholder="Title"
+                       th:placeholder="#{create.event.title}" autofocus/>
+            </div>
+            <div class="form-group">
+                <label for="topic"><i class="zmdi zmdi-lock"></i></label>
+                <br> <input type="topic" name="topic" id="topic" placeholder="Topic"
+                            th:placeholder="#{create.event.topic}"/>
+            </div>
+            <button class="btn btn-lg btn-info" type="submit" th:text="#{create.event}">Create</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

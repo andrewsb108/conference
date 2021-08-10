@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    //todo: лишняя логика
+
     public User createAccount(RegistrationDto registrationDto) throws UserAlreadyExistException {
         User user = businessMapper.convertFromRegistrationDtoToUser(registrationDto);
         log.info("Handling save users: " + registrationDto);
@@ -91,8 +91,7 @@ public class UserServiceImpl implements UserService {
 //        user.setLastName(updateUserDto.getLastName());
 
 //        return userRepository.save(user);
-        User user = businessMapper.convertFromUpdateUserDtoToUser(updateUserDto);
-        return Optional.ofNullable(userRepository.save(user));
+        return Optional.ofNullable(userRepository.save(businessMapper.convertFromUpdateUserDtoToUser(updateUserDto)));
     }
 
     public void deleteById(long id) {

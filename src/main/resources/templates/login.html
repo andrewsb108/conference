@@ -11,7 +11,6 @@
 
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <div class="card-header" th:text="#{login.title}"> SIGN IN</div>
-<!--    <div th:if="${logout != null}" class="alert alert-success" role="alert" th:text="#{valid.login.logged.out.success}">You signed out</div>-->
     <div th:if="${error}" class="alert alert-danger" role="alert" th:text="#{valid.login.wrong.credential}">Login error</div>
 
     <div class="card-body" >
