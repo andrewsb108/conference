@@ -48,22 +48,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    //todo: лишняя логика
     public User createAccount(RegistrationDto registrationDto) throws UserAlreadyExistException {
         User user = businessMapper.convertFromRegistrationDtoToUser(registrationDto);
-        if (emailExist(user.getEmail())) {
-            log.warn("Trying to register a new account {}: " +
-                    "There is an account with this email address", user.getEmail());
-            throw new UserAlreadyExistException("reg.login.not.unique");
-        }
+        log.info("Handling save users: " + registrationDto);
+//        if (emailExist(user.getEmail())) {
+//            log.warn("Trying to register a new account {}: " +
+//                    "There is an account with this email address", user.getEmail());
+//            throw new UserAlreadyExistException("reg.login.not.unique");
+//        }
 //        user.setRoles(Collections.singleton(UserRole.USER));
         user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         return userRepository.save(user);
     }
 
-    private boolean emailExist(String email) {
-        return userRepository.findByEmail(email).orElse(null) != null;
-    }
+//    private boolean emailExist(String email) {
+//        return userRepository.findByEmail(email).orElse(null) != null;
+//    }
 
     public User getUser(LoginDto loginDto) throws CredentialException {
         User user = userRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
@@ -73,6 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<UserDto> getAllUsers() {
+        log.info("Handling find all users request");
         return businessMapper.convertUserToUserDtoGetAll(userRepository.findAll());
     }
 
@@ -81,14 +83,16 @@ public class UserServiceImpl implements UserService {
                 new UsernameNotFoundException("No such user was found, id: " + id));
     }
 
-    @Transactional
-    public User updateProfile(UpdateUserDto updateUserDto) {
-        User user = userRepository.findById(updateUserDto.getId()).orElseThrow(() ->
-                new UsernameNotFoundException("No such user found"));
-        user.setFirstName(updateUserDto.getFirstName());
-        user.setLastName(updateUserDto.getLastName());
+    //    @Transactional todo:
+    public Optional<User> updateProfile(UpdateUserDto updateUserDto) {
+//        User user = userRepository.findById(updateUserDto.getId()).orElseThrow(() -> //todo?
+//                new UsernameNotFoundException("No such user found"));
+//        user.setFirstName(updateUserDto.getFirstName());
+//        user.setLastName(updateUserDto.getLastName());
 
-        return userRepository.save(user);
+//        return userRepository.save(user);
+        User user = businessMapper.convertFromUpdateUserDtoToUser(updateUserDto);
+        return Optional.ofNullable(userRepository.save(user));
     }
 
     public void deleteById(long id) {
