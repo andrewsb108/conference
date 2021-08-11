@@ -6,11 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap CSS -->
     <div th:replace="fragments/login_page :: head_tag"></div>
-    <!--    <link href="../public/css/main.css" rel="stylesheet">-->
-    <div th:replace="fragments/top_menu :: menu"></div>
 
 </head>
 <body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
+<div th:replace="fragments/top_menu :: menu"></div>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
 <!--    <h2 class="form-signin-heading" th:text="#{reg.header.title}">Create your account</h2>-->
     <h2 class="card-header" th:text="#{reg.header.title}">Create your account</h2>

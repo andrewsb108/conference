@@ -3,21 +3,12 @@ package com.spring.project.mapping;
 import com.spring.project.dto.*;
 import com.spring.project.model.Event;
 import com.spring.project.model.Participant;
-import com.spring.project.model.Role;
 import com.spring.project.model.User;
-import com.spring.project.model.enums.UserRole;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import java.text.CollationElementIterator;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class BusinessMapper {
@@ -78,14 +69,6 @@ public class BusinessMapper {
         user.setEnabled(true);
 
         return user;
-    }
-
-    public RoleDto convertToRoleDto(Role role) {
-        RoleDto roleDto = new RoleDto();
-        roleDto.setId(role.getId());
-        roleDto.setRole(role.getRole());
-
-        return roleDto;
     }
 
     public Event convertEventDtoToEvent(EventDto eventDto) {
