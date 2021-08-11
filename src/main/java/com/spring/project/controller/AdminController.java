@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -34,7 +35,7 @@ public class AdminController {
 
 //    @GetMapping
 //    public String showAllUsers(@ModelAttribute("user") RegistrationDto registrationDto, Model model) {
-//        model.addAttribute("users", userServiceImpl.getAllUsers());
+//        model.addAttribute("users", userService.getAllUsers());
 //        return "";
 //    }
 

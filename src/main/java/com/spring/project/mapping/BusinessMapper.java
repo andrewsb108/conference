@@ -90,6 +90,7 @@ public class BusinessMapper {
             return null;
         }
         return Event.builder()
+                .id(eventDto.getId())
                 .title(eventDto.getTitle())
                 .scheduled(LocalDateTime.now())
                 .topics(eventDto.getTopics())
@@ -102,6 +103,7 @@ public class BusinessMapper {
             return null;
         }
         return EventDto.builder()
+                .id(event.getId())
                 .title(event.getTitle())
                 .scheduled(event.getScheduled())
                 .topics(event.getTopics())

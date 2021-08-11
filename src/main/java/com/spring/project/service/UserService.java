@@ -3,9 +3,11 @@ package com.spring.project.service;
 import com.spring.project.dto.LoginDto;
 import com.spring.project.dto.RegistrationDto;
 import com.spring.project.dto.UpdateUserDto;
+import com.spring.project.dto.UserDto;
 import com.spring.project.model.User;
 
 import javax.security.auth.login.CredentialException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,6 +21,8 @@ public interface UserService {
     User getUser(LoginDto loginDto) throws CredentialException;
 
     Optional<User> updateProfile(UpdateUserDto updateUserDto);
+
+    List<UserDto> getAllUsers();
 
 //    User changePassword(UserDto userDto, String newPassword);
 

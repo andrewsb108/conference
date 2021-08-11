@@ -20,11 +20,14 @@
                        th:placeholder="#{create.event.title}" autofocus/>
             </div>
             <div class="form-group">
-                <label for="topic"><i class="zmdi zmdi-lock"></i></label>
-                <br> <input type="topic" name="topic" id="topic" placeholder="Topic"
-                            th:placeholder="#{create.event.topic}"/>
+                <label for="schedule"><i class="zmdi zmdi-lock"></i></label>
+                <br> <input type="schedule" name="schedule" id="schedule" placeholder="Schedule"
+                            th:placeholder="#{create.event.time}"/>
             </div>
-            <button class="btn btn-lg btn-info" type="submit" th:text="#{create.event}">Create</button>
+            <div class="col-2">
+                <a class="btn btn-lg btn-info" th:href="@{/events-list}" th:text="#{create.event}">Create</a>
+            </div>
+<!--            <button class="btn btn-lg btn-info" type="submit" th:href="@{/create-list}" th:text="#{create.event}">Create</button>-->
         </form>
     </div>
 </div>

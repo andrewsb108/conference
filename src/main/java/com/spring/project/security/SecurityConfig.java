@@ -34,11 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/login", "/", "/event/**").permitAll()
-//                .antMatchers("/admin/**").hasAuthority("MODERATOR")
-                .antMatchers("/admin/**").hasRole("MODERATOR")
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/signup", "/login", "/").permitAll()
+                .antMatchers("/event/**").hasRole("MODERATOR")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
@@ -59,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**");
+                .antMatchers("/resources/**", "/css/**", "/img/**");
     }
 
 }

@@ -6,7 +6,9 @@ import com.spring.project.dto.UpdateUserDto;
 import com.spring.project.dto.UserDto;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
+import com.spring.project.model.Role;
 import com.spring.project.model.User;
+import com.spring.project.model.enums.UserRole;
 import com.spring.project.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.security.auth.login.CredentialException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -46,6 +49,7 @@ public class UserServiceImpl implements UserService {
     public User createAccount(RegistrationDto registrationDto) throws UserAlreadyExistException {
         User user = businessMapper.convertRegistrationDtoToUser(registrationDto);
         log.info("Handling save users: " + registrationDto);
+        user.setRoles(Collections.singleton(UserRole.USER));
         user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         return userRepository.save(user);
     }
