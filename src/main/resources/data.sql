@@ -1,1 +1,1 @@
-insert into role (role) values ('MODERATOR'), ('USER'), ('SPEAKER')
+insert into roles (role) values ('MODERATOR'), ('USER'), ('SPEAKER')

@@ -68,11 +68,14 @@ public class BusinessMapper {
         if (registrationDto == null) {
             return null;
         }
-        User user = new User();
-        user.setFirstName(registrationDto.getFirstName());
-        user.setLastName(registrationDto.getLastName());
-        user.setEmail(registrationDto.getEmail());
-        user.setCreated(LocalDateTime.now());
+        User user = User.builder()
+                .firstName(registrationDto.getFirstName())
+                .lastName(registrationDto.getLastName())
+                .email(registrationDto.getEmail())
+                .created(LocalDateTime.now())
+                .build();
+
+        user.setEnabled(true);
 
         return user;
     }
