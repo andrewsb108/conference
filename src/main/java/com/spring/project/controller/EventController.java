@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -31,4 +32,9 @@ public class EventController {
     }
 
     //todo: make updateEventsList method
+    @PostMapping("/create")
+    public String createEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
+
+        return "";
+    }
 }
