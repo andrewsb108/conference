@@ -16,13 +16,17 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> findUserByEmail(String email);
 
-    User createAccount(RegistrationDto registrationDto);
+    User createUser(RegistrationDto registrationDto);
 
     User getUser(LoginDto loginDto) throws CredentialException;
+
+    User getUserById(Long id);
 
     Optional<User> updateProfile(UpdateUserDto updateUserDto);
 
     List<UserDto> getAllUsers();
+
+    public void deleteById(long id);
 
 //    User changePassword(UserDto userDto, String newPassword);
 

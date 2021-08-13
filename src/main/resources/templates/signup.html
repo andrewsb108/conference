@@ -11,12 +11,12 @@
 <body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
 <div th:replace="fragments/top_menu :: menu"></div>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-<!--    <h2 class="form-signin-heading" th:text="#{reg.header.title}">Create your account</h2>-->
     <h2 class="card-header" th:text="#{reg.header.title}">Create your account</h2>
-<!--    <div class="card-body">-->
     <div class="col py-3">
         <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/signup}"
-              th:object="${registrationDto}">
+              th:object="${user}">
+            <h5 class="text-success" th:text="${message}"></h5>
+            <h5 class="text-danger" th:text="${error_message}"></h5>
             <div class="form-group">
                 <label for="firstName"><i class="zmdi zmdi-account material-icons-name"></i></label>
                 <br> <input type="text" th:field="*{firstName}" name="firstName" id="firstName"

@@ -6,6 +6,10 @@ import com.spring.project.model.Event;
 import java.util.List;
 
 public interface EventService {
-    public List<EventDto> getAllEvents();
-    Event updateEvents(EventDto eventDto);
+    Event createEvent(EventDto eventDto);
+
+    List<EventDto> getAllEvents();
+
+    Event getEventById(Long id);
+
 }

@@ -1,10 +1,14 @@
 package com.spring.project.controller;
 
 import com.spring.project.dto.EventDto;
+import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,21 +24,34 @@ public class EventController {
     @Resource
     private EventService eventService;
 
+    @Resource
+    private MessageSource messageSource;
+
     @GetMapping
     public String showEventPage() {
-        return "create-event";
+        return "event_create";
     }
 
     @GetMapping("/events")
     public String showAllEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
         model.addAttribute("events", eventService.getAllEvents());
-        return "events-list";
+        return "event_edit";
     }
 
-    //todo: make updateEventsList method
     @PostMapping("/create")
-    public String createEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
-
-        return "";
+    public String createEvent(@ModelAttribute("event") EventDto eventDto,
+                              BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "event_create";
+        }
+        try {
+            eventService.createEvent(eventDto);
+            model.addAttribute("message", messageSource.getMessage("event.create.success",
+                    null, LocaleContextHolder.getLocale()));
+        } catch (EventAlreadyExistException e) {
+            model.addAttribute("error_message", messageSource.getMessage("reg.login.not.unique",
+                    null, LocaleContextHolder.getLocale()) + eventDto.getTitle());
+        }
+        return "event_edit";
     }
 }

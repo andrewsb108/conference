@@ -1,12 +1,16 @@
 package com.spring.project.controller;
 
 import com.spring.project.dto.RegistrationDto;
+import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.model.User;
 import com.spring.project.service.UserService;
 import com.spring.project.validation.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,26 +35,28 @@ public class RegistrationController {
     @Resource
     private PasswordValidator passwordValidator;
 
+    @Resource
+    private MessageSource messageSource;
+
     @GetMapping
-    public ModelAndView signup() {
-        ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("registrationDto", new RegistrationDto());
-        return modelAndView;
+    public String signup(@ModelAttribute("user")  RegistrationDto regDto) {
+        return "signup";
     }
 
-
     @PostMapping
-    public String createNewUserAccount(@ModelAttribute("registrationDto") @Valid RegistrationDto registrationDto,
-                                       BindingResult bindingResult) {
+    public String createNewUserAccount(@ModelAttribute("user") @Valid RegistrationDto registrationDto,
+                                       BindingResult bindingResult, Model model) {
         passwordValidator.validate(registrationDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "signup";
         }
         try {
-            User newUser = userService.createAccount(registrationDto);
-            log.info("Account ({}) registered successfully", newUser.getEmail());
-        } catch (Exception e) {
-            bindingResult.rejectValue("email", "user.email", "reg.login.not.unique");
+            userService.createUser(registrationDto);
+            model.addAttribute("message", messageSource.getMessage("reg.success",
+                    null, LocaleContextHolder.getLocale()));
+        } catch (UserAlreadyExistException e) {
+            model.addAttribute("error_message", messageSource.getMessage("reg.login.not.unique",
+                    null, LocaleContextHolder.getLocale()) + registrationDto.getEmail());
             return "signup";
         }
         return "redirect:login";
