@@ -23,16 +23,20 @@ public class Speaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "firstName", nullable = false)
     private String firstName;
+
     @Column(name = "lastName", nullable = false)
     private String lastName;
+
     @ManyToOne
     private Moderator moderator;
-    @CreatedDate
-    private LocalDateTime created = LocalDateTime.now();
 
-    @Column(name = "last_modified")
-    @LastModifiedDate
-    private LocalDateTime lastModified;
+//    @CreatedDate
+//    private LocalDateTime created = LocalDateTime.now();
+//
+//    @Column(name = "last_modified")
+//    @LastModifiedDate
+//    private LocalDateTime lastModified;
 }

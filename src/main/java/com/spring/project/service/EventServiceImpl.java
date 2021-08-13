@@ -1,5 +1,6 @@
 package com.spring.project.service;
 
+import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.exceptions.EventNotCreateException;
 import com.spring.project.exceptions.EventNotFoundException;
@@ -13,7 +14,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author Andrii Barsuk
@@ -32,13 +37,13 @@ public class EventServiceImpl implements EventService {
     private MessageSource messageSource;
 
     @Override
-    public Event createEvent(EventDto eventDto) {
+    public Event createEvent(EventCreateDto eventCreateDto) {
         try {
-            Event event = businessMapper.convertEventDtoToEvent(eventDto);
+            Event event = new Event(0, eventCreateDto.getTitle(), LocalDateTime.parse(eventCreateDto.getScheduled(), DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")), new TreeMap<>(), new ArrayList<>());
             return eventRepository.save(event);
         } catch (DataIntegrityViolationException e) {
             throw new EventNotCreateException(messageSource.getMessage("event.not.create", null,
-                    LocaleContextHolder.getLocale()) + eventDto.getTitle());
+                    LocaleContextHolder.getLocale()) + eventCreateDto.getTitle());
         }
     }
 
@@ -49,8 +54,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event getEventById(Long id) {
-          eventRepository.findById(id).orElseThrow(() ->
+        return  eventRepository.findById(id).orElseThrow(() ->
                   new EventNotFoundException("No such event was found, id: " + id));
-        return null;
     }
 }

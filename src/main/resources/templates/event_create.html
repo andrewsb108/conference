@@ -13,7 +13,7 @@
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <h2 class="card-header" th:text="#{create.new.event}">Create event</h2>
     <div class="col py-3">
-        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{event/create}"
+        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/create}"
               th:object="${event}">
             <h5 class="text-success" th:text="${message}"></h5>
             <h5 class="text-danger" th:text="${error_message}"></h5>
@@ -35,7 +35,7 @@
             </div>
             <div>
                 <br>
-                <button class="btn btn-outline-success" type="submit" th:text="#{login.sign.up}">Create</button>
+                <button class="btn btn-outline-success" type="submit" th:text="#{create.event}">Create</button>
             </div>
         </form>
     </div>

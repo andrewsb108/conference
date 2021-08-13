@@ -1,5 +1,6 @@
 package com.spring.project.controller;
 
+import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.service.EventService;
@@ -28,30 +29,30 @@ public class EventController {
     private MessageSource messageSource;
 
     @GetMapping
-    public String showEventPage() {
+    public String showEventPage(@ModelAttribute("event") EventCreateDto eventCreateDto) {
         return "event_create";
     }
 
-    @GetMapping("/events")
+    @GetMapping("/all")
     public String showAllEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
         model.addAttribute("events", eventService.getAllEvents());
-        return "event_edit";
+        return "event_list";
     }
 
     @PostMapping("/create")
-    public String createEvent(@ModelAttribute("event") EventDto eventDto,
+    public String createEvent(@ModelAttribute("event") EventCreateDto eventCreateDto,
                               BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "event_create";
         }
         try {
-            eventService.createEvent(eventDto);
+            eventService.createEvent(eventCreateDto);
             model.addAttribute("message", messageSource.getMessage("event.create.success",
                     null, LocaleContextHolder.getLocale()));
         } catch (EventAlreadyExistException e) {
             model.addAttribute("error_message", messageSource.getMessage("reg.login.not.unique",
-                    null, LocaleContextHolder.getLocale()) + eventDto.getTitle());
+                    null, LocaleContextHolder.getLocale()) + eventCreateDto.getTitle());
         }
-        return "event_edit";
+        return "redirect:/event/all";
     }
 }
