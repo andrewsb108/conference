@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class EventCreateDto {
 
     private String title;
-
-    private String scheduled;
+    private String scheduledDate;
+    private String scheduledTime;
 }

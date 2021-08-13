@@ -14,7 +14,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
         try {
-            Event event = new Event(0, eventCreateDto.getTitle(), LocalDateTime.parse(eventCreateDto.getScheduled(), DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")), new TreeMap<>(), new ArrayList<>());
+            Event event = businessMapper.convertEventCreateDtoToEvent(eventCreateDto);
+            log.info("Handling save users: " + eventCreateDto);
+//            Event event = new Event(0, eventCreateDto.getTitle(), LocalDate.parse(eventCreateDto.getScheduledDate(),
+//                    DateTimeFormatter.ofPattern("dd.MM.yyyy")), LocalTime.parse(eventCreateDto.getScheduledTime(),
+//                    DateTimeFormatter.ofPattern("HH:mm")), new TreeMap<>(), new ArrayList<>());
             return eventRepository.save(event);
         } catch (DataIntegrityViolationException e) {
             throw new EventNotCreateException(messageSource.getMessage("event.not.create", null,

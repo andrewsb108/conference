@@ -6,9 +6,13 @@ import com.spring.project.model.Participant;
 import com.spring.project.model.User;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 @Component
 public class BusinessMapper {
@@ -71,18 +75,18 @@ public class BusinessMapper {
         return user;
     }
 
-    public Event convertEventDtoToEvent(EventDto eventDto) {
-        if (eventDto == null) {
-            return null;
-        }
-        return Event.builder()
-                .id(eventDto.getId())
-                .title(eventDto.getTitle())
-                .scheduled(LocalDateTime.now())
-                .topics(eventDto.getTopics())
-                .participantList(eventDto.getParticipantList())
-                .build();
-    }
+//    public Event convertEventDtoToEvent(EventDto eventDto) {
+//        if (eventDto == null) {
+//            return null;
+//        }
+//        return Event.builder()
+//                .id(eventDto.getId())
+//                .title(eventDto.getTitle())
+//                .scheduledDate(LocalDateTime.now())
+//                .topics(eventDto.getTopics())
+//                .participantList(eventDto.getParticipantList())
+//                .build();
+//    }
 
     public EventDto convertEventToEventDto(Event event) {
         if (event == null) {
@@ -91,9 +95,25 @@ public class BusinessMapper {
         return EventDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
-                .scheduled(event.getScheduled())
+                .scheduledDate(event.getScheduledDate())
+                .scheduledTime(event.getScheduledTime())
                 .topics(event.getTopics())
                 .participantList(event.getParticipantList())
+                .build();
+    }
+
+    public Event convertEventCreateDtoToEvent(EventCreateDto eventCreateDto) {
+        if (eventCreateDto == null) {
+            return null;
+        }
+        return Event.builder()
+                .title(eventCreateDto.getTitle())
+                .scheduledDate(LocalDate.parse(eventCreateDto.getScheduledDate(),
+                        DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+                .scheduledTime(LocalTime.parse(eventCreateDto.getScheduledTime(),
+                        DateTimeFormatter.ofPattern("HH:mm")))
+                .topics(new TreeMap<>())
+                .participantList(new ArrayList<>())
                 .build();
     }
 

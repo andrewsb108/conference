@@ -23,14 +23,16 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Scheduled</th>
+                    <th scope="col">ScheduledDate</th>
+                    <th scope="col">ScheduledTime</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="event : ${events}">
                     <td th:text="${event.id}"/>
                     <td th:text="${event.title}"/>
-                    <td th:text="${event.scheduled}"/>
+                    <td th:text="${event.scheduledDate}"/>
+                    <td th:text="${event.scheduledTime}"/>
                 </tr>
                 </tbody>
             </table>

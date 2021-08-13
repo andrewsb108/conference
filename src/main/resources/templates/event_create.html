@@ -26,11 +26,20 @@
                 </small>
             </div>
             <div class="form-group">
-                <label for="scheduled"><i class="zmdi zmdi-email"></i></label>
-                <br> <input type="datetime-local" th:field="*{scheduled}" name="scheduled" id="scheduled"
-                            placeholder="Scheduled" th:placeholder="#{event.scheduled}" required>
-                <small class="text-danger" th:if="${#fields.hasErrors('scheduled')}"
-                       th:errors="*{scheduled}">Validation error
+                <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>
+                <br> <input type="datetime-local" th:field="*{scheduledDate}" name="scheduledDate" id="scheduledDate"
+                            placeholder="ScheduledDate" th:placeholder="#{event.scheduled.date}" required>
+                <small class="text-danger" th:if="${#fields.hasErrors('scheduledDate')}"
+                       th:errors="*{scheduledDate}">Validation error
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="scheduledTime"><i class="zmdi zmdi-email"></i></label>
+                <br> <input type="datetime-local" th:field="*{scheduledTime}" name="scheduledTime" id="scheduledTime"
+                            placeholder="ScheduledTime" th:placeholder="#{event.scheduled.time}" required>
+                <small class="text-danger" th:if="${#fields.hasErrors('scheduledTime')}"
+                       th:errors="*{scheduledTime}">Validation error
                 </small>
             </div>
             <div>

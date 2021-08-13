@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,9 @@ public class Event {
     private String title;
     @Column(name = "last_modified")
 
-    private LocalDateTime scheduled;
+    private LocalDate scheduledDate;
+
+    private LocalTime scheduledTime;
 
     @ElementCollection
     @CollectionTable(name = "phone_register")
