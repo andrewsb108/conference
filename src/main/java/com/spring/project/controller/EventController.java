@@ -3,6 +3,7 @@ package com.spring.project.controller;
 import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
+import com.spring.project.model.Event;
 import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
@@ -10,10 +11,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -33,11 +31,6 @@ public class EventController {
         return "event_create";
     }
 
-    @GetMapping("/all")
-    public String showAllEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
-        model.addAttribute("events", eventService.getAllEvents());
-        return "event_list";
-    }
 
     @PostMapping("/create")
     public String createEvent(@ModelAttribute("event") EventCreateDto eventCreateDto,
@@ -55,4 +48,30 @@ public class EventController {
         }
         return "redirect:/event/all";
     }
+
+    @GetMapping("/all")
+    public String showAllEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
+        model.addAttribute("events", eventService.getAllEvents());
+        return "event_list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditEvent(@PathVariable("id") long id, Model model) {
+        EventDto dto = eventService.getEventById(id);
+        model.addAttribute("event", dto);
+        return "event_edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateEvent(@PathVariable("id") long id, EventDto eventDto) {
+        eventService.updateEvent(eventDto);
+        return "redirect:/event/all";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteEvent(@PathVariable("id") long id) {
+        eventService.deleteById(id);
+        return "redirect:/event/all";
+    }
+
 }

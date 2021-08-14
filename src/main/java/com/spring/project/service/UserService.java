@@ -26,7 +26,7 @@ public interface UserService {
 
     List<UserDto> getAllUsers();
 
-    public void deleteById(long id);
+    void deleteById(long id);
 
 //    User changePassword(UserDto userDto, String newPassword);
 

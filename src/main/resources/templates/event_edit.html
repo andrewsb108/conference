@@ -8,15 +8,17 @@
     <div th:replace="fragments/login_page :: head_tag"></div>
 
 </head>
-<body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
+<body class="p-0 m-0"
+      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
 <div th:replace="fragments/top_menu :: menu"></div>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <h2 class="card-header" th:text="#{create.new.event}">Create event</h2>
+    <h2 class="card-header" th:text="#{event.edit}">Edit event</h2>
     <div class="col py-3">
-        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/create}"
+<!--        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/update}"-->
+        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/update/{id}(id=${event.getId()})}"
               th:object="${event}">
-            <h5 class="text-success" th:text="${message}"></h5>
-            <h5 class="text-danger" th:text="${error_message}"></h5>
+            <!--            <h5 class="text-success" th:text="${message}"></h5>-->
+            <!--            <h5 class="text-danger" th:text="${error_message}"></h5>-->
             <div class="form-group">
                 <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
                 <input type="text" th:field="*{title}" name="title" id="title"
@@ -25,6 +27,15 @@
                        th:errors="*{title}">Validation error
                 </small>
             </div>
+
+<!--            <div class="form-group">-->
+<!--                <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>-->
+<!--                <br> <input type="datetime-local" th:field="*{id}" name="scheduledDate" id="eventId"-->
+<!--                            placeholder="ScheduledDate" required>-->
+<!--                <small class="text-danger" th:if="${#fields.hasErrors('scheduledDate')}"-->
+<!--                       th:errors="*{scheduledDate}">Validation error-->
+<!--                </small>-->
+<!--            </div>-->
             <div class="form-group">
                 <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>
                 <br> <input type="datetime-local" th:field="*{scheduledDate}" name="scheduledDate" id="scheduledDate"
@@ -44,7 +55,7 @@
             </div>
             <div>
                 <br>
-                <button class="btn btn-outline-success" type="submit" th:text="#{create.event}">Create</button>
+                <button class="btn btn-outline-success" type="submit" th:text="#{event.edit.button}">Save</button>
             </div>
         </form>
     </div>

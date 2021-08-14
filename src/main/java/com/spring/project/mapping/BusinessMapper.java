@@ -75,18 +75,19 @@ public class BusinessMapper {
         return user;
     }
 
-//    public Event convertEventDtoToEvent(EventDto eventDto) {
-//        if (eventDto == null) {
-//            return null;
-//        }
-//        return Event.builder()
-//                .id(eventDto.getId())
-//                .title(eventDto.getTitle())
-//                .scheduledDate(LocalDateTime.now())
-//                .topics(eventDto.getTopics())
-//                .participantList(eventDto.getParticipantList())
-//                .build();
-//    }
+    public Event convertEventDtoToEvent(EventDto eventDto) {
+        if (eventDto == null) {
+            return null;
+        }
+        return Event.builder()
+                .id(eventDto.getId())
+                .title(eventDto.getTitle())
+                .scheduledDate(eventDto.getScheduledDate())
+                .scheduledTime(eventDto.getScheduledTime())
+                .topics(new TreeMap<>())
+                .participantList(new ArrayList<>())
+                .build();
+    }
 
     public EventDto convertEventToEventDto(Event event) {
         if (event == null) {

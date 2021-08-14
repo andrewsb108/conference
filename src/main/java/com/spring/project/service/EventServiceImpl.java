@@ -20,6 +20,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeMap;
 
 /**
@@ -43,9 +44,6 @@ public class EventServiceImpl implements EventService {
         try {
             Event event = businessMapper.convertEventCreateDtoToEvent(eventCreateDto);
             log.info("Handling save users: " + eventCreateDto);
-//            Event event = new Event(0, eventCreateDto.getTitle(), LocalDate.parse(eventCreateDto.getScheduledDate(),
-//                    DateTimeFormatter.ofPattern("dd.MM.yyyy")), LocalTime.parse(eventCreateDto.getScheduledTime(),
-//                    DateTimeFormatter.ofPattern("HH:mm")), new TreeMap<>(), new ArrayList<>());
             return eventRepository.save(event);
         } catch (DataIntegrityViolationException e) {
             throw new EventNotCreateException(messageSource.getMessage("event.not.create", null,
@@ -59,8 +57,24 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event getEventById(Long id) {
-        return  eventRepository.findById(id).orElseThrow(() ->
-                  new EventNotFoundException("No such event was found, id: " + id));
+    public EventDto getEventById(Long id) {
+        return businessMapper.convertEventToEventDto(eventRepository.findById(id).orElseThrow(() ->
+                new EventNotFoundException("No such event was found, id: " + id)));
+    }
+
+    @Override
+    public Optional<Event> updateEvent(EventDto eventDto) {
+        Event event = businessMapper.convertEventDtoToEvent(eventDto);
+       return Optional.ofNullable(eventRepository.save(event));
+    }
+
+    @Override
+    public Long deleteById(long id) {
+        try {
+            eventRepository.deleteById(id);
+        } catch (EventNotFoundException e) {
+            log.info("Deleted event with id: " + id);
+        }
+       return id;
     }
 }
