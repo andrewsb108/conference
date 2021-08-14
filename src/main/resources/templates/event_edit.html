@@ -14,11 +14,11 @@
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <h2 class="card-header" th:text="#{event.edit}">Edit event</h2>
     <div class="col py-3">
-<!--        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/update}"-->
-        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/update/{id}(id=${event.getId()})}"
+        <!--        <form action="#" method="POST" class="register-form" id="register-form" th:action="@{/event/update}"-->
+        <form action="#" method="POST" class="register-form" id="register-form"
+              th:action="@{/event/update/{id}(id=${event.getId()})}"
               th:object="${event}">
-            <!--            <h5 class="text-success" th:text="${message}"></h5>-->
-            <!--            <h5 class="text-danger" th:text="${error_message}"></h5>-->
+
             <div class="form-group">
                 <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
                 <input type="text" th:field="*{title}" name="title" id="title"
@@ -28,14 +28,6 @@
                 </small>
             </div>
 
-<!--            <div class="form-group">-->
-<!--                <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>-->
-<!--                <br> <input type="datetime-local" th:field="*{id}" name="scheduledDate" id="eventId"-->
-<!--                            placeholder="ScheduledDate" required>-->
-<!--                <small class="text-danger" th:if="${#fields.hasErrors('scheduledDate')}"-->
-<!--                       th:errors="*{scheduledDate}">Validation error-->
-<!--                </small>-->
-<!--            </div>-->
             <div class="form-group">
                 <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>
                 <br> <input type="datetime-local" th:field="*{scheduledDate}" name="scheduledDate" id="scheduledDate"
@@ -58,6 +50,31 @@
                 <button class="btn btn-outline-success" type="submit" th:text="#{event.edit.button}">Save</button>
             </div>
         </form>
+    </div>
+
+    <div class="col">
+        <tr th:each="entry : ${event.topics}">
+            <td th:text="${entry.key}">topic</td>
+            <td th:text="${entry.value}">speaker</td>
+        </tr>
+
+        <tr>
+            <form method="POST" class="register-form"
+                  th:action="@{/event/topic/add}"
+                  th:object="${topic}">
+
+                <div class="form-group">
+                    <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
+                    <input type="text" th:field="*{topic}"
+                           placeholder="add topic" th:placeholder="#{event.crete.title}" required>
+                    <input type="text" th:field="*{id}" hidden="hidden">
+                </div>
+                <div>
+                    <br>
+                    <button class="btn btn-outline-success" type="submit" th:text="#{event.edit.button}">Save</button>
+                </div>
+            </form>
+        </tr>
     </div>
 </div>
 <div th:replace="fragments/login_page :: footer"></div>

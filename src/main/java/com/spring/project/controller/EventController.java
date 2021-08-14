@@ -1,5 +1,6 @@
 package com.spring.project.controller;
 
+import com.spring.project.dto.CreateTopicDto;
 import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
@@ -58,7 +59,9 @@ public class EventController {
     @GetMapping("/edit/{id}")
     public String showEditEvent(@PathVariable("id") long id, Model model) {
         EventDto dto = eventService.getEventById(id);
+        System.out.println(dto);
         model.addAttribute("event", dto);
+        model.addAttribute("topic", new CreateTopicDto(id, ""));
         return "event_edit";
     }
 
@@ -72,6 +75,12 @@ public class EventController {
     public String deleteEvent(@PathVariable("id") long id) {
         eventService.deleteById(id);
         return "redirect:/event/all";
+    }
+
+    @PostMapping("/topic/add")
+    public String addNewTopic(CreateTopicDto dto) {
+        eventService.addTopic(dto);
+        return "redirect:/event/edit/" + dto.getId();
     }
 
 }

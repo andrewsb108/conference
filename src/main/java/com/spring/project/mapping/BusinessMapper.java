@@ -93,6 +93,7 @@ public class BusinessMapper {
         if (event == null) {
             return null;
         }
+        System.out.println("Event from DB:" +event);
         return EventDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
