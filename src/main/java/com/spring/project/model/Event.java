@@ -41,3 +41,7 @@ public class Event {
     @OneToMany
     private List<Participant> participantList;
 }
+//todo 1 - Create class Topic (id , title, Speaker)
+//todo 2 - Change class Event map->list(topic)
+//todo 3 - Change bussiness mapper
+//todo 4 - change edit event page for topic section
