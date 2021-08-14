@@ -34,8 +34,8 @@ public class Event {
     private LocalTime scheduledTime;
 
     @ElementCollection
-    @CollectionTable(name = "phone_register")
-    @Column(name = "since")
+    @CollectionTable(name = "topics")
+    @Column(name = "topics")
     private Map<String, Speaker> topics;
 
     @OneToMany
