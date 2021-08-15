@@ -40,6 +40,10 @@
                         <a class="btn btn-outline-danger" th:href="@{/event/delete/{id}(id=${event.getId})}"
                            th:text="#{event.delete.button}">Delete></a>
                     </td>
+                    <td>
+                        <a class="btn btn-outline-secondary" th:href="@{/event/register/{id}(id=${event.getId})}"
+                           th:text="#{speaker.register}">Register</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

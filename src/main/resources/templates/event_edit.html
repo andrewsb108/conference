@@ -66,12 +66,12 @@
                 <div class="form-group">
                     <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
                     <input type="text" th:field="*{topicTitle}"
-                           placeholder="add topic" th:placeholder="#{event.crete.title}" required>
+                           placeholder="add topic" th:placeholder="#{topic.title}" required>
                     <input type="text" th:field="*{id}" hidden="hidden">
                 </div>
                 <div>
                     <br>
-                    <button class="btn btn-outline-success" type="submit" th:text="#{event.edit.button}">Save</button>
+                    <button class="btn btn-outline-success" type="submit" th:text="#{topic.create}">Create</button>
                 </div>
             </form>
         </tr>
