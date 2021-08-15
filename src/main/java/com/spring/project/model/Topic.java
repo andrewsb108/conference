@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+
 /**
  * @author Andrii Barsuk
  */
@@ -15,19 +16,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "participants")
-public class Participant {
+@Table(name = "topics")
+public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "topicTitle", nullable = false)
-    private String name;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    private boolean isPresent;
-
-    private LocalDateTime registered;
+    @Column(name = "title")
+    private String title;
+    @OneToOne
+    private Speaker speaker;
 }

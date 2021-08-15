@@ -1,10 +1,9 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.CreateTopicDto;
+import com.spring.project.dto.TopicDto;
 import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
-import com.spring.project.model.Event;
 import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
@@ -56,12 +55,22 @@ public class EventController {
         return "event_list";
     }
 
+//    @GetMapping("/edit/{id}")
+//    public String showEditEvent(@PathVariable("id") long id, Model model) {
+//        EventDto dto = eventService.getEventById(id);
+//        System.out.println(dto);
+//        model.addAttribute("event", dto);
+//        model.addAttribute("topic", new TopicDto(id, ""));  //todo:??
+//        return "event_edit";
+//    }
+
     @GetMapping("/edit/{id}")
     public String showEditEvent(@PathVariable("id") long id, Model model) {
         EventDto dto = eventService.getEventById(id);
         System.out.println(dto);
         model.addAttribute("event", dto);
-        model.addAttribute("topic", new CreateTopicDto(id, ""));
+        model.addAttribute("topic", new TopicDto());
+        model.addAttribute("topics", dto.getTopicList());
         return "event_edit";
     }
 
@@ -77,10 +86,11 @@ public class EventController {
         return "redirect:/event/all";
     }
 
-    @PostMapping("/topic/add")
-    public String addNewTopic(CreateTopicDto dto) {
-        eventService.addTopic(dto);
-        return "redirect:/event/edit/" + dto.getId();
+    @PostMapping("{id}/topic/add")
+    public String createNewTopic(@PathVariable("id") long id, @ModelAttribute("topic") TopicDto dto) {
+        eventService.addNewTopic(id, dto);
+        return "redirect:/event/edit/" + id;
     }
+
 
 }

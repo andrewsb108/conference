@@ -1,7 +1,5 @@
 package com.spring.project.dto;
 
-import com.spring.project.model.Participant;
-import com.spring.project.model.Speaker;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Andrii Barsuk
@@ -30,7 +27,9 @@ public class EventDto {
 
     private LocalTime scheduledTime;
 
-    private Map<String, Speaker> topics;
+//    private Map<String, Speaker> topics;
 
-    private List<Participant> participantList;
+    private List<TopicDto> topicList;
+
+    private List<ParticipantDto> participantList;
 }

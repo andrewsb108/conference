@@ -20,14 +20,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
-
-//    @GetMapping("/logout")
-//    public String logout() {
-//        SecurityContextHolder.getContext().setAuthentication(null);
-//        return "redirect:/login";
-//    }
-
     @GetMapping
     public ModelAndView startPage() {
         return new ModelAndView("start-page");

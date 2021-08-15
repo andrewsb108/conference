@@ -3,6 +3,7 @@ package com.spring.project.mapping;
 import com.spring.project.dto.*;
 import com.spring.project.model.Event;
 import com.spring.project.model.Participant;
+import com.spring.project.model.Topic;
 import com.spring.project.model.User;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Component
 public class BusinessMapper {
@@ -52,11 +53,11 @@ public class BusinessMapper {
         if (userDto == null) {
             return null;
         }
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
 
-        return user;
+        return User.builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .build();
     }
 
     public User convertRegistrationDtoToUser(RegistrationDto registrationDto) {
@@ -84,8 +85,8 @@ public class BusinessMapper {
                 .title(eventDto.getTitle())
                 .scheduledDate(eventDto.getScheduledDate())
                 .scheduledTime(eventDto.getScheduledTime())
-                .topics(new TreeMap<>())
-                .participantList(new ArrayList<>())
+                .topicList(eventDto.getTopicList().stream().map(topic-> convertTopicDtoToTopic(topic)).collect(Collectors.toList()))
+                .participantList(eventDto.getParticipantList().stream().map(p->convertToParticipant(p)).collect(Collectors.toList()))
                 .build();
     }
 
@@ -93,14 +94,13 @@ public class BusinessMapper {
         if (event == null) {
             return null;
         }
-        System.out.println("Event from DB:" +event);
         return EventDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
                 .scheduledDate(event.getScheduledDate())
                 .scheduledTime(event.getScheduledTime())
-                .topics(event.getTopics())
-                .participantList(event.getParticipantList())
+                .topicList(event.getTopicList().stream().map(topic->convertToTopic(topic)).collect(Collectors.toList()))
+                .participantList(event.getParticipantList().stream().map(p->convertToParticipantDto(p)).collect(Collectors.toList()))
                 .build();
     }
 
@@ -114,7 +114,7 @@ public class BusinessMapper {
                         DateTimeFormatter.ofPattern("dd.MM.yyyy")))
                 .scheduledTime(LocalTime.parse(eventCreateDto.getScheduledTime(),
                         DateTimeFormatter.ofPattern("HH:mm")))
-                .topics(new TreeMap<>())
+                .topicList(new ArrayList<>())
                 .participantList(new ArrayList<>())
                 .build();
     }
@@ -130,27 +130,53 @@ public class BusinessMapper {
         return list;
     }
 
-    public Participant convertParticipantDtoToParticipant(ParticipantDto participantDto) {
+    public Participant convertToParticipant(ParticipantDto participantDto) {
         if (participantDto == null) {
             return null;
         }
         return Participant.builder()
+                .id(participantDto.getId())
                 .name(participantDto.getName())
                 .email(participantDto.getEmail())
-                .isPresent(true)
+                .isPresent(participantDto.isPresent())
                 .registered(participantDto.getRegistered())
                 .build();
     }
 
-    public ParticipantDto convertParticipantToParticipantDto(Participant participant) {
+    public ParticipantDto convertToParticipantDto(Participant participant) {
         if (participant == null) {
             return null;
         }
         return ParticipantDto.builder()
+                .id(participant.getId())
                 .name(participant.getName())
                 .email(participant.getEmail())
                 .isPresent(true)
                 .registered(participant.getRegistered())
                 .build();
     }
+
+    public TopicDto convertToTopic(Topic topic) {
+        if (topic == null) {
+            return null;
+        }
+       return TopicDto.builder()
+               .id(topic.getId())
+               .topicTitle(topic.getTitle())
+               .speaker(topic.getSpeaker())
+               .build();
+    }
+
+    public Topic convertTopicDtoToTopic(TopicDto topicDto) {
+        if (topicDto == null) {
+            return null;
+        }
+       return Topic.builder()
+               .id(topicDto.getId())
+               .title(topicDto.getTopicTitle())
+               .speaker(topicDto.getSpeaker())
+               .build();
+    }
+
+
 }

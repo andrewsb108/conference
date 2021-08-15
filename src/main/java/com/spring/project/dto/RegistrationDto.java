@@ -20,14 +20,16 @@ public class RegistrationDto {
     @Size(min = 2, max = 30, message = "{valid.reg.name.size}")
     private String lastName;
 
+    @ValidEmail(message = "{valid.reg.email}")
+    @NotEmpty(message = "{valid.reg.not.empty}")
+    @Size(min = 5, max = 50, message = "{valid.reg.email.size}")
+    private String email;
+
     @NotEmpty(message = "{valid.reg.not.empty}")
     private String password;
 
     @NotEmpty(message = "{valid.reg.not.empty}")
     private String matchingPassword;
 
-    @ValidEmail(message = "{valid.reg.email}")
-    @NotEmpty(message = "{valid.reg.not.empty}")
-    @Size(min = 5, max = 50, message = "{valid.reg.email.size}")
-    private String email;
+
 }

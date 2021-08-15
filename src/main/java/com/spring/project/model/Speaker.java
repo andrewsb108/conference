@@ -30,13 +30,6 @@ public class Speaker {
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @ManyToOne
-    private Moderator moderator;
-
-//    @CreatedDate
-//    private LocalDateTime created = LocalDateTime.now();
-//
-//    @Column(name = "last_modified")
-//    @LastModifiedDate
-//    private LocalDateTime lastModified;
+    @CreatedDate
+    private LocalDateTime registered;
 }

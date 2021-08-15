@@ -1,9 +1,10 @@
 package com.spring.project.service;
 
-import com.spring.project.dto.CreateTopicDto;
+import com.spring.project.dto.TopicDto;
 import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.model.Event;
+import com.spring.project.model.Topic;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,8 @@ public interface EventService {
 
     Long deleteById(long id);
 
-    void addTopic(CreateTopicDto topic);
+//    void addTopic(TopicDto topic);
+
+    Topic addNewTopic(long eventId, TopicDto topic);
 
 }
