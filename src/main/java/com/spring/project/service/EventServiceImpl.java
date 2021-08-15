@@ -1,5 +1,6 @@
 package com.spring.project.service;
 
+import com.spring.project.dto.EventRegisterDto;
 import com.spring.project.dto.TopicDto;
 import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
@@ -7,14 +8,17 @@ import com.spring.project.exceptions.EventNotCreateException;
 import com.spring.project.exceptions.EventNotFoundException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.Event;
+import com.spring.project.model.Participant;
 import com.spring.project.model.Topic;
 import com.spring.project.repository.EventRepository;
+import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepositiry;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,6 +42,9 @@ public class EventServiceImpl implements EventService {
 
     @Resource
     private MessageSource messageSource;
+
+    @Resource
+    private ParticipantRepository participantRepository;
 
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
@@ -79,6 +86,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public Topic addNewTopic(long eventId, TopicDto topicDto) {
         Event current = eventRepository.findById(eventId);
         Topic topic = businessMapper.convertTopicDtoToTopic(topicDto);
@@ -86,5 +94,15 @@ public class EventServiceImpl implements EventService {
         current.getTopicList().add(topic);
         eventRepository.save(current);
         return topic;
+    }
+
+    @Override
+    @Transactional
+    public void registerToEvent(long eventId, EventRegisterDto eventRegisterDto) {
+        Event current = eventRepository.findById(eventId);
+        Participant participant = businessMapper.convertEventRegisterDtoToParticipant(eventRegisterDto, eventId);
+        participantRepository.save(participant);
+        current.getParticipantList().add(participant);
+        eventRepository.save(current);
     }
 }

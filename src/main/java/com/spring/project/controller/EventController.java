@@ -1,8 +1,6 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.TopicDto;
-import com.spring.project.dto.EventCreateDto;
-import com.spring.project.dto.EventDto;
+import com.spring.project.dto.*;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
@@ -67,10 +65,11 @@ public class EventController {
     @GetMapping("/edit/{id}")
     public String showEditEvent(@PathVariable("id") long id, Model model) {
         EventDto dto = eventService.getEventById(id);
-        System.out.println(dto);
         model.addAttribute("event", dto);
         model.addAttribute("topic", new TopicDto());
         model.addAttribute("topics", dto.getTopicList());
+        model.addAttribute("participantList", dto.getParticipantList());
+
         return "event_edit";
     }
 
@@ -86,12 +85,28 @@ public class EventController {
         return "redirect:/event/all";
     }
 
-    @PostMapping("{id}/topic/add")
+    @PostMapping("/{id}/topic/add")
     public String createNewTopic(@PathVariable("id") long id, @ModelAttribute("topic") TopicDto dto) {
         eventService.addNewTopic(id, dto);
         return "redirect:/event/edit/" + id;
     }
 
+    @GetMapping("/{id}/event-reg")
+    public String showRegisterToEvent(@PathVariable("id") long id, Model model) {
+        model.addAttribute("participant", new EventRegisterDto());
+        EventDto eventDto = eventService.getEventById(id);
+        System.out.println(eventDto);
+        model.addAttribute("event", eventDto);
 
+        return "register_to_event";
+    }
 
+    @PostMapping("/{id}/event-reg")
+    public String registerToEvent(@PathVariable("id") long id,
+                                  @ModelAttribute("participant") EventRegisterDto eventRegisterDto) {
+        System.out.println(id);
+        eventService.registerToEvent(id, eventRegisterDto);
+
+        return "redirect:/event/all";
+    }
 }

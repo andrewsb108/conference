@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 /**
  * @author Andrii Barsuk
  */
@@ -21,13 +22,16 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "topicTitle", nullable = false)
-    private String name;
+    @Column(name = "event_id", nullable = false)
+    private long eventId;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    private boolean isPresent;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-    private LocalDateTime registered;
+    @Column(name = "is_speaker")
+    private boolean isSpeaker;
+
 }

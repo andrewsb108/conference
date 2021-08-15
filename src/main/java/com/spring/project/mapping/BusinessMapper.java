@@ -85,7 +85,7 @@ public class BusinessMapper {
                 .title(eventDto.getTitle())
                 .scheduledDate(eventDto.getScheduledDate())
                 .scheduledTime(eventDto.getScheduledTime())
-                .topicList(eventDto.getTopicList().stream().map(topic-> convertTopicDtoToTopic(topic)).collect(Collectors.toList()))
+                .topicList(eventDto.getTopicList().stream().map(topic -> convertTopicDtoToTopic(topic)).collect(Collectors.toList()))
                 .participantList(eventDto.getParticipantList().stream().map(p->convertToParticipant(p)).collect(Collectors.toList()))
                 .build();
     }
@@ -99,7 +99,7 @@ public class BusinessMapper {
                 .title(event.getTitle())
                 .scheduledDate(event.getScheduledDate())
                 .scheduledTime(event.getScheduledTime())
-                .topicList(event.getTopicList().stream().map(topic->convertToTopic(topic)).collect(Collectors.toList()))
+                .topicList(event.getTopicList().stream().map(topic -> convertToTopic(topic)).collect(Collectors.toList()))
                 .participantList(event.getParticipantList().stream().map(p->convertToParticipantDto(p)).collect(Collectors.toList()))
                 .build();
     }
@@ -136,10 +136,10 @@ public class BusinessMapper {
         }
         return Participant.builder()
                 .id(participantDto.getId())
-                .name(participantDto.getName())
-                .email(participantDto.getEmail())
-                .isPresent(participantDto.isPresent())
-                .registered(participantDto.getRegistered())
+                .eventId(participantDto.getEventId())
+                .firstName(participantDto.getFirstName())
+                .lastName(participantDto.getLastName())
+                .isSpeaker(participantDto.isSpeaker())
                 .build();
     }
 
@@ -149,10 +149,10 @@ public class BusinessMapper {
         }
         return ParticipantDto.builder()
                 .id(participant.getId())
-                .name(participant.getName())
-                .email(participant.getEmail())
-                .isPresent(true)
-                .registered(participant.getRegistered())
+                .eventId(participant.getEventId())
+                .firstName(participant.getFirstName())
+                .lastName(participant.getLastName())
+                .isSpeaker(participant.isSpeaker())
                 .build();
     }
 
@@ -160,22 +160,34 @@ public class BusinessMapper {
         if (topic == null) {
             return null;
         }
-       return TopicDto.builder()
-               .id(topic.getId())
-               .topicTitle(topic.getTitle())
-               .speaker(topic.getSpeaker())
-               .build();
+        return TopicDto.builder()
+                .id(topic.getId())
+                .topicTitle(topic.getTitle())
+                .speaker(topic.getSpeaker())
+                .build();
     }
 
     public Topic convertTopicDtoToTopic(TopicDto topicDto) {
         if (topicDto == null) {
             return null;
         }
-       return Topic.builder()
-               .id(topicDto.getId())
-               .title(topicDto.getTopicTitle())
-               .speaker(topicDto.getSpeaker())
-               .build();
+        return Topic.builder()
+                .id(topicDto.getId())
+                .title(topicDto.getTopicTitle())
+                .speaker(topicDto.getSpeaker())
+                .build();
+    }
+
+    public Participant convertEventRegisterDtoToParticipant(EventRegisterDto eventRegisterDto, long eventId) {
+        if (eventRegisterDto == null) {
+            return null;
+        }
+        return Participant.builder()
+                .eventId(eventId)
+                .firstName(eventRegisterDto.getFirstName())
+                .lastName(eventRegisterDto.getLastName())
+//                .isSpeaker(eventRegisterDto.isSpeaker())
+                .build();
     }
 
 

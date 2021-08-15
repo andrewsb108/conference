@@ -53,6 +53,11 @@
     </div>
 
     <div class="col">
+        <tr th:each="participant : ${participantList}">
+            <td th:text="${participant.firstName}"/>
+
+
+        </tr>
         <tr th:each="topic : ${topics}">
             <td th:text="${topic.getId()}"/>
             <td th:text="${topic.getTopicTitle()}"/>

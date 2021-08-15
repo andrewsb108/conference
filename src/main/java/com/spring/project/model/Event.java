@@ -26,8 +26,8 @@ public class Event {
 
     @Column(name = "topicTitle", nullable = false)
     private String title;
-    @Column(name = "last_modified")
 
+    @Column(name = "last_modified")
     private LocalDate scheduledDate;
 
     private LocalTime scheduledTime;

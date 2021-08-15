@@ -27,8 +27,6 @@ public class EventDto {
 
     private LocalTime scheduledTime;
 
-//    private Map<String, Speaker> topics;
-
     private List<TopicDto> topicList;
 
     private List<ParticipantDto> participantList;
