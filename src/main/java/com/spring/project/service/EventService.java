@@ -21,8 +21,6 @@ public interface EventService {
 
     Long deleteById(long id);
 
-//    void addTopic(TopicDto topic);
-
     Topic addNewTopic(long eventId, TopicDto topic);
 
     void registerToEvent(long id, EventRegisterDto eventRegisterDto);

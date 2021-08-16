@@ -1,6 +1,9 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.*;
+import com.spring.project.dto.EventCreateDto;
+import com.spring.project.dto.EventDto;
+import com.spring.project.dto.EventRegisterDto;
+import com.spring.project.dto.TopicDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
@@ -53,15 +56,6 @@ public class EventController {
         return "event_list";
     }
 
-//    @GetMapping("/edit/{id}")
-//    public String showEditEvent(@PathVariable("id") long id, Model model) {
-//        EventDto dto = eventService.getEventById(id);
-//        System.out.println(dto);
-//        model.addAttribute("event", dto);
-//        model.addAttribute("topic", new TopicDto(id, ""));  //todo:??
-//        return "event_edit";
-//    }
-
     @GetMapping("/edit/{id}")
     public String showEditEvent(@PathVariable("id") long id, Model model) {
         EventDto dto = eventService.getEventById(id);
@@ -92,19 +86,20 @@ public class EventController {
     }
 
     @GetMapping("/{id}/event-reg")
-    public String showRegisterToEvent(@PathVariable("id") long id, Model model) {
-        model.addAttribute("participant", new EventRegisterDto());
+    public String showRegisterToEvent(@PathVariable("id") long id,
+                                      @ModelAttribute("participant") EventRegisterDto eventRegisterDto,
+                                      Model model) {
         EventDto eventDto = eventService.getEventById(id);
-        System.out.println(eventDto);
         model.addAttribute("event", eventDto);
-
+        model.addAttribute("flag", false);
         return "register_to_event";
     }
+
 
     @PostMapping("/{id}/event-reg")
     public String registerToEvent(@PathVariable("id") long id,
                                   @ModelAttribute("participant") EventRegisterDto eventRegisterDto) {
-        System.out.println(id);
+        log.info("--------------------- speakerValue is {}",eventRegisterDto.isSpeaker());
         eventService.registerToEvent(id, eventRegisterDto);
 
         return "redirect:/event/all";

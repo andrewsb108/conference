@@ -60,7 +60,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventDto> getAllEvents() {
-        return businessMapper.convertEventDtoToEventGetAll(eventRepository.findAll());
+        return businessMapper.convertEventListToEventDto(eventRepository.findAll());
     }
 
     @Override

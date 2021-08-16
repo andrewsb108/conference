@@ -119,7 +119,7 @@ public class BusinessMapper {
                 .build();
     }
 
-    public List<EventDto> convertEventDtoToEventGetAll(List<Event> events) {
+    public List<EventDto> convertEventListToEventDto(List<Event> events) {
         if (events == null) {
             return null;
         }
@@ -186,7 +186,7 @@ public class BusinessMapper {
                 .eventId(eventId)
                 .firstName(eventRegisterDto.getFirstName())
                 .lastName(eventRegisterDto.getLastName())
-//                .isSpeaker(eventRegisterDto.isSpeaker())
+                .isSpeaker(eventRegisterDto.isSpeaker())
                 .build();
     }
 
