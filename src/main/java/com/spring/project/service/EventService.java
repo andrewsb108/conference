@@ -22,6 +22,6 @@ public interface EventService {
 
     void registerToEvent(long id, EventRegisterDto eventRegisterDto);
 
-    List<SpeakerDto> getAllSpeakers();
+//    List<SpeakerDto> getAllSpeakers();
 
 }

@@ -187,26 +187,26 @@ public class BusinessMapper {
                 .build();
     }
 
-    public SpeakerDto convertToSpeakerDto(Speaker speaker) {
-        if (speaker == null) {
-            return null;
-        }
-        return SpeakerDto.builder()
-                .id(speaker.getId())
-                .firstName(speaker.getFirstName())
-                .lastName(speaker.getLastName())
-                .build();
-    }
+//    public SpeakerDto convertToSpeakerDto(Speaker speaker) {
+//        if (speaker == null) {
+//            return null;
+//        }
+//        return SpeakerDto.builder()
+//                .id(speaker.getId())
+//                .firstName(speaker.getFirstName())
+//                .lastName(speaker.getLastName())
+//                .build();
+//    }
 
-    public List<SpeakerDto> convertSpeakerListToSpeakerDtoList(List<Speaker> speakers) {
-        if (speakers == null) {
-            return null;
-        }
-        List<SpeakerDto> list = new ArrayList<>();
-        for (Speaker speaker: speakers) {
-            list.add(convertToSpeakerDto(speaker));
-        }
-        return list;
-    }
+//    public List<SpeakerDto> convertSpeakerListToSpeakerDtoList(List<Speaker> speakers) {
+//        if (speakers == null) {
+//            return null;
+//        }
+//        List<SpeakerDto> list = new ArrayList<>();
+//        for (Speaker speaker: speakers) {
+//            list.add(convertToSpeakerDto(speaker));
+//        }
+//        return list;
+//    }
 
 }

@@ -102,10 +102,10 @@ public class EventController {
         return "redirect:/event/all";
     }
 
-    @GetMapping("/all-speakers")
-    public String showAllSpeakers(@ModelAttribute("speaker") SpeakerDto speakerDto, Model model) {
-        model.addAttribute("speakers", eventService.getAllSpeakers());
-        return "speaker_list";
-    }
+//    @GetMapping("/all-speakers")
+//    public String showAllSpeakers(@ModelAttribute("speaker") SpeakerDto speakerDto, Model model) {
+//        model.addAttribute("speakers", eventService.getAllSpeakers());
+//        return "speaker_list";
+//    }
 
 }

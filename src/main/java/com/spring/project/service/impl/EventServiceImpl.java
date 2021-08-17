@@ -108,8 +108,8 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(current);
     }
 
-    @Override
-    public List<SpeakerDto> getAllSpeakers() {
-        return businessMapper.convertSpeakerListToSpeakerDtoList(speakerRepository.findAll());
-    }
+//    @Override
+//    public List<SpeakerDto> getAllSpeakers() {
+//        return businessMapper.convertSpeakerListToSpeakerDtoList(speakerRepository.findAll());
+//    }
 }
