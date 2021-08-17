@@ -1,4 +1,4 @@
-package com.spring.project.service;
+package com.spring.project.security;
 
 import com.spring.project.model.User;
 import com.spring.project.repository.UserRepository;

@@ -1,4 +1,4 @@
-package com.spring.project.service;
+package com.spring.project.service.impl;
 
 import com.spring.project.dto.*;
 import com.spring.project.exceptions.EventNotCreateException;
@@ -11,6 +11,7 @@ import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.SpeakerRepository;
 import com.spring.project.repository.TopicRepositiry;
+import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

@@ -1,10 +1,9 @@
+
 package com.spring.project.security;
 
-import com.spring.project.service.SecurityService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,10 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/login", "/", "/event/**").permitAll()
-//                .antMatchers("/event/**").hasRole("MODERATOR")
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/signup", "/login", "/css/**", "/img/**").permitAll()
+                .antMatchers("/event/**").hasAuthority("MODERATOR")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
@@ -46,19 +44,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/login?logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/")
-                .and().exceptionHandling();
+                .logoutSuccessUrl("/login");
     }
 
+/*
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/css/**", "/img/**");
     }
+*/
 
 }

@@ -1,15 +1,16 @@
-package com.spring.project.service;
+package com.spring.project.service.impl;
 
 import com.spring.project.dto.LoginDto;
 import com.spring.project.dto.RegistrationDto;
 import com.spring.project.dto.UpdateUserDto;
 import com.spring.project.dto.UserDto;
-import com.spring.project.exceptions.EmailNotUniqueException;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.User;
-import com.spring.project.model.enums.UserRole;
+import com.spring.project.model.enums.Role;
 import com.spring.project.repository.UserRepository;
+import com.spring.project.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -29,20 +30,14 @@ import java.util.Optional;
  * @author Andrii Barsuk
  */
 @Log4j2
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserRepository userRepository;
-
-    @Resource
-    private BusinessMapper businessMapper;
-
-    @Resource
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Resource
-    private MessageSource messageSource;
+    private final UserRepository userRepository;
+    private final BusinessMapper businessMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MessageSource messageSource;
 
     @Override
     public Optional<User> findUserByEmail(String email) {
@@ -54,7 +49,7 @@ public class UserServiceImpl implements UserService {
         try {
             User user = businessMapper.convertRegistrationDtoToUser(registrationDto);
             log.info("Handling save users: " + registrationDto);
-            user.setRoles(Collections.singleton(UserRole.USER));
+            user.setRoles(Collections.singleton(Role.USER));
             user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
             return userRepository.save(user);
 

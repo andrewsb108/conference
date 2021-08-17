@@ -20,9 +20,5 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping
-    public ModelAndView startPage() {
-        return new ModelAndView("start-page");
-    }
 
 }
