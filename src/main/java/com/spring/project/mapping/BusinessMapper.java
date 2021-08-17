@@ -1,10 +1,7 @@
 package com.spring.project.mapping;
 
 import com.spring.project.dto.*;
-import com.spring.project.model.Event;
-import com.spring.project.model.Participant;
-import com.spring.project.model.Topic;
-import com.spring.project.model.User;
+import com.spring.project.model.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -85,8 +82,8 @@ public class BusinessMapper {
                 .title(eventDto.getTitle())
                 .scheduledDate(eventDto.getScheduledDate())
                 .scheduledTime(eventDto.getScheduledTime())
-                .topicList(eventDto.getTopicList().stream().map(topic -> convertTopicDtoToTopic(topic)).collect(Collectors.toList()))
-                .participantList(eventDto.getParticipantList().stream().map(p->convertToParticipant(p)).collect(Collectors.toList()))
+                .topicList(eventDto.getTopicList().stream().map(topic -> convertToTopic(topic)).collect(Collectors.toList()))
+                .participantList(eventDto.getParticipantList().stream().map(p -> convertToParticipant(p)).collect(Collectors.toList()))
                 .build();
     }
 
@@ -99,8 +96,8 @@ public class BusinessMapper {
                 .title(event.getTitle())
                 .scheduledDate(event.getScheduledDate())
                 .scheduledTime(event.getScheduledTime())
-                .topicList(event.getTopicList().stream().map(topic -> convertToTopic(topic)).collect(Collectors.toList()))
-                .participantList(event.getParticipantList().stream().map(p->convertToParticipantDto(p)).collect(Collectors.toList()))
+                .topicList(event.getTopicList().stream().map(topic -> convertToTopicDto(topic)).collect(Collectors.toList()))
+                .participantList(event.getParticipantList().stream().map(p -> convertToParticipantDto(p)).collect(Collectors.toList()))
                 .build();
     }
 
@@ -156,7 +153,7 @@ public class BusinessMapper {
                 .build();
     }
 
-    public TopicDto convertToTopic(Topic topic) {
+    public TopicDto convertToTopicDto(Topic topic) {
         if (topic == null) {
             return null;
         }
@@ -167,7 +164,7 @@ public class BusinessMapper {
                 .build();
     }
 
-    public Topic convertTopicDtoToTopic(TopicDto topicDto) {
+    public Topic convertToTopic(TopicDto topicDto) {
         if (topicDto == null) {
             return null;
         }
@@ -190,5 +187,26 @@ public class BusinessMapper {
                 .build();
     }
 
+    public SpeakerDto convertToSpeakerDto(Speaker speaker) {
+        if (speaker == null) {
+            return null;
+        }
+        return SpeakerDto.builder()
+                .id(speaker.getId())
+                .firstName(speaker.getFirstName())
+                .lastName(speaker.getLastName())
+                .build();
+    }
+
+    public List<SpeakerDto> convertSpeakerListToSpeakerDtoList(List<Speaker> speakers) {
+        if (speakers == null) {
+            return null;
+        }
+        List<SpeakerDto> list = new ArrayList<>();
+        for (Speaker speaker: speakers) {
+            list.add(convertToSpeakerDto(speaker));
+        }
+        return list;
+    }
 
 }

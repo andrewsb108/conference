@@ -1,9 +1,6 @@
 package com.spring.project.service;
 
-import com.spring.project.dto.EventRegisterDto;
-import com.spring.project.dto.TopicDto;
-import com.spring.project.dto.EventCreateDto;
-import com.spring.project.dto.EventDto;
+import com.spring.project.dto.*;
 import com.spring.project.model.Event;
 import com.spring.project.model.Topic;
 
@@ -24,5 +21,7 @@ public interface EventService {
     Topic addNewTopic(long eventId, TopicDto topic);
 
     void registerToEvent(long id, EventRegisterDto eventRegisterDto);
+
+    List<SpeakerDto> getAllSpeakers();
 
 }

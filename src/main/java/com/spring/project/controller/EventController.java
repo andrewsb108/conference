@@ -1,9 +1,6 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.EventCreateDto;
-import com.spring.project.dto.EventDto;
-import com.spring.project.dto.EventRegisterDto;
-import com.spring.project.dto.TopicDto;
+import com.spring.project.dto.*;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.service.EventService;
 import lombok.extern.log4j.Log4j2;
@@ -104,4 +101,11 @@ public class EventController {
 
         return "redirect:/event/all";
     }
+
+    @GetMapping("/all-speakers")
+    public String showAllSpeakers(@ModelAttribute("speaker") SpeakerDto speakerDto, Model model) {
+        model.addAttribute("speakers", eventService.getAllSpeakers());
+        return "speaker_list";
+    }
+
 }

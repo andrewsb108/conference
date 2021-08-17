@@ -70,7 +70,7 @@
                 <td th:text="${topic.getId()}"/>
                 <td th:text="${topic.getTopicTitle()}"/>
                 <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>
-                    <button th:unless="${topic.speaker}" th:text="#{add.speaker.to.topic}">ADD</button>
+                    <button class="btn btn-outline-success" th:unless="${topic.speaker}" th:text="#{add.speaker.to.topic}">ADD</button>
                 </td>
 
             </tr>
@@ -87,7 +87,7 @@
                         </div>
                     </td>
                     <td>
-                        <br><br>
+                        <br>
                         <button class="btn btn-outline-success" type="submit" th:text="#{topic.create}">Create</button>
                     </td>
                 </form>

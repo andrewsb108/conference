@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 /**
  * @author Andrii Barsuk
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RoleDto {
+public class SpeakerDto {
     private long id;
-    private String role;
+    private String firstName;
+    private String lastName;
 }
