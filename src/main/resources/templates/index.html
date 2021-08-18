@@ -12,7 +12,7 @@
       th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
 <div th:replace="fragments/top_menu :: menu"></div>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <div class="display-2 text-center w-100" th:text="#{start.page.create.new.conference}">Conference system</div>
+    <div class="display-2 text-center w-100" th:text="#{event.list}">Event list</div>
 </div>
 
 <div class="container w-75 bg-light">
@@ -38,7 +38,7 @@
                     <td>
                         <a class="btn btn-outline-secondary" th:href="@{/event/{id}/event-reg(id=${event.getId})}"
                            th:text="#{speaker.register}">Register</a>
-                    </td>
+                    </td>4
                 </tr>
                 </tbody>
             </table>

@@ -25,6 +25,8 @@
                 <small class="text-danger" th:if="${#fields.hasErrors('title')}"
                        th:errors="*{title}">Validation error
                 </small>
+
+
             </div>
 
             <div class="form-group">
@@ -62,16 +64,16 @@
             <tr>
                 <th scope="col" th:text="#{topic.id}">Id</th>
                 <th scope="col" th:text="#{topic.title}">Topic title</th>
-                <th scope="col" th:text="#{topic.speaker}">Speaker</th>
+                <!--                <th scope="col" th:text="#{topic.speaker}">Speaker</th>-->
             </tr>
             </thead>
             <tbody>
             <tr th:each="topic : ${topics}">
                 <td th:text="${topic.getId()}"/>
                 <td th:text="${topic.getTopicTitle()}"/>
-                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>
-                    <button class="btn btn-outline-success" th:unless="${topic.speaker}" th:text="#{add.speaker.to.topic}">ADD</button>
-                </td>
+                <!--                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>-->
+                <!--                    <button class="btn btn-outline-success" th:unless="${topic.speaker}" th:text="#{add.speaker.to.topic}">ADD</button>-->
+                <!--                </td>-->
 
             </tr>
             <tr>

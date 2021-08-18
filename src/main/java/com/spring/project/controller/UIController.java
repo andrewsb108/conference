@@ -18,7 +18,7 @@ public class UIController {
 
     @GetMapping
     public ModelAndView startPage() {
-        return new ModelAndView("dashboard");
+        return new ModelAndView("index");
     }
 
 }

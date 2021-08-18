@@ -2,6 +2,8 @@ package com.spring.project.mapping;
 
 import com.spring.project.dto.*;
 import com.spring.project.model.*;
+import com.spring.project.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class BusinessMapper {
+    @Autowired
+    EventRepository repository;
 
     public UserDto convertUserToUserDto(User user) {
         if (user == null) {
@@ -46,16 +50,16 @@ public class BusinessMapper {
         return list;
     }
 
-    public User convertUserDtoToUser(UserDto userDto) {
-        if (userDto == null) {
-            return null;
-        }
-
-        return User.builder()
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .build();
-    }
+//    public User convertUserDtoToUser(UserDto userDto) {
+//        if (userDto == null) {
+//            return null;
+//        }
+//
+//        return User.builder()
+//                .firstName(userDto.getFirstName())
+//                .lastName(userDto.getLastName())
+//                .build();
+//    }
 
     public User convertRegistrationDtoToUser(RegistrationDto registrationDto) {
         if (registrationDto == null) {
@@ -85,6 +89,19 @@ public class BusinessMapper {
                 .topicList(eventDto.getTopicList().stream().map(topic -> convertToTopic(topic)).collect(Collectors.toList()))
                 .participantList(eventDto.getParticipantList().stream().map(p -> convertToParticipant(p)).collect(Collectors.toList()))
                 .build();
+    }
+
+    public Event convertEventDtoToEventForUpdate(EventDto eventDto) {
+        if (eventDto == null) {
+            return null;
+        }
+
+        Event current = repository.findById(eventDto.getId());
+
+        current.setTitle(eventDto.getTitle());
+        current.setScheduledDate(eventDto.getScheduledDate());
+        current.setScheduledTime(eventDto.getScheduledTime());
+        return current;
     }
 
     public EventDto convertEventToEventDto(Event event) {
@@ -160,7 +177,7 @@ public class BusinessMapper {
         return TopicDto.builder()
                 .id(topic.getId())
                 .topicTitle(topic.getTitle())
-                .speaker(topic.getSpeaker())
+//                .speaker(topic.getSpeaker())
                 .build();
     }
 
@@ -171,7 +188,7 @@ public class BusinessMapper {
         return Topic.builder()
                 .id(topicDto.getId())
                 .title(topicDto.getTopicTitle())
-                .speaker(topicDto.getSpeaker())
+//                .speaker(topicDto.getSpeaker())
                 .build();
     }
 

@@ -7,7 +7,30 @@
     <div th:replace="fragments/login_page :: head_tag"></div>
 </head>
 <body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
-<div th:replace="fragments/top_menu :: menu"></div>
+
+<!--<div th:replace="fragments/top_menu :: menu"></div>-->
+
+<div th:fragment="menu">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container-fluid">
+<!--            <div clas="row">-->
+<!--                <div class="col-7"><a class="navbar-brand" th:href="@{/}" th:text="#{start.page.title}">Conference Management System</a></div>-->
+<!--            </div>-->
+
+            <div class="col-3" th:replace="fragments/lang_menu :: lang"></div>
+
+            <div class="col-2">
+<!--                <a class="btn btn-outline-success" th:href="@{/login}" th:text="#{login.login}">Sign in</a>-->
+                <a class="btn btn-outline-success" th:href="@{/signup}" th:text="#{login.sign.up}">Signup</a>
+                <!--                <a class="btn btn-outline-success" th:href="@{/logout}" th:text="#{login.out}">Log out</a>-->
+            </div>
+<!--            <form action="" th:action="@{/logout}" name="logout" method="POST">-->
+<!--                <button type="submit" class="btn btn-outline-success" name="logout" value="logout"-->
+<!--                        th:text="#{login.out}">Log out</button>-->
+<!--            </form>-->
+        </div>
+    </nav>
+</div>
 
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <div class="card-header" th:text="#{login.title}"> SIGN IN</div>
@@ -18,7 +41,7 @@
             <div class="form-group">
                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                 <input type="text" name="email" id="email" placeholder="Email"
-                       th:placeholder="#{login.email.placeholder}" autofocus/>
+                       th:placeholder="#{login.email.placeholder}"/>
             </div>
             <div class="form-group">
                 <label for="password"><i class="zmdi zmdi-lock"></i></label>

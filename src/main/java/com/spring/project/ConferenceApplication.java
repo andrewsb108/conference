@@ -1,9 +1,11 @@
 package com.spring.project;
 
 import com.spring.project.model.Event;
+import com.spring.project.model.Topic;
 import com.spring.project.model.User;
 import com.spring.project.model.enums.Role;
 import com.spring.project.repository.EventRepository;
+import com.spring.project.repository.TopicRepositiry;
 import com.spring.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -37,6 +39,9 @@ class MyRunner implements CommandLineRunner {
     private EventRepository eventRepository;
 
     @Autowired
+    private TopicRepositiry topicRepositiry;
+
+    @Autowired
     BCryptPasswordEncoder encoder;
 
 
@@ -44,7 +49,7 @@ class MyRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         User admin = new User();
         admin.setFirstName("admin");
-        admin.setLastName("adminovich");
+        admin.setLastName("admin");
         admin.setEmail("admin@gmail.com");
         admin.setPassword(encoder.encode("123"));
         admin.setRoles(Set.of(Role.MODERATOR));
@@ -52,7 +57,7 @@ class MyRunner implements CommandLineRunner {
 
         User speaker = new User();
         speaker.setFirstName("speaker");
-        speaker.setLastName("speakerovich");
+        speaker.setLastName("speaker");
         speaker.setEmail("speaker@gmail.com");
         speaker.setPassword(encoder.encode("456"));
         speaker.setRoles(Set.of(Role.SPEAKER));
@@ -66,5 +71,16 @@ class MyRunner implements CommandLineRunner {
         eventRepository.save(event);
         eventRepository.save(event1);
         eventRepository.save(event2);
+
+        Topic firstTopic = new Topic(0, "some title");
+        Topic secondTopic = new Topic(0, "some next");
+
+        topicRepositiry.save(firstTopic);
+        topicRepositiry.save(secondTopic);
+
+        event.getTopicList().add(firstTopic);
+        event.getTopicList().add(secondTopic);
+
+        eventRepository.save(event);
     }
 }

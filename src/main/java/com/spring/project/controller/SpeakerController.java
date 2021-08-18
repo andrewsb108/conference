@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 @RequiredArgsConstructor
 public class SpeakerController {
-//    @Autowired
+
     private final EventService eventService;
 
-    @GetMapping("/board")
+    @GetMapping("/index")
     public String showAllEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
         model.addAttribute("events", eventService.getAllEvents());
-        return "dashboard";
+        return "index";
     }
 }

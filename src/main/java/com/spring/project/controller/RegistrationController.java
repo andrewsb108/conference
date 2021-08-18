@@ -2,7 +2,6 @@ package com.spring.project.controller;
 
 import com.spring.project.dto.RegistrationDto;
 import com.spring.project.exceptions.UserAlreadyExistException;
-import com.spring.project.model.User;
 import com.spring.project.service.UserService;
 import com.spring.project.validation.PasswordValidator;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -29,14 +26,10 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/signup")
 public class RegistrationController {
-    @Resource
+
     private final UserService userService;
-
-    @Resource
-    private PasswordValidator passwordValidator;
-
-    @Resource
-    private MessageSource messageSource;
+    private final PasswordValidator passwordValidator;
+    private final MessageSource messageSource;
 
     @GetMapping
     public String signup(@ModelAttribute("user")  RegistrationDto regDto) {

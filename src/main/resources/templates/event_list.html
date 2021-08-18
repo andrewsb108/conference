@@ -24,7 +24,7 @@
                     <th scope="col" th:text="#{event.scheduled.time}">ScheduledTime</th>
                     <th scope="col" th:text="#{event.edit.button}">Edits</th>
                     <th scope="col" th:text="#{event.delete.button}">Delete</th>
-                    <th scope="col" th:text="#{register.to.event}">Register to event</th>
+<!--                    <th scope="col" th:text="#{register.to.event}">Register to event</th>-->
 
                 </tr>
                 </thead>
@@ -42,10 +42,10 @@
                         <a class="btn btn-outline-danger" th:href="@{/event/delete/{id}(id=${event.getId})}"
                            th:text="#{event.delete.button}">Delete></a>
                     </td>
-                    <td>
-                        <a class="btn btn-outline-secondary" th:href="@{/event/{id}/event-reg(id=${event.getId})}"
-                           th:text="#{speaker.register}">Register</a>
-                    </td>
+<!--                    <td>-->
+<!--                        <a class="btn btn-outline-secondary" th:href="@{/event/{id}/event-reg(id=${event.getId})}"-->
+<!--                           th:text="#{speaker.register}">Register</a>-->
+<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>

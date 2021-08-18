@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Resource;
 import javax.security.auth.login.CredentialException;
 import javax.validation.Valid;
 
@@ -19,7 +18,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class LoginController {
 
-    @Resource
     private final UserService userService;
 
     @GetMapping("/login")

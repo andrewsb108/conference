@@ -28,7 +28,8 @@
             <div class="form-group">
                 <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>
                 <br> <input type="datetime-local" th:field="*{scheduledDate}" name="scheduledDate" id="scheduledDate"
-                            placeholder="ScheduledDate" th:placeholder="#{event.scheduled.date}" required>
+                           th:placeholder="#{event.scheduled.date}" required >
+<!--                th:text="#{event.update.scheduled.date}"-->
                 <small class="text-danger" th:if="${#fields.hasErrors('scheduledDate')}"
                        th:errors="*{scheduledDate}">Validation error
                 </small>
@@ -36,8 +37,9 @@
 
             <div class="form-group">
                 <label for="scheduledTime"><i class="zmdi zmdi-email"></i></label>
-                <br> <input type="datetime-local" th:field="*{scheduledTime}" name="scheduledTime" id="scheduledTime"
-                            placeholder="ScheduledTime" th:placeholder="#{event.scheduled.time}" required>
+                <br> <input type="datetime-local"  th:field="*{scheduledTime}" name="scheduledTime" id="scheduledTime"
+                            th:placeholder="#{event.scheduled.time}" required >
+<!--                th:text="#{event.update.scheduled.time}"-->
                 <small class="text-danger" th:if="${#fields.hasErrors('scheduledTime')}"
                        th:errors="*{scheduledTime}">Validation error
                 </small>
