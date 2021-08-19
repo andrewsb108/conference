@@ -15,19 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import java.util.List;
-
 @Log4j2
 @RequestMapping("/event")
 @RequiredArgsConstructor
 @Controller
 public class EventController {
 
-    @Resource
-    private EventService eventService;
-    @Resource
-    private MessageSource messageSource;
+    private final EventService eventService;
+    private final MessageSource messageSource;
 
     @GetMapping
     public String showEventPage(@ModelAttribute("event") EventCreateDto eventCreateDto) {

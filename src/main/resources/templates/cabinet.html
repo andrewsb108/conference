@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:replace="fragments/login_page :: head_tag"></div>
+</head>
+<body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
+
+<div th:fragment="menu">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="col-3" th:replace="fragments/lang_menu :: lang"></div>
+            <form action="" th:action="@{/logout}" name="logout" method="POST">
+                <button type="submit" class="btn btn-outline-success" name="logout" value="logout"
+                        th:text="#{login.out}">Log out
+                </button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+
+<div>
+        <a style="text-decoration: none; font-size: 16pt;" class="brand my-0 mr-auto text-dark" href="/">Conference System</a>
+
+        <nav class="my-2 my-md-0 me-md-3" sec:authorize="hasAuthority('SPEAKER')">
+            <a class="p-2 text-dark" href="#" th:text="#{...}" th:href="@{/...}">Переход</a>
+        </nav>
+
+</div>
+
+<div th:replace="fragments/login_page :: footer"></div>
+</body>
+</html>

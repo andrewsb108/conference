@@ -39,7 +39,6 @@ public class EventServiceImpl implements EventService {
     private final BusinessMapper businessMapper;
     private final MessageSource messageSource;
     private final ParticipantRepository participantRepository;
-//    private final SpeakerRepository speakerRepository;
 
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
@@ -66,7 +65,6 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Optional<Event> updateEvent(EventDto eventDto) {
-        System.out.println(eventDto);
         Event event = businessMapper.convertEventDtoToEventForUpdate(eventDto);
         return Optional.ofNullable(eventRepository.save(event));
     }
@@ -102,9 +100,4 @@ public class EventServiceImpl implements EventService {
         current.getParticipantList().add(participant);
         eventRepository.save(current);
     }
-
-//    @Override
-//    public List<SpeakerDto> getAllSpeakers() {
-//        return businessMapper.convertSpeakerListToSpeakerDtoList(speakerRepository.findAll());
-//    }
 }
