@@ -10,6 +10,7 @@ import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.Event;
 import com.spring.project.model.Participant;
 import com.spring.project.model.Topic;
+import com.spring.project.model.User;
 import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepositiry;
@@ -39,6 +40,7 @@ public class EventServiceImpl implements EventService {
     private final BusinessMapper businessMapper;
     private final MessageSource messageSource;
     private final ParticipantRepository participantRepository;
+    private final UserServiceImpl userService;
 
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
@@ -89,6 +91,17 @@ public class EventServiceImpl implements EventService {
         current.getTopicList().add(topic);
         eventRepository.save(current);
         return topic;
+    }
+
+    @Override
+    @Transactional
+    public Topic assignSpeaker(long eventId, TopicDto topic) {
+        Topic topicRepositoryById = topicRepositiry.findById(topic.getId()).orElseThrow();
+        User user = userService.findUserById(topic.getSpeaker());
+        topicRepositoryById.setSpeaker(user.getFullName());
+        topicRepositiry.save(topicRepositoryById);
+
+        return topicRepositoryById;
     }
 
     @Override

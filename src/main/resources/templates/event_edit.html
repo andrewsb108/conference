@@ -69,12 +69,29 @@
             <tr th:each="topic : ${topics}">
                 <td th:text="${topic.getId()}"/>
                 <td th:text="${topic.getTopicTitle()}"/>
-<!--                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>-->
-<!--                    <button class="btn btn-outline-success" th:unless="${topic.speaker}"-->
-<!--                            th:text="#{add.speaker.to.topic}">ADD-->
-<!--                    </button>-->
-<!--                </td>-->
+<!--                                <td th:text="${topic.getSpeaker()}"/>-->
+                <td th:if="${topic.getSpeaker() == '---'}">
+                    <form method="POST" class="register-form"
+                          th:action="@{/event/{id}/topic/assign(id=${event.getId()})}"
+                          th:object="${topic}">
 
+                        <div class="form-group">
+                            <select th:field="*{speaker}">
+                                <option th:value="---" th:text="---"></option>
+                                <option th:each="speaker : ${speakerList}" th:value="${speaker.getId()}"
+                                        th:text="${speaker.getFullName()}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-outline-success" type="submit" th:text="#{topic.create}">Create</button>
+
+                    </form>
+
+                </td>
+                <td th:unless="${topic.getSpeaker() == '---'}">
+                    <span th:text="${topic.getSpeaker()}"/>
+                </td>
             </tr>
             <tr>
                 <form method="POST" class="register-form"
@@ -98,6 +115,8 @@
         </table>
     </div>
 </div>
+
+
 <div th:replace="fragments/login_page :: footer"></div>
 </body>
 </html>

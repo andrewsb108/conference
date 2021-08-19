@@ -1,9 +1,6 @@
 package com.spring.project.service;
 
-import com.spring.project.dto.LoginDto;
-import com.spring.project.dto.RegistrationDto;
-import com.spring.project.dto.UpdateUserDto;
-import com.spring.project.dto.UserDto;
+import com.spring.project.dto.*;
 import com.spring.project.model.User;
 
 import javax.security.auth.login.CredentialException;
@@ -26,10 +23,9 @@ public interface UserService {
 
     List<UserDto> getAllUsers();
 
+    List<SpeakerDto> getAllSpeakers();
+
     void deleteById(long id);
 
-//    User changePassword(UserDto userDto, String newPassword);
-
-//    boolean promote(String email, Role role);
-
+    User findUserById(String speaker);
 }

@@ -144,6 +144,25 @@ public class BusinessMapper {
         return list;
     }
 
+    public List<SpeakerDto> convertUsersToSpeakers(List<User> users) {
+        if (users == null) {
+            return null;
+        }
+        List<SpeakerDto> list = new ArrayList<>();
+        for (User user : users) {
+            list.add(convertUserToSpeaker(user));
+        }
+        return list;
+    }
+
+    public SpeakerDto convertUserToSpeaker (User user) {
+        return SpeakerDto.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build();
+    }
+
     public Participant convertToParticipant(ParticipantDto participantDto) {
         if (participantDto == null) {
             return null;
@@ -177,7 +196,7 @@ public class BusinessMapper {
         return TopicDto.builder()
                 .id(topic.getId())
                 .topicTitle(topic.getTitle())
-//                .speaker(topic.getSpeaker())
+                .speaker(topic.getSpeaker())
                 .build();
     }
 
@@ -188,7 +207,7 @@ public class BusinessMapper {
         return Topic.builder()
                 .id(topicDto.getId())
                 .title(topicDto.getTopicTitle())
-//                .speaker(topicDto.getSpeaker())
+                .speaker(topicDto.getSpeaker())
                 .build();
     }
 

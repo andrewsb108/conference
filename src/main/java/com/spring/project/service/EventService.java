@@ -20,6 +20,8 @@ public interface EventService {
 
     Topic addNewTopic(long eventId, TopicDto topic);
 
+    Topic assignSpeaker(long eventId, TopicDto topic);
+
     void registerToEvent(long id, EventRegisterDto eventRegisterDto);
 
 //    List<SpeakerDto> getAllSpeakers();

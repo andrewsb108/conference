@@ -87,8 +87,8 @@ class MyRunner implements CommandLineRunner {
             eventRepository.save(event);
 
 
-            Topic firstTopic = new Topic(0, faker.gameOfThrones().character());
-            Topic secondTopic = new Topic(0, faker.gameOfThrones().character());
+            Topic firstTopic = new Topic(0, faker.gameOfThrones().character(), "---");
+            Topic secondTopic = new Topic(0, faker.gameOfThrones().character(), "---");
 
             topicRepositiry.save(firstTopic);
             topicRepositiry.save(secondTopic);
@@ -98,7 +98,6 @@ class MyRunner implements CommandLineRunner {
 
             eventRepository.save(event);
         }
-
 
 
     }

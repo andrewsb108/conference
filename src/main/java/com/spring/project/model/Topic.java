@@ -23,6 +23,7 @@ public class Topic {
     private long id;
     @Column(name = "title")
     private String title;
-//    @OneToOne
-//    private Speaker speaker;
+
+    @Column(name="speaker")
+    private String speaker;
 }

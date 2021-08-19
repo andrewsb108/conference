@@ -6,6 +6,7 @@ import com.spring.project.dto.EventRegisterDto;
 import com.spring.project.dto.TopicDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.service.EventService;
+import com.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
@@ -23,6 +24,7 @@ public class EventController {
 
     private final EventService eventService;
     private final MessageSource messageSource;
+    private final UserService userService;
 
     @GetMapping
     public String showEventPage(@ModelAttribute("event") EventCreateDto eventCreateDto) {
@@ -60,7 +62,8 @@ public class EventController {
         model.addAttribute("topic", new TopicDto());
         model.addAttribute("topics", dto.getTopicList());
         model.addAttribute("participantList", dto.getParticipantList());
-        System.out.println(dto);
+        model.addAttribute("speakerList", userService.getAllSpeakers());
+        System.out.println("--------------------------------->"+userService.getAllSpeakers());
         return "event_edit";
     }
 
@@ -79,6 +82,12 @@ public class EventController {
     @PostMapping("/{id}/topic/add")
     public String createNewTopic(@PathVariable("id") long id, @ModelAttribute("topic") TopicDto dto) {
         eventService.addNewTopic(id, dto);
+        return "redirect:/event/edit/" + id;
+    }
+
+    @PostMapping("/{id}/topic/assign")
+    public String assignSpeaker(@PathVariable("id") long id, @ModelAttribute("topic") TopicDto dto) {
+        eventService.assignSpeaker(id, dto);
         return "redirect:/event/edit/" + id;
     }
 

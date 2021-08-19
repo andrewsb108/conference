@@ -17,4 +17,8 @@ public class SpeakerDto {
     private long id;
     private String firstName;
     private String lastName;
+
+    public String getFullName(){
+        return firstName+ " "+lastName;
+    }
 }

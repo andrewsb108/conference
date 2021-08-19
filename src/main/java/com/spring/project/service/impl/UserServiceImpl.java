@@ -1,9 +1,6 @@
 package com.spring.project.service.impl;
 
-import com.spring.project.dto.LoginDto;
-import com.spring.project.dto.RegistrationDto;
-import com.spring.project.dto.UpdateUserDto;
-import com.spring.project.dto.UserDto;
+import com.spring.project.dto.*;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.User;
@@ -25,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Andrii Barsuk
@@ -95,5 +93,16 @@ public class UserServiceImpl implements UserService {
         } catch (NoSuchElementException e) {
             log.info("Deleted category with id: " + id);
         }
+    }
+
+    @Override
+    public List<SpeakerDto> getAllSpeakers() {
+
+        return businessMapper.convertUsersToSpeakers(userRepository.findAll().stream().filter(u->u.getRoles().contains(Role.SPEAKER)).collect(Collectors.toList()));
+    }
+
+    @Override
+    public User findUserById(String speaker) {
+        return userRepository.findById(Long.parseLong(speaker)).orElseThrow();
     }
 }
