@@ -69,11 +69,11 @@
             <tr th:each="topic : ${topics}">
                 <td th:text="${topic.getId()}"/>
                 <td th:text="${topic.getTopicTitle()}"/>
-                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>
-                    <button class="btn btn-outline-success" th:unless="${topic.speaker}"
-                            th:text="#{add.speaker.to.topic}">ADD
-                    </button>
-                </td>
+<!--                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>-->
+<!--                    <button class="btn btn-outline-success" th:unless="${topic.speaker}"-->
+<!--                            th:text="#{add.speaker.to.topic}">ADD-->
+<!--                    </button>-->
+<!--                </td>-->
 
             </tr>
             <tr>
