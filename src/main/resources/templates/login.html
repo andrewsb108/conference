@@ -7,27 +7,16 @@
     <div th:replace="fragments/login_page :: head_tag"></div>
 </head>
 <body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
-
-<!--<div th:replace="fragments/top_menu :: menu"></div>-->
-
-<div th:fragment="menu">
+<div>
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container-fluid">
-<!--            <div clas="row">-->
-<!--                <div class="col-7"><a class="navbar-brand" th:href="@{/}" th:text="#{start.page.title}">Conference Management System</a></div>-->
-<!--            </div>-->
-
-            <div class="col-3" th:replace="fragments/lang_menu :: lang"></div>
-
-            <div class="col-2">
-<!--                <a class="btn btn-outline-success" th:href="@{/login}" th:text="#{login.login}">Sign in</a>-->
-                <a class="btn btn-outline-success" th:href="@{/signup}" th:text="#{login.sign.up}">Signup</a>
-                <!--                <a class="btn btn-outline-success" th:href="@{/logout}" th:text="#{login.out}">Log out</a>-->
+            <div>
+                <a href="?lang=en" class="btn btn-outline-success">English</a>
+                <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
             </div>
-<!--            <form action="" th:action="@{/logout}" name="logout" method="POST">-->
-<!--                <button type="submit" class="btn btn-outline-success" name="logout" value="logout"-->
-<!--                        th:text="#{login.out}">Log out</button>-->
-<!--            </form>-->
+            <div class="col-2">
+                <a class="btn btn-outline-success" th:href="@{/signup}" th:text="#{login.sign.up}">Signup</a>
+            </div>
         </div>
     </nav>
 </div>
@@ -53,5 +42,14 @@
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 </body>
 </html>

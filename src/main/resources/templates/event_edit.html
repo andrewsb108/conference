@@ -8,7 +8,8 @@
     <div th:replace="fragments/login_page :: head_tag"></div>
 
 </head>
-<body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
+<body class="p-0 m-0"
+      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
 <div th:replace="fragments/top_menu :: menu"></div>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <h2 class="card-header" th:text="#{event.edit}">Edit event</h2>
@@ -61,16 +62,18 @@
             <tr>
                 <th scope="col" th:text="#{topic.id}">Id</th>
                 <th scope="col" th:text="#{topic.title}">Topic title</th>
-                <!--                <th scope="col" th:text="#{topic.speaker}">Speaker</th>-->
+                <th scope="col" th:text="#{topic.speaker}">Speaker</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="topic : ${topics}">
                 <td th:text="${topic.getId()}"/>
                 <td th:text="${topic.getTopicTitle()}"/>
-                <!--                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>-->
-                <!--                    <button class="btn btn-outline-success" th:unless="${topic.speaker}" th:text="#{add.speaker.to.topic}">ADD</button>-->
-                <!--                </td>-->
+                <td><span th:if="${topic.speaker}" th:text="${topic.speaker.firstName}"></span>
+                    <button class="btn btn-outline-success" th:unless="${topic.speaker}"
+                            th:text="#{add.speaker.to.topic}">ADD
+                    </button>
+                </td>
 
             </tr>
             <tr>
