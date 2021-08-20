@@ -50,7 +50,7 @@ class MyRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Faker faker = new Faker(new Locale("uk"));
+        Faker faker = new Faker(new Locale("en"));
 
 
         User admin = new User();
@@ -69,7 +69,7 @@ class MyRunner implements CommandLineRunner {
         speaker.setRoles(Set.of(Role.SPEAKER));
         repository.save(speaker);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             User sp1 = new User();
             sp1.setFirstName(faker.name().firstName());
             sp1.setLastName(faker.name().lastName());
@@ -82,13 +82,13 @@ class MyRunner implements CommandLineRunner {
 
         Random rnd = new Random();
 
-        for (int i = 0; i < 20; i++) {
-            Event event = new Event(0, faker.gameOfThrones().city(), LocalDate.now().plusDays(rnd.nextInt(100)), LocalTime.now().plusMinutes(rnd.nextInt(100)), new ArrayList<>(), new ArrayList<>());
+        for (int i = 0; i < 8; i++) {
+            Event event = new Event(0, faker.book().genre(), LocalDate.now().plusDays(rnd.nextInt(100)), LocalTime.now().plusMinutes(rnd.nextInt(100)), new ArrayList<>(), new ArrayList<>());
             eventRepository.save(event);
 
 
-            Topic firstTopic = new Topic(0, faker.gameOfThrones().character(), "---");
-            Topic secondTopic = new Topic(0, faker.gameOfThrones().character(), "---");
+            Topic firstTopic = new Topic(0, faker.book().title(), "---");
+            Topic secondTopic = new Topic(0, faker.book().title(), "---");
 
             topicRepositiry.save(firstTopic);
             topicRepositiry.save(secondTopic);

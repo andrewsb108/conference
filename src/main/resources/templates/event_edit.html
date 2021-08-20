@@ -10,7 +10,24 @@
 </head>
 <body class="p-0 m-0"
       th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
-<div th:replace="fragments/top_menu :: menu"></div>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container-fluid">
+        <div>
+            <a href="?lang=en" class="btn btn-outline-success">English</a>
+            <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
+        </div>
+<!--        <div class="col-2">-->
+<!--            <a class="btn btn-outline-success" th:href="@{/event/all}" th:text="#{back.button}">Back</a>-->
+<!--        </div>-->
+        <form action="" th:action="@{/logout}" name="logout" method="POST">
+            <a class="btn btn-outline-success" th:href="@{/event/all}" th:text="#{back.button}">Back</a>
+            <button type="submit" class="btn btn-outline-success" name="logout" value="logout"
+                    th:text="#{login.out}">Log out
+            </button>
+        </form>
+    </div>
+</nav>
+<!--<div th:replace="fragments/top_menu :: menu"></div>-->
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <h2 class="card-header" th:text="#{event.edit}">Edit event</h2>
     <div class="col py-3">
@@ -69,7 +86,7 @@
             <tr th:each="topic : ${topics}">
                 <td th:text="${topic.getId()}"/>
                 <td th:text="${topic.getTopicTitle()}"/>
-<!--                                <td th:text="${topic.getSpeaker()}"/>-->
+                <!--                                <td th:text="${topic.getSpeaker()}"/>-->
                 <td th:if="${topic.getSpeaker() == '---'}">
                     <form method="POST" class="register-form"
                           th:action="@{/event/{id}/topic/assign(id=${event.getId()})}"
@@ -84,8 +101,8 @@
                             </select>
                         </div>
 
-                        <button class="btn btn-outline-success" type="submit" th:text="#{topic.create}">Create</button>
-
+                        <button class="btn btn-outline-success" type="submit" th:text="#{topic.add.speaker}">Create
+                        </button>
                     </form>
 
                 </td>
@@ -107,7 +124,8 @@
                     </td>
                     <td>
                         <br>
-                        <button class="btn btn-outline-success" type="submit" th:text="#{topic.create}">Create</button>
+                        <button class="btn btn-outline-success" type="submit" th:text="#{create.event}">Add Speaker
+                        </button>
                     </td>
                 </form>
             </tr>
@@ -115,8 +133,6 @@
         </table>
     </div>
 </div>
-
-
 <div th:replace="fragments/login_page :: footer"></div>
 </body>
 </html>

@@ -8,9 +8,21 @@
     <div th:replace="fragments/login_page :: head_tag"></div>
 
 </head>
-<body class="p-0 m-0"
-      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
-<div th:replace="fragments/top_menu :: menu"></div>
+<body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container-fluid">
+        <div>
+            <a href="?lang=en" class="btn btn-outline-success">English</a>
+            <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
+        </div>
+        <form action="" th:action="@{/logout}" name="logout" method="POST">
+            <a class="btn btn-outline-success" th:href="@{/index}" th:text="#{back.button}">Back</a>
+            <button type="submit" class="btn btn-outline-success" name="logout" value="logout"
+                    th:text="#{login.out}">Log out
+            </button>
+        </form>
+    </div>
+</nav>
 
 <div class="col py-3">
     <form method="POST" class="register-form" th:action="@{/event/{id}/event-reg(id=${event.getId()})}"
