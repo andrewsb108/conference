@@ -1,6 +1,7 @@
 
 package com.spring.project.security;
 
+import com.spring.project.model.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -39,13 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/signup", "/login", "/css/**", "/img/**").permitAll()
-                .antMatchers("/event/create").hasAuthority("MODERATOR")
-                .antMatchers("/event/all").hasAuthority("MODERATOR")
-                .antMatchers("/event/edit/{\\d+}").hasAuthority("MODERATOR")
-                .antMatchers("/event/update/{\\d+}").hasAuthority("MODERATOR")
-                .antMatchers("/event/delete/{\\d+}").hasAuthority("MODERATOR")
-                .antMatchers("/event/{\\d+}/topic/add").hasAuthority("MODERATOR")
-                .antMatchers("/event/{\\d+}/event-reg").hasAuthority("SPEAKER")
+                .antMatchers("/event/**").hasAuthority(Role.MODERATOR.name())
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -61,13 +56,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login");
     }
-
-/*
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/css/**", "/img/**");
-    }
-*/
 }

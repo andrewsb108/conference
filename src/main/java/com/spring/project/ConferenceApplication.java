@@ -1,12 +1,11 @@
 package com.spring.project;
 
-import com.github.javafaker.Faker;
 import com.spring.project.model.Event;
 import com.spring.project.model.Topic;
 import com.spring.project.model.User;
 import com.spring.project.model.enums.Role;
 import com.spring.project.repository.EventRepository;
-import com.spring.project.repository.TopicRepositiry;
+import com.spring.project.repository.TopicRepository;
 import com.spring.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -35,13 +32,13 @@ class MyRunner implements CommandLineRunner {
 
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Autowired
     private EventRepository eventRepository;
 
     @Autowired
-    private TopicRepositiry topicRepositiry;
+    private TopicRepository topicRepository;
 
     @Autowired
     BCryptPasswordEncoder encoder;
@@ -49,56 +46,47 @@ class MyRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        var moderator = User.builder()
+                .firstName("moderator")
+                .lastName("mod")
+                .email("admin@gmail.com")
+                .password(encoder.encode("111"))
+                .roles(Set.of(Role.MODERATOR))
+                .enabled(true)
+                .build();
+        var user = User.builder()
+                .firstName("user")
+                .lastName("user")
+                .email("user@gmail.com")
+                .password(encoder.encode("111"))
+                .roles(Set.of(Role.USER))
+                .enabled(true)
+                .build();
+        userRepository.saveAll(List.of(moderator, user));
 
-        Faker faker = new Faker(new Locale("en"));
-
-
-        User admin = new User();
-        admin.setFirstName("admin");
-        admin.setLastName("admin");
-        admin.setEmail("admin@gmail.com");
-        admin.setPassword(encoder.encode("123"));
-        admin.setRoles(Set.of(Role.MODERATOR));
-        repository.save(admin);
-
-        User speaker = new User();
-        speaker.setFirstName("speaker");
-        speaker.setLastName("speaker");
-        speaker.setEmail("speaker@gmail.com");
-        speaker.setPassword(encoder.encode("456"));
-        speaker.setRoles(Set.of(Role.SPEAKER));
-        repository.save(speaker);
-
-        for (int i = 0; i < 8; i++) {
-            User sp1 = new User();
-            sp1.setFirstName(faker.name().firstName());
-            sp1.setLastName(faker.name().lastName());
-            sp1.setEmail(faker.name().username() + "@gmail.com");
-            sp1.setPassword(encoder.encode("456"));
-            sp1.setRoles(Set.of(Role.SPEAKER));
-            repository.save(sp1);
-        }
-
-
-        Random rnd = new Random();
-
-        for (int i = 0; i < 8; i++) {
-            Event event = new Event(0, faker.book().genre(), LocalDate.now().plusDays(rnd.nextInt(100)), LocalTime.now().plusMinutes(rnd.nextInt(100)), new ArrayList<>(), new ArrayList<>());
-            eventRepository.save(event);
-
-
-            Topic firstTopic = new Topic(0, faker.book().title(), "---");
-            Topic secondTopic = new Topic(0, faker.book().title(), "---");
-
-            topicRepositiry.save(firstTopic);
-            topicRepositiry.save(secondTopic);
-
-            event.getTopicList().add(firstTopic);
-            event.getTopicList().add(secondTopic);
-
-            eventRepository.save(event);
-        }
-
-
+        var topicOne = Topic.builder()
+                .title("topic1")
+                .build();
+        var topicTwo = Topic.builder()
+                .title("topic2")
+                .build();
+        var rnd = new Random();
+        var event = Event.builder()
+                .title("event")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .topics(List.of(topicOne, topicTwo))
+                .build();
+        var event1 = Event.builder()
+                .title("event 1")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+        var event2 = Event.builder()
+                .title("event 2")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+        topicOne.setEvent(event);
+        topicTwo.setEvent(event);
+        topicRepository.saveAll(List.of(topicOne, topicTwo));
+        eventRepository.saveAll(List.of(event, event1, event2));
     }
 }

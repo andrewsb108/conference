@@ -16,7 +16,6 @@ public class ExceptionHandlingController {
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
         ModelAndView mav = new ModelAndView();
-//        mav.addObject("exception", e.getMessage());
         mav.addObject("url", req.getRequestURL());
         mav.setViewName(DEFAULT_ERROR_VIEW);
         return mav;

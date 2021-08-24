@@ -23,19 +23,5 @@ public class ParticipantDto {
     private String firstName;
     private String lastName;
     private boolean isSpeaker;
-
-
-//    private long id;
-//
-//    @NotEmpty(message = "{valid.reg.not.empty}")
-//    private String name;
-//
-//    @Email(message = "{valid.reg.email}")
-//    @NotEmpty(message = "{valid.reg.not_empty}")
-//    @Size(min = 2, max = 25, message = "{valid.reg.email.size}")
-//    private String email;
-//
-//    private boolean isPresent;
-//
-//    private LocalDateTime registered;
 }
+

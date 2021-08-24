@@ -12,7 +12,7 @@ public interface EventService {
 
     List<EventDto> getAllEvents();
 
-    EventDto getEventById(Long id);
+   EventDto getEventById(Long id);
 
     Optional<Event> updateEvent(EventDto eventDto);
 
@@ -20,10 +20,6 @@ public interface EventService {
 
     Topic addNewTopic(long eventId, TopicDto topic);
 
-    Topic assignSpeaker(long eventId, TopicDto topic);
-
     void registerToEvent(long id, EventRegisterDto eventRegisterDto);
-
-//    List<SpeakerDto> getAllSpeakers();
 
 }

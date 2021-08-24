@@ -1,11 +1,14 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.EventCreateDto;
-import com.spring.project.dto.EventDto;
-import com.spring.project.dto.EventRegisterDto;
-import com.spring.project.dto.TopicDto;
+import com.spring.project.dto.*;
 import com.spring.project.exceptions.EventAlreadyExistException;
+import com.spring.project.exceptions.EventNotFoundException;
+import com.spring.project.exceptions.TopicNotCreatedException;
+import com.spring.project.model.Topic;
+import com.spring.project.model.User;
+import com.spring.project.repository.TopicRepository;
 import com.spring.project.service.EventService;
+import com.spring.project.service.TopicService;
 import com.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -16,6 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @Log4j2
 @RequestMapping("/event")
 @RequiredArgsConstructor
@@ -24,6 +30,8 @@ public class EventController {
 
     private final EventService eventService;
     private final MessageSource messageSource;
+    private final TopicRepository topicRepository;
+    private final TopicService topicService;
     private final UserService userService;
 
     @GetMapping
@@ -55,68 +63,59 @@ public class EventController {
         return "event_list";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditEvent(@PathVariable("id") long id, Model model) {
-        EventDto dto = eventService.getEventById(id);
-        model.addAttribute("event", dto);
-        model.addAttribute("topic", new TopicDto());
-        model.addAttribute("topics", dto.getTopicList());
-        model.addAttribute("participantList", dto.getParticipantList());
-        model.addAttribute("speakerList", userService.getAllSpeakers());
-        System.out.println("--------------------------------->"+userService.getAllSpeakers());
+    @GetMapping("/edit/{eventId}")
+    public String showEditEvent(@PathVariable long eventId, Model model) {
+        try {
+            EventDto dto = eventService.getEventById(eventId);
+            model.addAttribute("event", dto);
+            model.addAttribute("topic", new TopicDto());
+            List<Topic> topics = topicRepository.findByEventId(eventId);
+            model.addAttribute("topics", topics);
+            List<UserDto> users = userService.getAllUsers();
+            model.addAttribute("users", users);
+        } catch (EventNotFoundException ex) {
+            model.addAttribute("error_message", messageSource.getMessage("event.not.found",
+                    null, LocaleContextHolder.getLocale()));
+        }
         return "event_edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateEvent(@PathVariable("id") long id, @ModelAttribute("event") EventDto eventDto) {
+    @PostMapping("/edit/{eventId}")
+    public String assignSpeaker(@PathVariable long eventId, UserDto userDto) {
+        return "redirect:/event/edit/" + eventId;
+    }
+
+    @PostMapping("/update/{eventId}")
+    public String updateEvent(@PathVariable long eventId, @ModelAttribute("event") EventDto eventDto) {
         eventService.updateEvent(eventDto);
         return "redirect:/event/all";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEvent(@PathVariable("id") long id) {
+    public String deleteEvent(@PathVariable long id) {
         eventService.deleteById(id);
         return "redirect:/event/all";
     }
 
-    @PostMapping("/{id}/topic/add")
-    public String createNewTopic(@PathVariable("id") long id, @ModelAttribute("topic") TopicDto dto) {
-        eventService.addNewTopic(id, dto);
-        return "redirect:/event/edit/" + id;
+    @PostMapping("/{eventId}/topic/add")
+    public String createNewTopic(@PathVariable long eventId, @ModelAttribute("topic") TopicDto dto, Model model) {
+        try {
+            eventService.addNewTopic(eventId, dto);
+        } catch (TopicNotCreatedException e) {
+            model.addAttribute("error_message", messageSource.getMessage("topic.not.created",
+                    null, LocaleContextHolder.getLocale()));
+        }
+        return "redirect:/event/edit/" + eventId;
     }
 
-    @PostMapping("/{id}/topic/assign")
-    public String assignSpeaker(@PathVariable("id") long id, @ModelAttribute("topic") TopicDto dto) {
-        eventService.assignSpeaker(id, dto);
-        return "redirect:/event/edit/" + id;
+    @PostMapping("/topic/edit/{topicId}")
+    public String editTopic(@PathVariable long topicId, @ModelAttribute("topic") TopicDto topicDto) {
+        topicService.editTopic(topicDto);
+
+        return "redirect:event/all";
     }
-
-    @GetMapping("/{id}/event-reg")
-    public String showRegisterToEvent(@PathVariable("id") long id,
-                                      @ModelAttribute("participant") EventRegisterDto eventRegisterDto,
-                                      Model model) {
-        EventDto eventDto = eventService.getEventById(id);
-        model.addAttribute("event", eventDto);
-        model.addAttribute("flag", false);
-        return "register_to_event";
-    }
-
-
-    @PostMapping("/{id}/event-reg")
-    public String registerToEvent(@PathVariable("id") long id,
-                                  @ModelAttribute("participant") EventRegisterDto eventRegisterDto) {
-        log.info("--------------------- speakerValue is {}", eventRegisterDto.isSpeaker());
-        eventService.registerToEvent(id, eventRegisterDto);
-
-        return "redirect:/event/all";
-    }
-
-//    @GetMapping("/all-speakers")
-//    public String showAllSpeakers(@ModelAttribute("speaker") SpeakerDto speakerDto, Model model) {
-//        model.addAttribute("speakers", eventService.getAllSpeakers());
-//        return "speaker_list";
-//    }
-
 }
+
+
 
 

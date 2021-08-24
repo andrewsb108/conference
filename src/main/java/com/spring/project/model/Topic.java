@@ -1,9 +1,6 @@
 package com.spring.project.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
@@ -11,7 +8,8 @@ import javax.persistence.*;
 /**
  * @author Andrii Barsuk
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,6 +22,11 @@ public class Topic {
     @Column(name = "title")
     private String title;
 
-    @Column(name="speaker")
-    private String speaker;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "speaker_id")
+    private User speaker;
 }

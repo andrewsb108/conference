@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -23,11 +24,9 @@ public class EventDto {
     @NotEmpty(message = "{valid.reg.not.empty}")
     private String title;
 
-    private LocalDate scheduledDate;
+    private String scheduledDate;
 
-    private LocalTime scheduledTime;
+    private List<TopicDto> topics;
 
-    private List<TopicDto> topicList;
-
-    private List<ParticipantDto> participantList;
+    private List<ParticipantDto> participants;
 }

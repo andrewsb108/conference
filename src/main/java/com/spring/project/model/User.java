@@ -15,7 +15,8 @@ import java.util.Set;
 /**
  * @author Andrii Barsuk
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

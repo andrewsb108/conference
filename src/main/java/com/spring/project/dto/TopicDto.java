@@ -1,8 +1,6 @@
 package com.spring.project.dto;
 
-
-//import com.spring.project.model.Speaker;
-
+import com.spring.project.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TopicDto {
     private long id;
-    private String topicTitle;
-    private String speaker;
+    private String title;
+    private User speaker;
 }

@@ -14,8 +14,4 @@ public class ProjectConfiguration {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
-    @Bean
-    public BusinessMapper createBusinessMapper(){
-        return new BusinessMapper();
-    }
 }

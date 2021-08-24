@@ -23,8 +23,6 @@ public interface UserService {
 
     List<UserDto> getAllUsers();
 
-    List<SpeakerDto> getAllSpeakers();
-
     void deleteById(long id);
 
     User findUserById(String speaker);

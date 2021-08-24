@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class EventRegisterDto {
     private String firstName;
     private String lastName;
-    private boolean isSpeaker;
+    private Boolean isSpeaker;
 }

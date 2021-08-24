@@ -96,12 +96,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SpeakerDto> getAllSpeakers() {
-
-        return businessMapper.convertUsersToSpeakers(userRepository.findAll().stream().filter(u->u.getRoles().contains(Role.SPEAKER)).collect(Collectors.toList()));
-    }
-
-    @Override
     public User findUserById(String speaker) {
         return userRepository.findById(Long.parseLong(speaker)).orElseThrow();
     }

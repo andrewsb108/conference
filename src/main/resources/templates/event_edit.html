@@ -16,9 +16,6 @@
             <a href="?lang=en" class="btn btn-outline-success">English</a>
             <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
         </div>
-<!--        <div class="col-2">-->
-<!--            <a class="btn btn-outline-success" th:href="@{/event/all}" th:text="#{back.button}">Back</a>-->
-<!--        </div>-->
         <form action="" th:action="@{/logout}" name="logout" method="POST">
             <a class="btn btn-outline-success" th:href="@{/event/all}" th:text="#{back.button}">Back</a>
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout"
@@ -27,13 +24,13 @@
         </form>
     </div>
 </nav>
-<!--<div th:replace="fragments/top_menu :: menu"></div>-->
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <h2 class="card-header" th:text="#{event.edit}">Edit event</h2>
     <div class="col py-3">
         <form action="#" method="POST" class="register-form" id="register-form"
               th:action="@{/event/update/{id}(id=${event.getId()})}"
               th:object="${event}">
+            <h5 class="text-danger" th:text="${error_message}"></h5>
 
             <div class="form-group">
                 <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
@@ -52,15 +49,6 @@
                        th:errors="*{scheduledDate}">Validation error
                 </small>
             </div>
-
-            <div class="form-group">
-                <label for="scheduledTime"><i class="zmdi zmdi-email"></i></label>
-                <br> <input type="datetime-local" th:field="*{scheduledTime}" name="scheduledTime" id="scheduledTime"
-                            placeholder="ScheduledTime" th:placeholder="#{event.scheduled.time}" required>
-                <small class="text-danger" th:if="${#fields.hasErrors('scheduledTime')}"
-                       th:errors="*{scheduledTime}">Validation error
-                </small>
-            </div>
             <div>
                 <br>
                 <button class="btn btn-outline-success" type="submit" th:text="#{event.edit.button}">Edit</button>
@@ -73,58 +61,43 @@
     <h2 class="card-header" th:text="#{topic.topics}">Topics</h2>
 
     <div class="col">
-
         <table class="table">
-            <thead>
-            <tr>
-                <th scope="col" th:text="#{topic.id}">Id</th>
-                <th scope="col" th:text="#{topic.title}">Topic title</th>
-                <th scope="col" th:text="#{topic.speaker}">Speaker</th>
-            </tr>
-            </thead>
             <tbody>
-            <tr th:each="topic : ${topics}">
-                <td th:text="${topic.getId()}"/>
-                <td th:text="${topic.getTopicTitle()}"/>
-                <!--                                <td th:text="${topic.getSpeaker()}"/>-->
-                <td th:if="${topic.getSpeaker() == '---'}">
-                    <form method="POST" class="register-form"
-                          th:action="@{/event/{id}/topic/assign(id=${event.getId()})}"
-                          th:object="${topic}">
+            <tr th:each="topicItem : ${topics}">
+                <td th:text="${topicItem.getTitle()}"/>
 
-                        <div class="form-group">
-                            <select th:field="*{speaker}">
-                                <option th:value="---" th:text="---"></option>
-                                <option th:each="speaker : ${speakerList}" th:value="${speaker.getId()}"
-                                        th:text="${speaker.getFullName()}">
-                                </option>
-                            </select>
-                        </div>
+                <td>
+                    <form id="assignSpeaker" th:action="@{/event/edit/{id}(id=${event.getId()})}" method="post">
 
-                        <button class="btn btn-outline-success" type="submit" th:text="#{topic.add.speaker}">Create
-                        </button>
                     </form>
-
+                    <select name="speakerId" class="form-select" aria-label="Default select example" th:object="${users}"
+                            form="assignSpeaker">
+<!--                        <option selected>Select user</option>-->
+                        <option th:each="user : ${users}"
+                                th:value="${user.id}"
+                                th:text="${user.firstName}">
+                        </option>
+                    </select>
                 </td>
-                <td th:unless="${topic.getSpeaker() == '---'}">
-                    <span th:text="${topic.getSpeaker()}"/>
+                <td>
+                    <button class="btn btn-outline-success" type="submit" form="assignSpeaker" th:text="#{speaker.choose.topic}">Choose
+                    </button>
                 </td>
             </tr>
+
             <tr>
                 <form method="POST" class="register-form"
                       th:action="@{/event/{id}/topic/add(id=${event.getId()})}"
                       th:object="${topic}">
-                    <td></td>
                     <td>
                         <div class="form-group">
                             <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
-                            <input type="text" th:field="*{topicTitle}"
+                            <input type="text" th:field="*{title}"
                                    placeholder="add topic" th:placeholder="#{topic.title}" required>
                         </div>
                     </td>
                     <td>
-                        <br>
-                        <button class="btn btn-outline-success" type="submit" th:text="#{create.event}">Add Speaker
+                       <br> <button class="btn btn-outline-success" type="submit" th:text="#{topic.create.title}">Create
                         </button>
                     </td>
                 </form>

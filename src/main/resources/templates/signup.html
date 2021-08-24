@@ -9,7 +9,13 @@
 
 </head>
 <body class="p-0 m-0" th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
-<div th:replace="fragments/top_menu :: menu"></div>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container-fluid">
+        <div class="col-3" th:replace="fragments/lang_menu :: lang"></div>
+            <a class="btn btn-outline-success" th:href="@{/login}" th:text="#{back.button}">Back</a>
+    </div>
+</nav>
+
 <div class="card text-center container  mt-5 w-50 shadow-lg">
     <h2 class="card-header" th:text="#{reg.header.title}">Create your account</h2>
     <div class="col py-3">
@@ -62,7 +68,6 @@
             <div>
                 <br>
                 <button class="btn btn-outline-success" type="submit" th:text="#{login.sign.up}">Sign up</button>
-                <div class="my-sm-3 m-3 text-right"><a href="/login" th:text="#{reg.sign.in}">I already have an Account</a></div>
             </div>
         </form>
     </div>

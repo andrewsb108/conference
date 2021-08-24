@@ -4,16 +4,15 @@ import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.dto.EventRegisterDto;
 import com.spring.project.dto.TopicDto;
-import com.spring.project.exceptions.EventNotCreateException;
+import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.exceptions.EventNotFoundException;
+import com.spring.project.exceptions.TopicNotCreatedException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.Event;
-import com.spring.project.model.Participant;
 import com.spring.project.model.Topic;
-import com.spring.project.model.User;
 import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
-import com.spring.project.repository.TopicRepositiry;
+import com.spring.project.repository.TopicRepository;
 import com.spring.project.service.EventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -36,20 +35,19 @@ public class EventServiceImpl implements EventService {
 
 
     private final EventRepository eventRepository;
-    private final TopicRepositiry topicRepositiry;
+    private final TopicRepository topicRepository;
     private final BusinessMapper businessMapper;
     private final MessageSource messageSource;
     private final ParticipantRepository participantRepository;
-    private final UserServiceImpl userService;
 
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
         try {
-            Event event = businessMapper.convertEventCreateDtoToEvent(eventCreateDto);
+            var event = businessMapper.convertEventCreateDtoToEvent(eventCreateDto);
             log.info("Handling save users: " + eventCreateDto);
             return eventRepository.save(event);
         } catch (DataIntegrityViolationException e) {
-            throw new EventNotCreateException(messageSource.getMessage("event.not.create", null,
+            throw new EventAlreadyExistException(messageSource.getMessage("event.exists", null,
                     LocaleContextHolder.getLocale()) + eventCreateDto.getTitle());
         }
     }
@@ -61,14 +59,15 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventDto getEventById(Long id) {
-        return businessMapper.convertEventToEventDto(eventRepository.findById(id).orElseThrow(() ->
-                new EventNotFoundException("No such event was found, id: " + id)));
+        var event = eventRepository.findById(id);
+        return event.map(businessMapper::convertEventToEventDto)
+                .orElseThrow(() -> new  EventNotFoundException("event.not.found"));
     }
 
     @Override
     public Optional<Event> updateEvent(EventDto eventDto) {
-        Event event = businessMapper.convertEventDtoToEventForUpdate(eventDto);
-        return Optional.ofNullable(eventRepository.save(event));
+        var event = businessMapper.convertEventDtoToEventForUpdate(eventDto);
+        return Optional.of(eventRepository.save(event));
     }
 
     @Override
@@ -84,33 +83,21 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public Topic addNewTopic(long eventId, TopicDto topicDto) {
-        Event current = eventRepository.findById(eventId);
-        topicDto.setId(0);
-        Topic topic = businessMapper.convertToTopic(topicDto);
-        topicRepositiry.save(topic);
-        current.getTopicList().add(topic);
-        eventRepository.save(current);
+        var event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new TopicNotCreatedException("topic.not.created"));
+        var topic = businessMapper.convertToTopic(topicDto);
+        topic.setEvent(event);
+        topicRepository.save(topic);
         return topic;
     }
 
     @Override
     @Transactional
-    public Topic assignSpeaker(long eventId, TopicDto topic) {
-        Topic topicRepositoryById = topicRepositiry.findById(topic.getId()).orElseThrow();
-        User user = userService.findUserById(topic.getSpeaker());
-        topicRepositoryById.setSpeaker(user.getFullName());
-        topicRepositiry.save(topicRepositoryById);
-
-        return topicRepositoryById;
-    }
-
-    @Override
-    @Transactional
     public void registerToEvent(long eventId, EventRegisterDto eventRegisterDto) {
-        Event current = eventRepository.findById(eventId);
-        Participant participant = businessMapper.convertEventRegisterDtoToParticipant(eventRegisterDto, eventId);
+        var event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
+        var participant = businessMapper
+                .convertEventRegisterDtoToParticipant(eventRegisterDto, event);
         participantRepository.save(participant);
-        current.getParticipantList().add(participant);
-        eventRepository.save(current);
     }
 }

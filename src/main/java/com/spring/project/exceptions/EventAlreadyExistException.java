@@ -8,12 +8,4 @@ public class EventAlreadyExistException extends RuntimeException {
     public EventAlreadyExistException(String message) {
         super(message);
     }
-
-    public EventAlreadyExistException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public EventAlreadyExistException(Throwable cause) {
-        super(cause);
-    }
 }

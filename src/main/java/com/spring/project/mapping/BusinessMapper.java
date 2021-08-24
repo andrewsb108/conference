@@ -1,14 +1,13 @@
 package com.spring.project.mapping;
 
 import com.spring.project.dto.*;
-import com.spring.project.model.*;
-import com.spring.project.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.project.model.Event;
+import com.spring.project.model.Participant;
+import com.spring.project.model.Topic;
+import com.spring.project.model.User;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class BusinessMapper {
-    @Autowired
-    EventRepository repository;
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public UserDto convertUserToUserDto(User user) {
         if (user == null) {
@@ -50,22 +49,11 @@ public class BusinessMapper {
         return list;
     }
 
-//    public User convertUserDtoToUser(UserDto userDto) {
-//        if (userDto == null) {
-//            return null;
-//        }
-//
-//        return User.builder()
-//                .firstName(userDto.getFirstName())
-//                .lastName(userDto.getLastName())
-//                .build();
-//    }
-
     public User convertRegistrationDtoToUser(RegistrationDto registrationDto) {
         if (registrationDto == null) {
             return null;
         }
-        User user = User.builder()
+        var user = User.builder()
                 .firstName(registrationDto.getFirstName())
                 .lastName(registrationDto.getLastName())
                 .email(registrationDto.getEmail())
@@ -77,31 +65,28 @@ public class BusinessMapper {
         return user;
     }
 
-    public Event convertEventDtoToEvent(EventDto eventDto) {
-        if (eventDto == null) {
-            return null;
-        }
-        return Event.builder()
-                .id(eventDto.getId())
-                .title(eventDto.getTitle())
-                .scheduledDate(eventDto.getScheduledDate())
-                .scheduledTime(eventDto.getScheduledTime())
-                .topicList(eventDto.getTopicList().stream().map(topic -> convertToTopic(topic)).collect(Collectors.toList()))
-                .participantList(eventDto.getParticipantList().stream().map(p -> convertToParticipant(p)).collect(Collectors.toList()))
-                .build();
-    }
+//    public Event convertEventDtoToEvent(EventDto eventDto) {
+//        if (eventDto == null) {
+//            return null;
+//        }
+//        return Event.builder()
+//                .title(eventDto.getTitle())
+//                .scheduledDate(LocalDateTime.parse(eventDto.getScheduledDate(), formatter))
+//                .participants(eventDto.getParticipants().stream()
+//                        .map(this::convertToParticipant).collect(Collectors.toList()))
+//                .build();
+//    }
 
     public Event convertEventDtoToEventForUpdate(EventDto eventDto) {
         if (eventDto == null) {
             return null;
         }
 
-        Event current = repository.findById(eventDto.getId());
-
-        current.setTitle(eventDto.getTitle());
-        current.setScheduledDate(eventDto.getScheduledDate());
-        current.setScheduledTime(eventDto.getScheduledTime());
-        return current;
+        return Event.builder()
+                .id(eventDto.getId())
+                .title(eventDto.getTitle())
+                .scheduledDate(LocalDateTime.parse(eventDto.getScheduledDate()))
+                .build();
     }
 
     public EventDto convertEventToEventDto(Event event) {
@@ -111,10 +96,9 @@ public class BusinessMapper {
         return EventDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
-                .scheduledDate(event.getScheduledDate())
-                .scheduledTime(event.getScheduledTime())
-                .topicList(event.getTopicList().stream().map(topic -> convertToTopicDto(topic)).collect(Collectors.toList()))
-                .participantList(event.getParticipantList().stream().map(p -> convertToParticipantDto(p)).collect(Collectors.toList()))
+                .scheduledDate(event.getScheduledDate().format(formatter))
+                .participants(event.getParticipants().stream()
+                        .map(this::convertToParticipantDto).collect(Collectors.toList()))
                 .build();
     }
 
@@ -123,13 +107,10 @@ public class BusinessMapper {
             return null;
         }
         return Event.builder()
+                .id(eventCreateDto.getId())
                 .title(eventCreateDto.getTitle())
-                .scheduledDate(LocalDate.parse(eventCreateDto.getScheduledDate(),
-                        DateTimeFormatter.ofPattern("dd.MM.yyyy")))
-                .scheduledTime(LocalTime.parse(eventCreateDto.getScheduledTime(),
-                        DateTimeFormatter.ofPattern("HH:mm")))
-                .topicList(new ArrayList<>())
-                .participantList(new ArrayList<>())
+                .scheduledDate(LocalDateTime.parse(eventCreateDto.getScheduledDate(), formatter))
+                .participants(new ArrayList<>())
                 .build();
     }
 
@@ -144,32 +125,11 @@ public class BusinessMapper {
         return list;
     }
 
-    public List<SpeakerDto> convertUsersToSpeakers(List<User> users) {
-        if (users == null) {
-            return null;
-        }
-        List<SpeakerDto> list = new ArrayList<>();
-        for (User user : users) {
-            list.add(convertUserToSpeaker(user));
-        }
-        return list;
-    }
-
-    public SpeakerDto convertUserToSpeaker (User user) {
-        return SpeakerDto.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .build();
-    }
-
     public Participant convertToParticipant(ParticipantDto participantDto) {
         if (participantDto == null) {
             return null;
         }
         return Participant.builder()
-                .id(participantDto.getId())
-                .eventId(participantDto.getEventId())
                 .firstName(participantDto.getFirstName())
                 .lastName(participantDto.getLastName())
                 .isSpeaker(participantDto.isSpeaker())
@@ -181,8 +141,6 @@ public class BusinessMapper {
             return null;
         }
         return ParticipantDto.builder()
-                .id(participant.getId())
-                .eventId(participant.getEventId())
                 .firstName(participant.getFirstName())
                 .lastName(participant.getLastName())
                 .isSpeaker(participant.isSpeaker())
@@ -194,9 +152,7 @@ public class BusinessMapper {
             return null;
         }
         return TopicDto.builder()
-                .id(topic.getId())
-                .topicTitle(topic.getTitle())
-                .speaker(topic.getSpeaker())
+                .title(topic.getTitle())
                 .build();
     }
 
@@ -205,44 +161,20 @@ public class BusinessMapper {
             return null;
         }
         return Topic.builder()
-                .id(topicDto.getId())
-                .title(topicDto.getTopicTitle())
-                .speaker(topicDto.getSpeaker())
+                .title(topicDto.getTitle())
                 .build();
     }
 
-    public Participant convertEventRegisterDtoToParticipant(EventRegisterDto eventRegisterDto, long eventId) {
-        if (eventRegisterDto == null) {
+    public Participant convertEventRegisterDtoToParticipant(EventRegisterDto eventRegDto, Event event) {
+        if (eventRegDto == null) {
             return null;
         }
         return Participant.builder()
-                .eventId(eventId)
-                .firstName(eventRegisterDto.getFirstName())
-                .lastName(eventRegisterDto.getLastName())
-                .isSpeaker(eventRegisterDto.isSpeaker())
+                .firstName(eventRegDto.getFirstName())
+                .lastName(eventRegDto.getLastName())
+                .isSpeaker(eventRegDto.getIsSpeaker())
+                .event(event)
                 .build();
     }
-
-//    public SpeakerDto convertToSpeakerDto(Speaker speaker) {
-//        if (speaker == null) {
-//            return null;
-//        }
-//        return SpeakerDto.builder()
-//                .id(speaker.getId())
-//                .firstName(speaker.getFirstName())
-//                .lastName(speaker.getLastName())
-//                .build();
-//    }
-
-//    public List<SpeakerDto> convertSpeakerListToSpeakerDtoList(List<Speaker> speakers) {
-//        if (speakers == null) {
-//            return null;
-//        }
-//        List<SpeakerDto> list = new ArrayList<>();
-//        for (Speaker speaker: speakers) {
-//            list.add(convertToSpeakerDto(speaker));
-//        }
-//        return list;
-//    }
-
 }
+

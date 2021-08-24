@@ -1,9 +1,6 @@
 package com.spring.project.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +8,8 @@ import java.time.LocalDateTime;
 /**
  * @author Andrii Barsuk
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -22,8 +20,9 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "event_id", nullable = false)
-    private long eventId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -33,5 +32,4 @@ public class Participant {
 
     @Column(name = "is_speaker")
     private boolean isSpeaker;
-
 }
