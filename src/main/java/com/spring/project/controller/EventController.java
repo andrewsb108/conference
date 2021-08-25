@@ -123,7 +123,6 @@ public class EventController {
     @PostMapping("/topic/edit/{topicId}")
     public String editTopic(@PathVariable Long topicId, @ModelAttribute("topic") TopicDto topicDto) {
         topicService.editTopic(topicDto);
-
         return "redirect:event/all";
     }
 }

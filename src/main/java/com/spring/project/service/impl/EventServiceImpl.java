@@ -98,9 +98,9 @@ public class EventServiceImpl implements EventService {
     public void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto) {
         var event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
-        var participant = businessMapper
-                .convertEventRegisterDtoToParticipant(eventRegisterDto, event);
+        var participant = businessMapper.convertEventRegisterDtoToParticipant(eventRegisterDto, event);
         participantRepository.save(participant);
     }
+
 
 }

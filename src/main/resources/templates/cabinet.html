@@ -30,19 +30,18 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <!--                    <th scope="col" th:text="#{event.id}">Id</th>-->
                     <th scope="col" th:text="#{event.crete.title}">Title</th>
                     <th scope="col" th:text="#{event.scheduled.date}">ScheduledDate</th>
                     <th scope="col" th:text="#{register.to.event}">Register to event</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="event : ${events}">
+                    <!--                    <td th:text="${event.id}"/>-->
                     <td th:text="${event.title}"/>
                     <td th:text="${event.scheduledDate}"/>
-<!--                    <td>-->
-<!--                        <a class="btn btn-outline-secondary" th:href="@{/{id}/event-reg(id=${event.getId})}"-->
-<!--                           th:text="#{speaker.register}">Register</a>-->
-<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>
