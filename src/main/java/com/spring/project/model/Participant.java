@@ -24,9 +24,12 @@ public class Participant {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "is_speaker")
     private boolean isSpeaker;
+
+    private String nickName;
 }

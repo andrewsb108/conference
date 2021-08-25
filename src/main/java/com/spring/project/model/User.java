@@ -23,6 +23,9 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
+    private static final long serialVersionUID = -1552455201892236515L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,13 +48,6 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
-    @CreatedDate
-    private LocalDateTime created = LocalDateTime.now();
-
-    @Column(name = "last_modified")
-    @LastModifiedDate
-    private LocalDateTime lastModified;
 
     @Column(name = "enabled", columnDefinition = "boolean default true", nullable = false)
     private Boolean enabled = true;
@@ -87,6 +83,6 @@ public class User implements UserDetails {
     }
 
     public String getFullName(){
-        return firstName+ " "+lastName;
+        return String.format("%s %s", firstName, lastName);
     }
 }

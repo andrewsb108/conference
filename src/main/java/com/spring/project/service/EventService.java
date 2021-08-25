@@ -20,6 +20,6 @@ public interface EventService {
 
     Topic addNewTopic(Long eventId, TopicDto topic);
 
-    void registerToEvent(Long id, EventRegisterDto eventRegisterDto);
+    void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto);
 
 }

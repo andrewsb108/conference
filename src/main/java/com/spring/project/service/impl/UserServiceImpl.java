@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updateProfile(UpdateUserDto updateUserDto) {
         User user = businessMapper.convertFromUpdateUserDtoToUser(updateUserDto);
-        return Optional.ofNullable(userRepository.save(user));
+        return Optional.of(userRepository.save(user));
     }
 
     @Override

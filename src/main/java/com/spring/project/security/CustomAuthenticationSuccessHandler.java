@@ -14,18 +14,22 @@ import java.util.Set;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    private static Set<String> NONE_ADMIN_ROLES = Set.of(Role.USER.name(), Role.SPEAKER.name());
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        var noneAdminRoles = Set.of(Role.USER.name(), Role.SPEAKER.name());
         response.setStatus(HttpServletResponse.SC_OK);
 
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             if (Role.MODERATOR.name().equals(auth.getAuthority())) {
                 response.sendRedirect("/event/all");
-            } else if (noneAdminRoles.contains(auth.getAuthority())) {
+                return;
+            } else if (NONE_ADMIN_ROLES.contains(auth.getAuthority())) {
                 response.sendRedirect("/index");
+                return;
             }
         }
     }

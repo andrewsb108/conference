@@ -6,6 +6,7 @@ import com.spring.project.dto.EventRegisterDto;
 import com.spring.project.dto.TopicDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.exceptions.EventNotFoundException;
+import com.spring.project.exceptions.ParticipantAlreadyRegistered;
 import com.spring.project.exceptions.TopicNotCreatedException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.Event;
@@ -14,6 +15,7 @@ import com.spring.project.model.User;
 import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepository;
+import com.spring.project.security.SecurityService;
 import com.spring.project.service.EventService;
 import com.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,7 @@ public class EventServiceImpl implements EventService {
     private final BusinessMapper businessMapper;
     private final MessageSource messageSource;
     private final ParticipantRepository participantRepository;
+    private final SecurityService securityService;
 
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
@@ -98,9 +101,18 @@ public class EventServiceImpl implements EventService {
     public void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto) {
         var event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
-        var participant = businessMapper.convertEventRegisterDtoToParticipant(eventRegisterDto, event);
+        var participant = businessMapper
+                .convertEventRegisterDtoToParticipant(eventRegisterDto, event);
+        var user = securityService.getCurrentLoggedUser();
+        checkIfAlreadyRegistered(user, event);
+        participant.setUser(user);
         participantRepository.save(participant);
     }
 
-
+    private void checkIfAlreadyRegistered(User user, Event event) {
+        var participant = participantRepository.findByUserIdAndEventId(user.getId(), event.getId());
+        if (participant.isPresent()) {
+            throw new ParticipantAlreadyRegistered("You are already registered for this event");
+        }
+    }
 }

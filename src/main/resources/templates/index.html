@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,8 +16,11 @@
             <a href="?lang=en" class="btn btn-outline-success">English</a>
             <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
         </div>
-        <a class="btn btn-outline-secondary" th:href="@{/index/cabinet-entrance}"
-           th:text="#{speaker.cabinet.entrance}">Cabinet</a>
+        <div sec:authorize="hasAuthority('SPEAKER')">
+            <a class="btn btn-outline-success" th:href="@{/index/cabinet-entrance}"
+               th:text="#{speaker.cabinet.entrance}">Cabinet</a>
+        </div>
+
 
         <form action="" th:action="@{/logout}" name="logout" method="POST">
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout"

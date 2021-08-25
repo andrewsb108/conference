@@ -25,23 +25,20 @@
 </nav>
 
 <div class="col py-3">
-    <form method="POST" class="register-form" th:action="@{/index/event/{id}/event-reg(id=${event.getId()})}"
+    <form method="POST" class="register-form" th:action="@{/index/event/{eventId}/event-reg(eventId=${event.getId()})}"
           th:object="${participant}">
         <h5 class="text-danger" th:text="${error_message}"></h5>
 
         <div class="form-group">
-            <label for="firstName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-            <br> <input type="text" th:field="*{firstName}" name="firstName" id="firstName"
-                        th:placeholder="#{reg.first.name.placeholder}" required autofocus>
-        </div>
-        <div class="form-group">
-            <br> <label for="lastName"><i class="zmdi zmdi-account-o"></i></label>
-            <input type="text" th:field="*{lastName}" name="lastName" id="lastName"
-                   th:placeholder="#{reg.last.name.placeholder}" required>
+            <label for="nickName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+            <br><input type="text" th:field="*{nickName}" name="nickName" id="nickName"
+                       th:placeholder="#{event.reg.participant}" required autofocus>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" th:field="${participant.isSpeaker}">
-            <label class="form-check-label">Become a Speaker</label>
+            <label class="form-check-label">
+                Become a Speaker
+            </label>
         </div>
 
         <div>
@@ -54,5 +51,3 @@
 <div th:replace="fragments/login_page :: footer"></div>
 </body>
 </html>
-
-

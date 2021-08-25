@@ -60,26 +60,12 @@ public class BusinessMapper {
                 .firstName(registrationDto.getFirstName())
                 .lastName(registrationDto.getLastName())
                 .email(registrationDto.getEmail())
-                .created(LocalDateTime.now())
                 .build();
 
         user.setEnabled(true);
 
         return user;
     }
-
-//    public Event convertEventDtoToEvent(EventDto eventDto) {
-//        if (eventDto == null) {
-//            return null;
-//        }
-//        return Event.builder()
-//                .id(eventDto.getId())
-//                .title(eventDto.getTitle())
-//                .scheduledDate(LocalDateTime.parse(eventDto.getScheduledDate(), formatter))
-//                .participants(eventDto.getParticipants().stream()
-//                        .map(this::convertToParticipant).collect(Collectors.toList()))
-//                .build();
-//    }
 
     public Event convertEventDtoToEventForUpdate(EventDto eventDto) {
         if (eventDto == null) {
@@ -181,13 +167,8 @@ public class BusinessMapper {
             return null;
         }
 
-        User user = User.builder()
-                .firstName(eventRegDto.getFirstName())
-                .lastName(eventRegDto.getLastName())
-                .build();
-
         return Participant.builder()
-                .user(user)
+                .nickName(eventRegDto.getNickName())
                 .isSpeaker(eventRegDto.getIsSpeaker())
                 .event(event)
                 .build();

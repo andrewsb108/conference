@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class EventRegisterDto {
-    private String firstName;
-    private String lastName;
+    private String nickName;
     private Boolean isSpeaker;
 }
