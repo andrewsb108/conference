@@ -37,13 +37,12 @@ public class UserController {
     }
 
     @GetMapping("/event/{id}/event-reg")
-    public String showRegisterToEvent(@PathVariable("id") long eventId,
+    public String showRegisterToEvent(@PathVariable("id") Long eventId,
                                       @ModelAttribute("participant") EventRegisterDto eventRegisterDto,
                                       Model model) {
         try {
             EventDto eventDto = eventService.getEventById(eventId);
             model.addAttribute("event", eventDto);
-            model.addAttribute("flag", false);
         } catch (EventNotFoundException ex) {
             model.addAttribute("error_message", messageSource.getMessage("event.not.found",
                     null, LocaleContextHolder.getLocale()));
@@ -52,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/event/{eventId}/event-reg")
-    public String registerToEvent(@PathVariable long eventId,
+    public String registerToEvent(@PathVariable Long eventId,
                                   @ModelAttribute("participant") EventRegisterDto eventRegisterDto, Model model) {
         try {
             log.info("speakerValue is {}", eventRegisterDto.getIsSpeaker());
@@ -61,7 +60,7 @@ public class UserController {
             model.addAttribute("error_message", messageSource.getMessage("event.exist",
                     null, LocaleContextHolder.getLocale()));
         }
-        return "redirect:/event/all";
+        return "redirect:/index";
     }
 
     @GetMapping("/cabinet-entrance")

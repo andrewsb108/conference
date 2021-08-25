@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class EventDto {
-    private long id;
+    private Long id;
 
     @NotEmpty(message = "{valid.reg.not.empty}")
     private String title;

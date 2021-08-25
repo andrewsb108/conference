@@ -65,7 +65,7 @@ public class EventController {
     }
 
     @GetMapping("/edit/{eventId}")
-    public String showEditEvent(@PathVariable long eventId, Model model) {
+    public String showEditEvent(@PathVariable Long eventId, Model model) {
         try {
             EventDto dto = eventService.getEventById(eventId);
             List<Topic> topics = topicRepository.findByEventId(eventId);
@@ -98,19 +98,19 @@ public class EventController {
     }
 
     @PostMapping("/update/{eventId}")
-    public String updateEvent(@PathVariable long eventId, @ModelAttribute("event") EventDto eventDto) {
+    public String updateEvent(@PathVariable Long eventId, @ModelAttribute("event") EventDto eventDto) {
         eventService.updateEvent(eventDto);
         return "redirect:/event/all";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEvent(@PathVariable long id) {
+    public String deleteEvent(@PathVariable Long id) {
         eventService.deleteById(id);
         return "redirect:/event/all";
     }
 
     @PostMapping("/{eventId}/topic/add")
-    public String createNewTopic(@PathVariable long eventId, @ModelAttribute("topic") TopicDto dto, Model model) {
+    public String createNewTopic(@PathVariable Long eventId, @ModelAttribute("topic") TopicDto dto, Model model) {
         try {
             eventService.addNewTopic(eventId, dto);
         } catch (TopicNotCreatedException e) {
@@ -121,7 +121,7 @@ public class EventController {
     }
 
     @PostMapping("/topic/edit/{topicId}")
-    public String editTopic(@PathVariable long topicId, @ModelAttribute("topic") TopicDto topicDto) {
+    public String editTopic(@PathVariable Long topicId, @ModelAttribute("topic") TopicDto topicDto) {
         topicService.editTopic(topicDto);
 
         return "redirect:event/all";

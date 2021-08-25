@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         try {
             userRepository.deleteById(id);
         } catch (NoSuchElementException e) {

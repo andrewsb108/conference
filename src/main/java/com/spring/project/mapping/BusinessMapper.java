@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 public class BusinessMapper {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    @Autowired
-    private EventRepository eventRepository;
 
     public UserDto convertUserToUserDto(User user) {
         if (user == null) {
@@ -152,7 +150,6 @@ public class BusinessMapper {
         }
 
         return ParticipantDto.builder()
-//                .id(participant.getId())
                 .firstName(participant.getUser().getFirstName())
                 .lastName(participant.getUser().getLastName())
                 .isSpeaker(participant.isSpeaker())

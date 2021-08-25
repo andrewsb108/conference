@@ -25,7 +25,7 @@
 </nav>
 
 <div class="col py-3">
-    <form method="POST" class="register-form" th:action="@{/{id}/event-reg(id=${event.getId()})}"
+    <form method="POST" class="register-form" th:action="@{/index/event/{id}/event-reg(id=${event.getId()})}"
           th:object="${participant}">
         <h5 class="text-danger" th:text="${error_message}"></h5>
 

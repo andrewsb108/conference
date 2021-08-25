@@ -73,7 +73,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Long deleteById(long id) {
+    public Long deleteById(Long id) {
         try {
             eventRepository.deleteById(id);
         } catch (EventNotFoundException e) {
@@ -84,7 +84,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public Topic addNewTopic(long eventId, TopicDto topicDto) {
+    public Topic addNewTopic(Long eventId, TopicDto topicDto) {
         var event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new TopicNotCreatedException("topic.not.created"));
         var topic = businessMapper.convertToTopic(topicDto);
@@ -95,7 +95,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public void registerToEvent(long eventId, EventRegisterDto eventRegisterDto) {
+    public void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto) {
         var event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
         var participant = businessMapper

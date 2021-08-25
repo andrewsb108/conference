@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class ParticipantDto {
-    private long id;
-    private long eventId;
+    private Long id;
+    private Long eventId;
     private String firstName;
     private String lastName;
     private boolean isSpeaker;

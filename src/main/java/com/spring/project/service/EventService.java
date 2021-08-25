@@ -16,10 +16,10 @@ public interface EventService {
 
     Optional<Event> updateEvent(EventDto eventDto);
 
-    Long deleteById(long id);
+    Long deleteById(Long id);
 
-    Topic addNewTopic(long eventId, TopicDto topic);
+    Topic addNewTopic(Long eventId, TopicDto topic);
 
-    void registerToEvent(long id, EventRegisterDto eventRegisterDto);
+    void registerToEvent(Long id, EventRegisterDto eventRegisterDto);
 
 }

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SpeakerDto {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
 

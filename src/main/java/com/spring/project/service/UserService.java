@@ -23,7 +23,7 @@ public interface UserService {
 
     List<UserDto> getAllUsers();
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
     User findUserById(String speaker);
 }
