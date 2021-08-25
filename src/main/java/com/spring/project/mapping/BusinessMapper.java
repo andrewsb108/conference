@@ -5,6 +5,8 @@ import com.spring.project.model.Event;
 import com.spring.project.model.Participant;
 import com.spring.project.model.Topic;
 import com.spring.project.model.User;
+import com.spring.project.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -17,12 +19,15 @@ import java.util.stream.Collectors;
 public class BusinessMapper {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    @Autowired
+    private EventRepository eventRepository;
 
     public UserDto convertUserToUserDto(User user) {
         if (user == null) {
             return null;
         }
         return UserDto.builder()
+                .userId(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail()).build();
@@ -70,6 +75,7 @@ public class BusinessMapper {
 //            return null;
 //        }
 //        return Event.builder()
+//                .id(eventDto.getId())
 //                .title(eventDto.getTitle())
 //                .scheduledDate(LocalDateTime.parse(eventDto.getScheduledDate(), formatter))
 //                .participants(eventDto.getParticipants().stream()
@@ -81,7 +87,6 @@ public class BusinessMapper {
         if (eventDto == null) {
             return null;
         }
-
         return Event.builder()
                 .id(eventDto.getId())
                 .title(eventDto.getTitle())
@@ -129,9 +134,14 @@ public class BusinessMapper {
         if (participantDto == null) {
             return null;
         }
-        return Participant.builder()
+        User user = User.builder()
                 .firstName(participantDto.getFirstName())
-                .lastName(participantDto.getLastName())
+                .firstName(participantDto.getFirstName())
+                .build();
+
+        return Participant.builder()
+                .id(participantDto.getId())
+                .user(user)
                 .isSpeaker(participantDto.isSpeaker())
                 .build();
     }
@@ -140,9 +150,11 @@ public class BusinessMapper {
         if (participant == null) {
             return null;
         }
+
         return ParticipantDto.builder()
-                .firstName(participant.getFirstName())
-                .lastName(participant.getLastName())
+//                .id(participant.getId())
+                .firstName(participant.getUser().getFirstName())
+                .lastName(participant.getUser().getLastName())
                 .isSpeaker(participant.isSpeaker())
                 .build();
     }
@@ -152,7 +164,9 @@ public class BusinessMapper {
             return null;
         }
         return TopicDto.builder()
+                .id(topic.getId())
                 .title(topic.getTitle())
+                .speaker(topic.getSpeaker())
                 .build();
     }
 
@@ -169,9 +183,14 @@ public class BusinessMapper {
         if (eventRegDto == null) {
             return null;
         }
-        return Participant.builder()
+
+        User user = User.builder()
                 .firstName(eventRegDto.getFirstName())
                 .lastName(eventRegDto.getLastName())
+                .build();
+
+        return Participant.builder()
+                .user(user)
                 .isSpeaker(eventRegDto.getIsSpeaker())
                 .event(event)
                 .build();

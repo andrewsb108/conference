@@ -1,11 +1,13 @@
 package com.spring.project.controller;
 
-import com.spring.project.dto.*;
+import com.spring.project.dto.EventCreateDto;
+import com.spring.project.dto.EventDto;
+import com.spring.project.dto.TopicDto;
+import com.spring.project.dto.UserDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.exceptions.EventNotFoundException;
 import com.spring.project.exceptions.TopicNotCreatedException;
 import com.spring.project.model.Topic;
-import com.spring.project.model.User;
 import com.spring.project.repository.TopicRepository;
 import com.spring.project.service.EventService;
 import com.spring.project.service.TopicService;
@@ -20,7 +22,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 @RequestMapping("/event")
@@ -67,12 +68,10 @@ public class EventController {
     public String showEditEvent(@PathVariable long eventId, Model model) {
         try {
             EventDto dto = eventService.getEventById(eventId);
+            List<Topic> topics = topicRepository.findByEventId(eventId);
             model.addAttribute("event", dto);
             model.addAttribute("topic", new TopicDto());
-            List<Topic> topics = topicRepository.findByEventId(eventId);
             model.addAttribute("topics", topics);
-            List<UserDto> users = userService.getAllUsers();
-            model.addAttribute("users", users);
         } catch (EventNotFoundException ex) {
             model.addAttribute("error_message", messageSource.getMessage("event.not.found",
                     null, LocaleContextHolder.getLocale()));
@@ -80,8 +79,21 @@ public class EventController {
         return "event_edit";
     }
 
-    @PostMapping("/edit/{eventId}")
-    public String assignSpeaker(@PathVariable long eventId, UserDto userDto) {
+    @GetMapping("/edit/{eventId}/topic/{topicId}")
+    public String assignSpeaker(@PathVariable Long eventId, @PathVariable Long topicId, Model model) {
+        var users = userService.getAllUsers();
+        var topic = topicService.getTopic(topicId);
+        model.addAttribute("users", users);
+        model.addAttribute("topic", topic);
+        model.addAttribute("eventId", eventId);
+        return "topic_assign_speaker";
+    }
+
+    @PostMapping("/edit/{eventId}/topic/{topicId}")
+    public String assignSpeaker(@PathVariable Long eventId,
+                                @PathVariable Long topicId,
+                                @RequestParam Long speakerId) {
+        topicService.assignSpeaker(topicId, speakerId);
         return "redirect:/event/edit/" + eventId;
     }
 

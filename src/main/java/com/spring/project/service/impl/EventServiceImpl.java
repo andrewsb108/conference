@@ -10,10 +10,12 @@ import com.spring.project.exceptions.TopicNotCreatedException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.Event;
 import com.spring.project.model.Topic;
+import com.spring.project.model.User;
 import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepository;
 import com.spring.project.service.EventService;
+import com.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
@@ -100,4 +102,5 @@ public class EventServiceImpl implements EventService {
                 .convertEventRegisterDtoToParticipant(eventRegisterDto, event);
         participantRepository.save(participant);
     }
+
 }

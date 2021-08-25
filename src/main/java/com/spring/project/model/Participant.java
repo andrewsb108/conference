@@ -24,11 +24,8 @@ public class Participant {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "is_speaker")
     private boolean isSpeaker;

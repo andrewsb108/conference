@@ -4,6 +4,7 @@ import com.spring.project.dto.EventDto;
 import com.spring.project.dto.EventRegisterDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.exceptions.EventNotFoundException;
+import com.spring.project.model.Event;
 import com.spring.project.service.EventService;
 import com.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
  */
 @Log4j2
 @Controller
-@RequestMapping("/")
+@RequestMapping("/index")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -29,13 +30,13 @@ public class UserController {
     private final MessageSource messageSource;
 
 
-    @GetMapping("/index")
+    @GetMapping
     public String showAllEvent(@ModelAttribute("event") EventDto eventDto, Model model) {
         model.addAttribute("events", eventService.getAllEvents());
         return "index";
     }
 
-    @GetMapping("/{id}/event-reg")
+    @GetMapping("/event/{id}/event-reg")
     public String showRegisterToEvent(@PathVariable("id") long eventId,
                                       @ModelAttribute("participant") EventRegisterDto eventRegisterDto,
                                       Model model) {
@@ -50,7 +51,7 @@ public class UserController {
         return "register_to_event";
     }
 
-    @PostMapping("/{eventId}/event-reg")
+    @PostMapping("/event/{eventId}/event-reg")
     public String registerToEvent(@PathVariable long eventId,
                                   @ModelAttribute("participant") EventRegisterDto eventRegisterDto, Model model) {
         try {
@@ -61,5 +62,16 @@ public class UserController {
                     null, LocaleContextHolder.getLocale()));
         }
         return "redirect:/event/all";
+    }
+
+    @GetMapping("/cabinet-entrance")
+    public String showSpeakerCabinet(@ModelAttribute("event") EventDto eventDto, Model model) {
+        model.addAttribute("events", eventService.getAllEvents());
+        return "cabinet";
+    }
+
+    @PostMapping("/cabinet-entrance")
+    public String speakerCabinet() {
+        return "cabinet";
     }
 }

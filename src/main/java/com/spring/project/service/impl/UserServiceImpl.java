@@ -1,6 +1,9 @@
 package com.spring.project.service.impl;
 
-import com.spring.project.dto.*;
+import com.spring.project.dto.LoginDto;
+import com.spring.project.dto.RegistrationDto;
+import com.spring.project.dto.UpdateUserDto;
+import com.spring.project.dto.UserDto;
 import com.spring.project.exceptions.UserAlreadyExistException;
 import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.User;
@@ -16,13 +19,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.security.auth.login.CredentialException;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Andrii Barsuk
