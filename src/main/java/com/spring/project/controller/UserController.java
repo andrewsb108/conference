@@ -18,6 +18,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,15 +62,17 @@ public class UserController {
 
     @PostMapping("/event/{eventId}/event-reg")
     public String registerToEvent(@PathVariable Long eventId,
-                                  @ModelAttribute("participant") EventRegisterDto eventRegisterDto, Model model) {
+                                  @ModelAttribute("participant") EventRegisterDto eventRegisterDto,
+                                  Model model) {
         try {
             eventService.registerToEvent(eventId, eventRegisterDto);
         } catch (EventAlreadyExistException e) {
-            model.addAttribute("error_message", messageSource.getMessage("event.exist",
+            model.addAttribute("error_message_event", messageSource.getMessage("event.exist",
                     null, LocaleContextHolder.getLocale()));
         } catch (ParticipantAlreadyRegistered ex) {
-            //todo: pass a message to the page
-            ex.getMessage();
+            model.addAttribute("error_message", messageSource.getMessage("register.at.the.same.event",
+                    null, LocaleContextHolder.getLocale()) + eventRegisterDto.getNickName());
+//            todo: pass error a message to the page
         }
         return "redirect:/index";
     }

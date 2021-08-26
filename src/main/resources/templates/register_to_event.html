@@ -27,20 +27,20 @@
 <div class="col py-3">
     <form method="POST" class="register-form" th:action="@{/index/event/{eventId}/event-reg(eventId=${event.getId()})}"
           th:object="${participant}">
+        <h5 class="text-danger" th:text="${error_message_event}"></h5>
         <h5 class="text-danger" th:text="${error_message}"></h5>
 
         <div class="form-group">
             <label for="nickName"><i class="zmdi zmdi-account material-icons-name"></i></label>
             <br><input type="text" th:field="*{nickName}" name="nickName" id="nickName"
                        th:placeholder="#{event.reg.participant}" required autofocus>
-        </div>
+<!--            <div th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}" class="alert alert-danger p-2"-->
+<!--                 role="alert">Validation error</div>-->
+<!--        </div>-->
         <div class="form-check">
             <input class="form-check-input" type="checkbox" th:field="${participant.isSpeaker}">
-            <label class="form-check-label">
-                Become a Speaker
-            </label>
+            <label class="form-check-label" th:text="#{speaker.become.speaker}">Become a Speaker</label>
         </div>
-
         <div>
             <br>
             <button class="btn btn-outline-success" type="submit" th:text="#{register.to.event}">Register</button>

@@ -11,7 +11,24 @@
     <title>Events list</title>
 </head>
 <body th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">
-<div th:replace="fragments/top_menu :: menu"></div>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container-fluid">
+        <div>
+            <a href="?lang=en" class="btn btn-outline-success">English</a>
+            <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
+        </div>
+        <div sec:authorize="hasAuthority('MODERATOR')">
+            <a class="btn btn-outline-success" th:href="@{/index}"
+               th:text="#{index.event.list}">Index page</a>
+        </div>
+        <form action="" th:action="@{/logout}" name="logout" method="POST">
+            <button type="submit" class="btn btn-outline-success" name="logout" value="logout"
+                    th:text="#{login.out}">Log out
+            </button>
+        </form>
+    </div>
+</nav>
+
 <div class="container w-75 bg-light">
     <div class="row my-5">
         <div class="col py-3 shadow rounded">

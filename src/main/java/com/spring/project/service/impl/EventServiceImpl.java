@@ -12,6 +12,7 @@ import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.Event;
 import com.spring.project.model.Topic;
 import com.spring.project.model.User;
+import com.spring.project.model.enums.Role;
 import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepository;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Andrii Barsuk
@@ -66,7 +68,7 @@ public class EventServiceImpl implements EventService {
     public EventDto getEventById(Long id) {
         var event = eventRepository.findById(id);
         return event.map(businessMapper::convertEventToEventDto)
-                .orElseThrow(() -> new  EventNotFoundException("event.not.found"));
+                .orElseThrow(() -> new EventNotFoundException("event.not.found"));
     }
 
     @Override
@@ -100,11 +102,20 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto) {
         var event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
+//                .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
+                .orElseThrow(() -> new EventAlreadyExistException(
+                        messageSource.getMessage("register.at.the.same.event", null,
+                        LocaleContextHolder.getLocale()) + eventRegisterDto.getNickName()));
         var participant = businessMapper
                 .convertEventRegisterDtoToParticipant(eventRegisterDto, event);
         var user = securityService.getCurrentLoggedUser();
+        if (eventRegisterDto.getIsSpeaker()) {
+            Set<Role> roles = user.getRoles();
+            roles.add(Role.SPEAKER);
+            user.setRoles(roles);
+        }
         checkIfAlreadyRegistered(user, event);
+
         participant.setUser(user);
         participantRepository.save(participant);
     }
