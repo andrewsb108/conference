@@ -96,9 +96,8 @@ public class BusinessMapper {
             return null;
         }
         return Event.builder()
-                .id(eventCreateDto.getId())
                 .title(eventCreateDto.getTitle())
-                .scheduledDate(LocalDateTime.parse(eventCreateDto.getScheduledDate(), formatter))
+                .scheduledDate(LocalDateTime.parse(eventCreateDto.getScheduledDate()))
                 .participants(new ArrayList<>())
                 .build();
     }

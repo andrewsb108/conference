@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EventCreateDto {
 
-    private Long id;
+//    private Long id;
     private String title;
     private String scheduledDate;
 }

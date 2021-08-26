@@ -27,7 +27,7 @@
 <div class="col py-3">
     <form method="POST" class="register-form" th:action="@{/index/event/{eventId}/event-reg(eventId=${event.getId()})}"
           th:object="${participant}">
-        <h5 class="text-danger" th:text="${error_message_event}"></h5>
+<!--        <h5 class="text-danger" th:text="${error_message_event}"></h5>-->
         <h5 class="text-danger" th:text="${error_message}"></h5>
 
         <div class="form-group">

@@ -3,7 +3,6 @@ package com.spring.project.controller;
 import com.spring.project.dto.EventCreateDto;
 import com.spring.project.dto.EventDto;
 import com.spring.project.dto.TopicDto;
-import com.spring.project.dto.UserDto;
 import com.spring.project.exceptions.EventAlreadyExistException;
 import com.spring.project.exceptions.EventNotFoundException;
 import com.spring.project.exceptions.TopicNotCreatedException;
@@ -99,6 +98,7 @@ public class EventController {
 
     @PostMapping("/update/{eventId}")
     public String updateEvent(@PathVariable Long eventId, @ModelAttribute("event") EventDto eventDto) {
+        eventDto.setId(eventId);
         eventService.updateEvent(eventDto);
         return "redirect:/event/all";
     }
