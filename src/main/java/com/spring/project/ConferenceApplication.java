@@ -72,21 +72,46 @@ class MyRunner implements CommandLineRunner {
                 .build();
         var rnd = new Random();
         var event = Event.builder()
-                .title("event")
-                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
-                .topics(List.of(topicOne, topicTwo))
-                .build();
-        var event1 = Event.builder()
                 .title("event 1")
                 .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .topics(List.of(topicOne, topicTwo))
                 .build();
         var event2 = Event.builder()
                 .title("event 2")
                 .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
                 .build();
+        var event3 = Event.builder()
+                .title("event 3")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+
+        var event4 = Event.builder()
+                .title("event 4")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+
+        var event5 = Event.builder()
+                .title("event 5")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+
+        var event6 = Event.builder()
+                .title("event 6")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+
+        var event7 = Event.builder()
+                .title("event 7")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
+
+        var event8 = Event.builder()
+                .title("event 8")
+                .scheduledDate(LocalDateTime.now().plusDays(rnd.nextInt(100)))
+                .build();
         topicOne.setEvent(event);
         topicTwo.setEvent(event);
         topicRepository.saveAll(List.of(topicOne, topicTwo));
-        eventRepository.saveAll(List.of(event, event1, event2));
+        eventRepository.saveAll(List.of(event, event2, event3, event4, event5, event6, event7, event8));
     }
 }

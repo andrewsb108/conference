@@ -18,18 +18,20 @@ import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepository;
 import com.spring.project.security.SecurityService;
 import com.spring.project.service.EventService;
-import com.spring.project.service.UserService;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Andrii Barsuk
@@ -102,10 +104,9 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto) {
         var event = eventRepository.findById(eventId)
-//                .orElseThrow(() -> new EventAlreadyExistException("event.exist"));
                 .orElseThrow(() -> new EventAlreadyExistException(
                         messageSource.getMessage("register.at.the.same.event", null,
-                        LocaleContextHolder.getLocale()) + eventRegisterDto.getNickName()));
+                                LocaleContextHolder.getLocale()) + eventRegisterDto.getNickName()));
         var participant = businessMapper
                 .convertEventRegisterDtoToParticipant(eventRegisterDto, event);
         var user = securityService.getCurrentLoggedUser();
@@ -118,6 +119,14 @@ public class EventServiceImpl implements EventService {
 
         participant.setUser(user);
         participantRepository.save(participant);
+    }
+
+    @Override
+    public Page<Event> findAllPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return eventRepository.findAll(pageable);
     }
 
     private void checkIfAlreadyRegistered(User user, Event event) {

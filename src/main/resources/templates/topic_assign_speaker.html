@@ -24,7 +24,7 @@
     </div>
 </nav>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <h2 class="card-header">Topic</h2>
+    <h2 class="card-header" th:text="#{topic.select.user}">Topic</h2>
 
     <div class="col">
         <table class="table">
@@ -35,7 +35,7 @@
                     <form id="assignSpeaker" th:action="@{/event/edit/{eventId}/topic/{topicId}(eventId=${eventId},
                         topicId=${topic.getId()})}" method="post">
                         <select name="speakerId" class="form-select">
-                            <option value="" selected disabled>Select user</option>
+                            <option value="" selected disabled th:text="#{topic.select.user}">Select user</option>
                             <option th:each="user : ${users}"
                                     th:value="${user.userId}"
                                     th:text="${user.firstName}">

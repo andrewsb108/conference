@@ -3,6 +3,7 @@ package com.spring.project.service;
 import com.spring.project.dto.*;
 import com.spring.project.model.Event;
 import com.spring.project.model.Topic;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,5 @@ public interface EventService {
 
     void registerToEvent(Long eventId, EventRegisterDto eventRegisterDto);
 
+    Page<Event> findAllPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 }

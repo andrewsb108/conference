@@ -34,11 +34,9 @@
             <label for="nickName"><i class="zmdi zmdi-account material-icons-name"></i></label>
             <br><input type="text" th:field="*{nickName}" name="nickName" id="nickName"
                        th:placeholder="#{event.reg.participant}" required autofocus>
-<!--            <div th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}" class="alert alert-danger p-2"-->
-<!--                 role="alert">Validation error</div>-->
-<!--        </div>-->
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" th:field="${participant.isSpeaker}">
+        </div>
+        <div>
+            <input type="checkbox" th:field="${participant.isSpeaker}">
             <label class="form-check-label" th:text="#{speaker.become.speaker}">Become a Speaker</label>
         </div>
         <div>

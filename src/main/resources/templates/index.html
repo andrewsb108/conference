@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,10 +44,14 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col" th:text="#{event.crete.title}">Title</th>
-                    <th scope="col" th:text="#{event.scheduled.date}">ScheduledDate</th>
-                    <th scope="col" th:text="#{register.to.event}">Register to event</th>
-
+                    <th scope="col">
+                        <a th:text="#{event.crete.title}"
+                           th:href="@{'/index/' + ${currentPage} + '?sortField=title&sortDirection=' + ${reverseDirection}}">Title</a>
+                    </th>
+                    <th scope="col">
+                        <a th:text="#{event.scheduled.date}"
+                           th:href="@{'/index/' + ${currentPage} + '?sortField=scheduledDate&sortDirection=' + ${reverseDirection}}">ScheduledDate</a>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,6 +65,34 @@
                 </tr>
                 </tbody>
             </table>
+            <div th:if="${totalPages > 1}">
+                <div class="row col-sm-10">
+                    <div class="col-sm-3">
+                        [[#{index.pagination.total.row}]] [[${totalItems}]]
+                    </div>
+                    <div class="col-sm-3">
+                        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                            <a th:if="${currentPage != i}"
+                               th:href="@{'/index/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+                            <span th:unless="${currentPage != i}">[[${i}]]</span>
+                        </span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a th:if="${currentPage > 1}"
+                           th:href="@{'/index/1?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">First</a>
+                    </div>
+                    <div class="col-sm-1">
+                        <a th:if="${currentPage < totalPages}"
+                           th:href="@{'/index/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a th:if="${currentPage < totalPages}"
+                           th:href="@{'/index/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
