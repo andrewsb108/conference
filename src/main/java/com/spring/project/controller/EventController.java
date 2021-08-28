@@ -65,6 +65,7 @@ public class EventController {
 
     @GetMapping("/edit/{eventId}")
     public String showEditEvent(@PathVariable Long eventId, Model model) {
+
         try {
             EventDto dto = eventService.getEventById(eventId);
             List<Topic> topics = topicRepository.findByEventId(eventId);
@@ -76,6 +77,14 @@ public class EventController {
                     null, LocaleContextHolder.getLocale()));
         }
         return "event_edit";
+    }
+
+    //todo: change path
+    @PostMapping("/update/{eventId}")
+    public String updateEvent(@PathVariable Long eventId, @ModelAttribute("event") EventDto eventDto) {
+        eventDto.setId(eventId);
+        eventService.updateEvent(eventDto);
+        return "redirect:/event/all";
     }
 
     @GetMapping("/edit/{eventId}/topic/{topicId}")
@@ -96,12 +105,6 @@ public class EventController {
         return "redirect:/event/edit/" + eventId;
     }
 
-    @PostMapping("/update/{eventId}")
-    public String updateEvent(@PathVariable Long eventId, @ModelAttribute("event") EventDto eventDto) {
-        eventDto.setId(eventId);
-        eventService.updateEvent(eventDto);
-        return "redirect:/event/all";
-    }
 
     @GetMapping("/delete/{id}")
     public String deleteEvent(@PathVariable Long id) {

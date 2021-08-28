@@ -5,8 +5,6 @@ import com.spring.project.model.Event;
 import com.spring.project.model.Participant;
 import com.spring.project.model.Topic;
 import com.spring.project.model.User;
-import com.spring.project.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -46,6 +44,7 @@ public class BusinessMapper {
             return null;
         }
         List<UserDto> list = new ArrayList<>();
+
         for (User user : users) {
             list.add(convertUserToUserDto(user));
         }
@@ -107,6 +106,7 @@ public class BusinessMapper {
             return null;
         }
         List<EventDto> list = new ArrayList<>();
+
         for (Event event : events) {
             list.add(convertEventToEventDto(event));
         }
@@ -165,7 +165,6 @@ public class BusinessMapper {
         if (eventRegDto == null) {
             return null;
         }
-
         return Participant.builder()
                 .nickName(eventRegDto.getNickName())
                 .isSpeaker(eventRegDto.getIsSpeaker())
