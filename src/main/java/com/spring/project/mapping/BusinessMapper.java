@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class BusinessMapper {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public UserDto convertUserToUserDto(User user) {
         if (user == null) {
@@ -85,8 +85,8 @@ public class BusinessMapper {
                 .id(event.getId())
                 .title(event.getTitle())
                 .scheduledDate(event.getScheduledDate().format(formatter))
-                .participants(event.getParticipants().stream()
-                        .map(this::convertToParticipantDto).collect(Collectors.toList()))
+                .topics(event.getTopics())
+                .participants(event.getParticipants())
                 .build();
     }
 
@@ -137,7 +137,7 @@ public class BusinessMapper {
         return ParticipantDto.builder()
                 .firstName(participant.getUser().getFirstName())
                 .lastName(participant.getUser().getLastName())
-                .isSpeaker(participant.isSpeaker())
+                .isSpeaker(participant.getIsSpeaker())
                 .build();
     }
 

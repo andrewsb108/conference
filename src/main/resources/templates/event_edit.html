@@ -77,8 +77,10 @@
                     <td>
                         <div class="form-group">
                             <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
-                            <input type="text" th:field="*{title}"
-                                   placeholder="add topic" th:placeholder="#{topic.title}" required>
+                            <input type="text"
+                                   th:field="*{title}"
+                                   placeholder="add topic"
+                                   th:placeholder="#{topic.title}" required>
                         </div>
                     </td>
                     <td>
@@ -95,117 +97,3 @@
 <div th:replace="fragments/login_page :: footer"></div>
 </body>
 </html>
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
-<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
-<!--    <div th:replace="fragments/login_page :: head_tag"></div>-->
-
-<!--</head>-->
-<!--<body class="p-0 m-0"-->
-<!--      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">-->
-<!--<nav class="navbar navbar-dark bg-dark navbar-expand-lg">-->
-<!--    <div class="container-fluid">-->
-<!--        <div>-->
-<!--            <a href="?lang=en" class="btn btn-outline-success">English</a>-->
-<!--            <a href="?lang=uk" class="btn btn-outline-success">Українська</a>-->
-<!--        </div>-->
-<!--        <form action="" th:action="@{/logout}" name="logout" method="POST">-->
-<!--            <a class="btn btn-outline-success" th:href="@{/event/all}" th:text="#{back.button}">Back</a>-->
-<!--            <button type="submit" class="btn btn-outline-success" name="logout" value="logout"-->
-<!--                    th:text="#{login.out}">Log out-->
-<!--            </button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</nav>-->
-<!--<div class="card text-center container  mt-5 w-50 shadow-lg">-->
-<!--    <h2 class="card-header" th:text="#{event.edit}">Edit event</h2>-->
-<!--    <div class="col py-3">-->
-<!--        <form action="#" method="POST" class="register-form" id="register-form"-->
-<!--              th:action="@{/event/update/{id}(id=${event.getId()})}"-->
-<!--              th:object="${event}">-->
-<!--            <h5 class="text-danger" th:text="${error_message}"></h5>-->
-
-<!--            <div class="form-group">-->
-<!--                <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>-->
-<!--                <input type="text" th:field="*{title}" name="title" id="title"-->
-<!--                       placeholder="Title" th:placeholder="#{event.crete.title}" required>-->
-<!--                <small class="text-danger" th:if="${#fields.hasErrors('title')}"-->
-<!--                       th:errors="*{title}">Validation error-->
-<!--                </small>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="scheduledDate"><i class="zmdi zmdi-email"></i></label>-->
-<!--                <br> <input type="datetime-local" th:field="*{scheduledDate}" name="scheduledDate" id="scheduledDate"-->
-<!--                            placeholder="ScheduledDate" th:placeholder="#{event.scheduled.date}" required>-->
-<!--                <small class="text-danger" th:if="${#fields.hasErrors('scheduledDate')}"-->
-<!--                       th:errors="*{scheduledDate}">Validation error-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <br>-->
-<!--                <button class="btn btn-outline-success" type="submit" th:text="#{event.edit.button}">Edit</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="card text-center container  mt-5 w-50 shadow-lg">-->
-<!--    <h2 class="card-header" th:text="#{topic.topics}">Topics</h2>-->
-
-<!--    <div class="col">-->
-<!--        <table class="table">-->
-<!--            <tbody>-->
-<!--            <tr th:each="topicItem : ${topics}">-->
-<!--                <td th:text="${topicItem.getTitle()}"/>-->
-
-<!--                <td>-->
-<!--                    <form id="assignSpeaker" th:action="@{/event/edit/{id}(id=${event.getId()})}" method="post">-->
-
-<!--                    </form>-->
-<!--                    <select name="speakerId" class="form-select" aria-label="Default select example" th:object="${users}"-->
-<!--                            form="assignSpeaker">-->
-<!--&lt;!&ndash;                        <option selected>Select user</option>&ndash;&gt;-->
-<!--                        <option th:each="user : ${users}"-->
-<!--                                th:value="${user.id}"-->
-<!--                                th:text="${user.firstName}">-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <button class="btn btn-outline-success" type="submit" form="assignSpeaker" th:text="#{speaker.choose.topic}">Choose-->
-<!--                    </button>-->
-<!--                </td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <form method="POST" class="register-form"-->
-<!--                      th:action="@{/event/{id}/topic/add(id=${event.getId()})}"-->
-<!--                      th:object="${topic}">-->
-<!--                    <td>-->
-<!--                        <div class="form-group">-->
-<!--                            <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>-->
-<!--                            <input type="text" th:field="*{title}"-->
-<!--                                   placeholder="add topic" th:placeholder="#{topic.title}" required>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                       <br> <button class="btn btn-outline-success" type="submit" th:text="#{topic.create.title}">Create-->
-<!--                        </button>-->
-<!--                    </td>-->
-<!--                </form>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div th:replace="fragments/login_page :: footer"></div>-->
-<!--</body>-->
-<!--</html>-->

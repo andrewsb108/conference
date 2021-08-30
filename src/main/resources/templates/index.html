@@ -52,12 +52,20 @@
                         <a th:text="#{event.scheduled.date}"
                            th:href="@{'/index/' + ${currentPage} + '?sortField=scheduledDate&sortDirection=' + ${reverseDirection}}">ScheduledDate</a>
                     </th>
+                    <th scope="col">
+                        <span th:text="#{event.topics.count}">t_ctn</span>
+                    </th>
+                    <th scope="col">
+                        <span th:text="#{event.participants.count}">p_ctn</span>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="event : ${events}">
                     <td th:text="${event.title}"/>
                     <td th:text="${event.scheduledDate}"/>
+                    <td th:text="${#lists.size(event.topics)}"/>
+                    <td th:text="${#lists.size(event.participants)}"/>
                     <td>
                         <a class="btn btn-outline-secondary" th:href="@{/index/event/{id}/event-reg(id=${event.getId})}"
                            th:text="#{speaker.register}">Register</a>

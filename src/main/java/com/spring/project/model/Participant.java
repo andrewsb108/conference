@@ -29,7 +29,7 @@ public class Participant {
     private User user;
 
     @Column(name = "is_speaker")
-    private boolean isSpeaker;
+    private Boolean isSpeaker;
 
     private String nickName;
 }

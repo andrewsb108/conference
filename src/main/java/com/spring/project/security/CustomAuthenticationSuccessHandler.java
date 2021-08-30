@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,7 +26,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             if (Role.MODERATOR.name().equals(auth.getAuthority())) {
                 response.sendRedirect("/event/all");
                 return;
-            } else if (NONE_ADMIN_ROLES.contains(auth.getAuthority())) {
+            }
+            if (NONE_ADMIN_ROLES.contains(auth.getAuthority())) {
                 response.sendRedirect("/index");
                 return;
             }
