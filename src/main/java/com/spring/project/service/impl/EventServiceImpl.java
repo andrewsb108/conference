@@ -18,6 +18,8 @@ import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepository;
 import com.spring.project.security.SecurityService;
 import com.spring.project.service.EventService;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -118,7 +120,11 @@ public class EventServiceImpl implements EventService {
         checkIfAlreadyRegistered(user, event);
 
         participant.setUser(user);
-        participantRepository.save(participant);
+        try {
+            participantRepository.save(participant);
+        } catch (Exception ex) {
+            throw new ParticipantAlreadyRegistered();
+        }
     }
 
     @Override

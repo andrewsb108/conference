@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "participants")
+@Table(name = "participants", uniqueConstraints = @UniqueConstraint(columnNames = {"event_id", "user_id"}))
 public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

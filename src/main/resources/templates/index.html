@@ -41,6 +41,10 @@
 <div class="container w-75 bg-light">
     <div class="row my-5">
         <div class="col py-3 shadow rounded">
+<!--            <h5 class="text-danger" th:text="${#request.getParameter('error_message')}">Error message</h5>-->
+            <div th:if="${#request.getParameter('error_message') != null}" class="alert alert-danger fade show">
+                <h5 class="text-danger" th:text="${#request.getParameter('error_message')}">Error message</h5>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
