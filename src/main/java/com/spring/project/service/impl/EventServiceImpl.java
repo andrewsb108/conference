@@ -16,13 +16,9 @@ import com.spring.project.model.enums.Role;
 import com.spring.project.repository.EventRepository;
 import com.spring.project.repository.ParticipantRepository;
 import com.spring.project.repository.TopicRepository;
+import com.spring.project.repository.UserRepository;
 import com.spring.project.security.SecurityService;
 import com.spring.project.service.EventService;
-
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;
@@ -34,6 +30,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Andrii Barsuk
@@ -50,6 +50,7 @@ public class EventServiceImpl implements EventService {
     private final MessageSource messageSource;
     private final ParticipantRepository participantRepository;
     private final SecurityService securityService;
+    private final UserRepository userRepository;
 
     @Override
     public Event createEvent(EventCreateDto eventCreateDto) {
@@ -116,6 +117,7 @@ public class EventServiceImpl implements EventService {
             Set<Role> roles = user.getRoles();
             roles.add(Role.SPEAKER);
             user.setRoles(roles);
+            userRepository.save(user);
         }
         checkIfAlreadyRegistered(user, event);
 
