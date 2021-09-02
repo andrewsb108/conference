@@ -62,7 +62,16 @@ class MyRunner implements CommandLineRunner {
                 .roles(Set.of(Role.USER))
                 .enabled(true)
                 .build();
-        userRepository.saveAll(List.of(moderator, user));
+
+        var user2 = User.builder()
+                .firstName("user2")
+                .lastName("user")
+                .email("user2@gmail.com")
+                .password(encoder.encode("111"))
+                .roles(Set.of(Role.SPEAKER))
+                .enabled(true)
+                .build();
+        userRepository.saveAll(List.of(moderator, user, user2));
 
         var topicOne = Topic.builder()
                 .title("topic1")

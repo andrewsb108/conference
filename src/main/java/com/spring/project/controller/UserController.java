@@ -102,7 +102,9 @@ public class UserController {
     public String showSpeakerCabinet(@ModelAttribute("event") EventDto eventDto, Model model) {
         User currentLoggedUser = securityService.getCurrentLoggedUser();
         List<Long> participantIds = participantRepository.findAllByUserId(currentLoggedUser.getId()).stream()
-                .map(Participant::getId).collect(Collectors.toList());
+                .map(Participant::getEvent)
+                .map(Event::getId)
+                .collect(Collectors.toList());
         List<Event> events = eventRepository.findByIdIn(participantIds);
         model.addAttribute("events", events);
         return "cabinet";
