@@ -128,7 +128,14 @@ public class EventController {
         topicService.editTopic(topicDto);
         return "redirect:event/all";
     }
-}
+
+    @GetMapping("/{id}/statistics")
+    public String openStatistic(@PathVariable Long id, Model model){
+        EventDto eventDto = eventService.getEventById(id);
+        model.addAttribute("event", eventDto);
+        return "event_statistics";
+    }
+ }
 
 
 

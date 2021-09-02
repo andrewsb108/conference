@@ -25,6 +25,7 @@
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout"
                     th:text="#{login.out}">Log out
             </button>
+
         </form>
     </div>
 </nav>
@@ -37,6 +38,7 @@
                 <tr>
                     <th scope="col" th:text="#{event.crete.title}">Title</th>
                     <th scope="col" th:text="#{event.scheduled.date}">ScheduledDate</th>
+                    <th scope="col" th:text="#{event.open.statistics}">Details</th>
                     <th scope="col" th:text="#{event.edit.button}">Edits</th>
                     <th scope="col" th:text="#{event.delete.button}">Delete</th>
 
@@ -46,6 +48,10 @@
                 <tr th:each="event : ${events}">
                     <td th:text="${event.title}"/>
                     <td th:text="${event.scheduledDate}"/>
+                    <td>
+                        <a class="btn btn-outline-success" th:href="@{/event/{id}/statistics(id=${event.getId})}"
+                           th:text="#{event.statistics}">Open</a>
+                    </td>
                     <td>
                         <a class="btn btn-outline-success" th:href="@{/event/edit/{id}(id=${event.getId})}"
                            th:text="#{event.edit.button}">Edit</a>
