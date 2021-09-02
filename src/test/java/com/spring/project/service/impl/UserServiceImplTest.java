@@ -7,6 +7,8 @@ import com.spring.project.repository.UserRepository;
 import com.spring.project.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,13 +22,20 @@ import java.util.Collections;
 @SpringBootTest
 public class UserServiceImplTest {
 
-    private final String firstName = "firstName";
-    private final String lastName = "lastName";
-    private final String email = "user@mail.com";
-    private final String password = "1234";
-    private final Role role = Role.USER;
-    @Autowired
+//    private final String firstName = "firstName";
+//    private final String lastName = "lastName";
+//    private final String email = "user@mail.com";
+//    private final String password = "1234";
+//    private final Role role = Role.USER;
+
+    @Mock
+    private User user;
+
+    @InjectMocks
     private UserService userService;
+
+//    @Autowired
+//    private UserService userService;
 
     @MockBean
     private UserRepository userRepository;
@@ -36,44 +45,25 @@ public class UserServiceImplTest {
 
     @Test
     public void createUser() {
-        RegistrationDto dto = new RegistrationDto();
-        dto.setFirstName(firstName);
-        dto.setLastName(lastName);
-        dto.setEmail(email);
-        dto.setPassword(password);
+        RegistrationDto dto = RegistrationDto.builder()
+                .firstName("firstname")
+                .lastName("lastname")
+                .email("email")
+                .password("password")
+                .build();
 
         User user = User.builder()
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
-                .email(email)
+                .enabled(true)
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .roles(Collections.singleton(role))
+                .roles(Collections.singleton(Role.USER))
                 .build();
 
         userService.createUser(dto);
 
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
-        Mockito.verify(passwordEncoder, Mockito.times(2)).encode(dto.getPassword());
+        Mockito.verify(passwordEncoder,Mockito.times(2)).encode(dto.getPassword());
 
-    }
-
-    @Test
-    public void removeUser() {
-        User user = User.builder()
-                .id(1l)
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .roles(Collections.singleton(role))
-                .build();
-
-        Mockito.doReturn(user)
-                .when(userRepository)
-                .findById(1l);
-
-        userService.deleteById(user.getId());
-
-        Mockito.verify(userRepository, Mockito.times(1)).delete(user);
     }
 }
