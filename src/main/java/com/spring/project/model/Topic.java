@@ -1,7 +1,6 @@
 package com.spring.project.model;
 
 import lombok.*;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 

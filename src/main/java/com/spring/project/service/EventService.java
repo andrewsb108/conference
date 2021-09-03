@@ -1,6 +1,9 @@
 package com.spring.project.service;
 
-import com.spring.project.dto.*;
+import com.spring.project.dto.EventCreateDto;
+import com.spring.project.dto.EventDto;
+import com.spring.project.dto.EventRegisterDto;
+import com.spring.project.dto.TopicDto;
 import com.spring.project.model.Event;
 import com.spring.project.model.Topic;
 import org.springframework.data.domain.Page;
