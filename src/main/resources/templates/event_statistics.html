@@ -31,14 +31,12 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col" th:text="#{event.id}">Title</th>
-                <th scope="col" th:text="#{event.nick.name}">Edits</th>
-                <th scope="col" th:text="#{event.is.speaker}">Delete</th>
+                <th scope="col" th:text="#{event.nick.name}"></th>
+                <th scope="col" th:text="#{event.is.speaker}"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="participant : ${event.getParticipants()}">
-                <td th:text="${participant.id}"/>
                 <td th:text="${participant.nickName}"/>
                 <td th:text="${participant.isSpeaker}"/>
             </tr>

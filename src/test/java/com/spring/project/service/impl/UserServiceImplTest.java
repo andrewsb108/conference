@@ -1,69 +1,90 @@
 package com.spring.project.service.impl;
 
 import com.spring.project.dto.RegistrationDto;
+import com.spring.project.dto.UserDto;
+import com.spring.project.mapping.BusinessMapper;
 import com.spring.project.model.User;
-import com.spring.project.model.enums.Role;
 import com.spring.project.repository.UserRepository;
-import com.spring.project.service.UserService;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Collections;
+import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
-
-//    private final String firstName = "firstName";
-//    private final String lastName = "lastName";
-//    private final String email = "user@mail.com";
-//    private final String password = "1234";
-//    private final Role role = Role.USER;
 
     @Mock
     private User user;
-
-    @InjectMocks
-    private UserService userService;
-
-//    @Autowired
-//    private UserService userService;
-
-    @MockBean
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
+    @Mock
+    private BusinessMapper businessMapper;
+    @Mock
     private UserRepository userRepository;
 
-    @MockBean
-    private PasswordEncoder passwordEncoder;
+    @InjectMocks
+    private UserServiceImpl testInstance;
 
     @Test
-    public void createUser() {
-        RegistrationDto dto = RegistrationDto.builder()
-                .firstName("firstname")
-                .lastName("lastname")
+    public void shouldCreateUser() {
+        //given
+        String encodedPassword = "sadfjhlk4565jh6gfdsfjh";
+        RegistrationDto registrationDto = RegistrationDto.builder()
+                .firstName("firstName")
+                .lastName("lastName")
+                .email("email")
+                .password("password")
+                .matchingPassword("password")
+                .build();
+        User user = User.builder()
+                .firstName("firstName")
+                .lastName("lastName")
                 .email("email")
                 .password("password")
                 .build();
+        given(businessMapper.convertRegistrationDtoToUser(registrationDto)).willReturn(user);
+        given(passwordEncoder.encode(registrationDto.getPassword())).willReturn(encodedPassword);
+        given(userRepository.save(user)).willReturn(user);
 
-        User user = User.builder()
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .enabled(true)
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .roles(Collections.singleton(Role.USER))
-                .build();
+        //when
+        User actualUser = testInstance.createUser(registrationDto);
 
-        userService.createUser(dto);
+        //then
+        assertThat(actualUser).isEqualTo(user);
+        assertThat(actualUser.getPassword()).isEqualTo(encodedPassword);
 
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
-        Mockito.verify(passwordEncoder,Mockito.times(2)).encode(dto.getPassword());
+    }
 
+    @Test
+    public void shouldReturnAllUsers() {
+        UserDto userDto = new UserDto();
+        //given
+        List<UserDto> expectedUsers = List.of(userDto);
+        List<User> users = userRepository.findAll();
+        given(businessMapper.convertUserToUserDtoGetAll(users)).willReturn(expectedUsers);
+
+        //when
+        List<UserDto> actualUsers = testInstance.getAllUsers();
+
+        //then
+        assertThat(actualUsers).isEqualTo(expectedUsers);
+    }
+
+    @Test
+    public void delete_test() {
+        long id = 1;
+        testInstance.deleteById(id);
+        verify(userRepository).deleteById(id);
     }
 }

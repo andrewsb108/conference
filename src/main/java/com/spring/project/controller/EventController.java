@@ -79,7 +79,6 @@ public class EventController {
         return "event_edit";
     }
 
-    //todo: change path
     @PostMapping("/update/{eventId}")
     public String updateEvent(@PathVariable Long eventId, @ModelAttribute("event") EventDto eventDto) {
         eventDto.setId(eventId);
@@ -130,12 +129,12 @@ public class EventController {
     }
 
     @GetMapping("/{id}/statistics")
-    public String openStatistic(@PathVariable Long id, Model model){
+    public String openStatistic(@PathVariable Long id, Model model) {
         EventDto eventDto = eventService.getEventById(id);
         model.addAttribute("event", eventDto);
         return "event_statistics";
     }
- }
+}
 
 
 

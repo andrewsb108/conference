@@ -3,7 +3,6 @@ package com.spring.project.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * @author Andrii Barsuk
